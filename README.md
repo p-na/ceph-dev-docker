@@ -1,6 +1,7 @@
 # ceph-dev-docker
 
-The purpose of this docker image is to help developing Ceph.
+The purpose of this docker image is to help developing the `dashboard_v2` Ceph
+MGR module.
 
 ## Usage
 
@@ -10,18 +11,12 @@ The purpose of this docker image is to help developing Ceph.
 
 ### Run the Container
 
-    # docker run --rm -it -v ~/src/ceph-local:/ceph -h ceph-dev \
-        --net host ceph-dev
+    # docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host ceph-dev
 
 On first run, you may want to clone and build Ceph. To do this, you just need
 to run `setup-ceph`.
 
-    # cd /ceph
-    # ./install-deps.sh
-    # ./do_cmake.sh
-    # cd /ceph/build
-    # make -j8
-
+    $ setup-ceph
 
 # TODO revise
 
