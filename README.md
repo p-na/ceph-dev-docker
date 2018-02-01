@@ -1,29 +1,29 @@
 # ceph-dev-docker
 
-The purpose of this docker image is to help in the development of ceph.
+The purpose of this docker image is to help developing Ceph.
 
 ## Usage
 
-### Clone ceph
+### Build Image
 
-    # git clone <repo>
-    # git submodule update --init --recursive
+    # docker build -t ceph-dev .
 
-### Image build
+### Run the Container
 
-    # docker build -t ceph-dev-docker .
+    # docker run --rm -it -v ~/src/ceph-local:/ceph -h ceph-dev \
+        --net host ceph-dev
 
-### Running the container
-
-    # docker run -it -v /home/rimarques-local/projects/ceph:/ceph --net=host ceph-dev-docker /bin/bash
-
-Please note that the mapped Ceph source cannot be used in the Docker container if `./do_cmake.sh` has been called with a path not used by the Docker container.  The source, taken from the example above, is `/home/rimarques-local/projects/ceph` in this case.  If it doesn't compile (due to wrong paths), use a dedicated Ceph source for the Docker container where `./do_cmake.sh` hasn't been called before.
+On first run, you may want to clone and build Ceph. To do this, you just need
+to run `setup-ceph`.
 
     # cd /ceph
     # ./install-deps.sh
     # ./do_cmake.sh
     # cd /ceph/build
     # make -j8
+
+
+# TODO revise
 
 ### Create a new docker image with all dependencies installed (use a separate terminal)
 
@@ -32,7 +32,7 @@ Please note that the mapped Ceph source cannot be used in the Docker container i
 
 ### Running the container with all dependencies installed
 
-     # docker run -it -v /home/rimarques-local/projects/ceph:/ceph --net=host ceph-dev-docker-build /bin/bash
+    # docker run --rm -it -v ~/ceph-local:/ceph -h ceph-dev --net host pna/docker-dev
 
 ### Start ceph development environment
 
