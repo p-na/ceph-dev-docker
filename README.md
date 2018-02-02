@@ -37,8 +37,9 @@ E.g.
     $ docker commit 7dbf64f71d4d ceph-dev-build
 
 You can find the container ID by issuing `docker ps` (if it's running) or by
-issuing `docker ps -a` (outside of the container).  The latter will will list
-all containers, including those which are stopped.
+issuing `docker ps -a`.  Both commands do only work outside of the container.
+The latter will will list all containers, including those which have been
+stopped.
 
 ### Start Ceph
 
