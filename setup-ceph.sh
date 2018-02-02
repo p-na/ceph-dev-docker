@@ -11,4 +11,4 @@ git clone https://github.com/openattic/ceph .
 cd /ceph/build
 make -j${cpus}
 
-
+pip install -r /ceph/src/pybind/mgr/dashboard_v2/requirements.txt

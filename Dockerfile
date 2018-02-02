@@ -4,7 +4,7 @@ MAINTAINER Patrick Nawracay "pnawracay@suse.com"
 RUN zypper ref && \
     zypper -n dup && \
     zypper -n install \
-        iproute2 net-tools-deprecated \
+        iproute2 net-tools-deprecated python2-pip python3-pip \
         python lttng-ust-devel babeltrace-devel \
         librados2 python-rados python2-pylint python3-pylint \
         bash vim tmux git zsh
