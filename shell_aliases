@@ -1,7 +1,0 @@
-alias ls='ls --color=auto'
-alias o='grep --color=auto'
-alias dashb='cd /ceph/src/pybind/mgr/dashboard_v2'
-alias restart="stop && start"
-alias watch-mgr-log="watch grep -A15 'Traceback' /ceph/build/out/mgr.x.log"
-alias tb="grep -A15 Traceback /ceph/build/out/mgr.x.log"
-alias reload="ceph mgr module disable dashboard_v2 && ceph mgr module enable dashboard_v2"
