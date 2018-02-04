@@ -1,5 +1,4 @@
 FROM opensuse:tumbleweed
-MAINTAINER Patrick Nawracay "pnawracay@suse.com"
 
 ENV remote_branch wip-mgr-dashboard_v2
 ENV github_repo openattic/ceph
