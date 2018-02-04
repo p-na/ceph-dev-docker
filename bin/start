@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd /ceph/build
+RGW=1 ../src/vstart.sh
+popd

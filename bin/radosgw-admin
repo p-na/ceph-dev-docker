@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd /ceph/build 1>/dev/null
+./bin/radosgw-admin $@
+popd 1>/dev/null

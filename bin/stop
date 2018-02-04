@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd /ceph/build
+../src/stop.sh
+popd
