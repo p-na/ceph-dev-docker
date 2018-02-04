@@ -24,9 +24,27 @@ to run `setup-ceph`.
 
     $ setup-ceph
 
-### Backup the work done
+### Start Ceph
 
-At this point it might make sense to create an image out of the current
+Within your docker container, run the following code.
+
+    $ start
+
+### Running the container with all dependencies installed
+
+    # docker run --rm -it -v ~/ceph-local:/ceph -h ceph-dev --net host ceph-dev
+
+### Test ceph development environment
+
+    $ ceph -s
+
+### Stop ceph development environment
+
+    $ stop
+
+### Backup the Container
+
+At a certain point, it might make sense to create an image out of the current
 container to preserve the current state of the container.  To do this, you will
 need to commit your container to an image.
 
@@ -40,38 +58,4 @@ You can find the container ID by issuing `docker ps` (if it's running) or by
 issuing `docker ps -a`.  Both commands do only work outside of the container.
 The latter will will list all containers, including those which have been
 stopped.
-
-### Start Ceph
-
-Within your docker container, run the following code.
-
-    $ cd /ceph/build
-    $ ../src/vstart.sh -n
-
-You have to start Ceph with the `-n` command line argument, if you're
-starting the Cluster for the first time.  There are other switches available
-(`-d`, `-x`) which are not necessary for the development of the `dashboard_v2`
-module.
-
-# TODO revise
-
-### Running the container with all dependencies installed
-
-    # docker run --rm -it -v ~/ceph-local:/ceph -h ceph-dev --net host pna/docker-dev
-
-### Start ceph development environment
-
-     # cd /ceph/build
-     # ../src/vstart.sh -d -n -x
-
-### Test ceph development environment
-
-     # cd /ceph/build
-     # bin/ceph -s
-
-### Stop ceph development environment
-
-     # cd /ceph/build
-     # ../src/stop.sh
-
 
