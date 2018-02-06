@@ -20,7 +20,7 @@ RUN zypper ref && \
     pip2 install -r requirements.txt && \
     pip3 install -r requirements.txt && \
     chsh -s /usr/bin/zsh root && \
-    zypper -n in ccache
+    zypper -n in ccache aaa_base
 
 ADD setup-ceph.sh /root/bin/setup-ceph
 ADD bash.bashrc /etc/bash.bashrc
