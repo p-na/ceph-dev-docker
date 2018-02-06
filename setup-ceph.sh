@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cpus=$(lscpu | sed -n 's/^CPU(s):\s*\(\d*\)/\1/p')
 
 cd /ceph
 git clone https://github.com/openattic/ceph .
@@ -9,7 +8,7 @@ git clone https://github.com/openattic/ceph .
 if [ ! -d /ceph/build ]; then
     ./do_cmake.sh
     cd /ceph/build
-    make -j${cpus}
+    make -j$(nproc)
 else
     echo "skipping compilation... found /ceph/build"
 fi
