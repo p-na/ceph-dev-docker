@@ -20,9 +20,13 @@ to create your development environment.  You may, of course, change the
 location of the directory to your liking.
 
 On first run, you may want to clone and build Ceph.  To do this, you just need
-to run `setup-ceph`.
+to run `setup-ceph`.  The command does also work for rebuilding Ceph.
 
     $ setup-ceph
+
+If you want to build Ceph with Python3 support and with disabled tests, you'll want to run the following command.
+
+    $ setup-ceph -DWITH_PYTHON3=ON -DWITH_TESTS=OFF
 
 ### Start Ceph
 
