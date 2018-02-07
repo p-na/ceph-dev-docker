@@ -1,3 +1,3 @@
-alias ~/.aliases
+source ~/.aliases
 
 export PATH=~/bin:${PATH}
