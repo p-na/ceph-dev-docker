@@ -4,15 +4,16 @@ ENV remote_branch wip-mgr-dashboard_v2
 ENV github_repo openattic/ceph
 ENV mgr_module_name dashboard_v2
 
-RUN zypper ref && \
-    zypper -n dup && \
-    zypper -n install \
+RUN zypper ref
+RUN zypper -n dup
+RUN zypper -n install \
         iproute2 net-tools-deprecated python2-pip python3-pip \
         python lttng-ust-devel babeltrace-devel \
-        librados2 python-rados python2-pylint python3-pylint \
+        librados2 python2-pylint python3-pylint \
         vim zsh inotify-tools wget \
-        python python2-pip python3-pip gcc git && \
-    wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
+        python python2-pip python3-pip gcc git \
+        python-devel python2-Cython python2-PrettyTable
+RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/install-deps.sh && \
     chmod +x install-deps.sh && \
     bash install-deps.sh && \
