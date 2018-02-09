@@ -12,7 +12,7 @@ RUN zypper -n install \
         librados2 python2-pylint python3-pylint \
         vim zsh inotify-tools wget \
         python python2-pip python3-pip gcc git \
-        python-devel python2-Cython python2-PrettyTable
+        python-devel python2-Cython python2-PrettyTable psmisc
 RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/install-deps.sh && \
     chmod +x install-deps.sh && \
