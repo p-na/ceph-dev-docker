@@ -26,9 +26,9 @@ location of the directory to your liking.
 On first run, you may want to clone and build Ceph.  To do this, you just need
 to run `setup-ceph`.  The command does also work for rebuilding Ceph.
 
-    $ setup-ceph -DWITH_PYTHON3=ON -DWITH_TESTS=OFF
+    $ setup-ceph
 
-This clones Ceph, if it's not yet cloned, and builds Ceph with Python2 and Python3 support.
+Ceph will automatically be build with Python2 and Python3 support.
 
 ### Start Ceph
 
