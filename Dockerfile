@@ -13,6 +13,12 @@ RUN zypper -n install \
         vim zsh inotify-tools wget \
         python python2-pip python3-pip gcc git \
         python-devel python2-Cython python2-PrettyTable psmisc
+
+# `restful` module
+RUN pip2 install pecan werkzeug && \
+    zypper in -n python2-pyOpenSSL werkzeug
+
+# Ceph dependecies and `dashboard_v2` module
 RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/install-deps.sh && \
     chmod +x install-deps.sh && \
