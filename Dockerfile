@@ -16,7 +16,7 @@ RUN zypper -n install \
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
-    zypper in -n python2-pyOpenSSL
+    zypper -n in python2-pyOpenSSL
 
 # Ceph dependecies and `dashboard_v2` module
 RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
