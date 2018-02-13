@@ -8,6 +8,7 @@ git clone https://github.com/openattic/ceph . | true
 
 cmake_called=False
 if [ ! -d /ceph/build ]; then
+    # do_cmake.sh enables ccache by default if ccache is available
     ./do_cmake.sh -DWITH_PYTHON3=ON -DWITH_TESTS=OFF
     cmake_called=True
 fi
