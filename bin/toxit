@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd /ceph/src/pybind/mgr/dashboard_v2
+PATH=/ceph/build/bin:$PATH tox $@
+popd
