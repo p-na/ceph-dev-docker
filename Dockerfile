@@ -29,7 +29,6 @@ RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.
     chsh -s /usr/bin/zsh root && \
     zypper -n in ccache aaa_base
 
-ADD setup-ceph.sh /root/bin/setup-ceph
 ADD bash.bashrc /etc/bash.bashrc
 ADD aliases /root/.aliases
 ADD bin/* /root/bin/
