@@ -13,7 +13,7 @@ if [ ! -d /ceph/build ]; then
     cmake_called=True
 fi
 cd /ceph/build
-if [ "${cmake_called}" -eq "False" ] ; then
+if [ "${cmake_called}" == "False" ] ; then
     cmake -DWITH_CCACHE=ON -DWITH_TESTS=OFF -DWITH_PYTHON3=ON ..
 fi
 make -j$(nproc)
