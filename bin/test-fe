@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd src/pybind/mgr/dashboard_v2/frontend
+npm run test -- --code-coverage=true --browsers PhantomJS --watch=false
+mv coverage/cobertura-coverage.xml ../coverage_frontend.xml
+mv junit.frontend.xml ..
+npm run lint
