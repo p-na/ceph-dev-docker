@@ -11,11 +11,11 @@ Bash.
 
 ### Build the Docker Image
 
-    # docker build -t ceph-dev .
+    $ docker build -t ceph-dev .
 
-### Run the Container
+### Create and Run the Container
 
-    # docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host ceph-dev
+    $ docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host --name ceph-dev ceph-dev
 
 In this case `~/src/ceph-local` is just an empty directory if you just started
 to create your development environment.  You may, of course, change the
@@ -38,7 +38,13 @@ Within your docker container, run the following code.
 
 When you already started Ceph once, you can omit the `-n` flag.  The `-n` flag
 creates a new cluster and hence you'll have to re-enable the `dashboard_v2`
-module after you've used it.
+module after you've used it.  By default the environment variable `RGW` will be
+passed to `start` with the value `1`, which is not the default of `vstart.sh`,
+so now you know.
+
+To, lets say, start a new Ceph cluster with three MGR deamons, do:
+
+    $ MGR=3 start -n
 
 ### Check the Status of the Ceph Cluster
 
@@ -47,6 +53,16 @@ module after you've used it.
 ### Stop the Ceph Development Environment
 
     $ stop
+
+### Starting and Stopping Containers
+
+    $ docker start ceph-dev
+
+    $ docker stop ceph-dev
+
+Note that the container is started with all the arguments given on its
+creation! Docker containers are created using the `docker create` *and* `docker
+run` command.
 
 ### Backup the Container
 
