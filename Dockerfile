@@ -18,7 +18,8 @@ RUN zypper -n install \
 RUN pip2 install pecan werkzeug && \
     zypper -n in python2-pyOpenSSL
 
-# Ceph dependecies and `dashboard_v2` module
+# Ceph dependencies and `dashboard_v2` module
+WORKDIR /tmp
 RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/install-deps.sh && \
     chmod +x install-deps.sh && \
