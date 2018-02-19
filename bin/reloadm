@@ -13,9 +13,4 @@ if [ ! -z "${@}" ]; then
 	MGR_MODULE="${@}"
 fi
 
-if [ -z "${MGR_MODULE}" ]; then
-	MGR_MODULE="dashboard_v2"
-fi
-
-
 ceph mgr module disable "${MGR_MODULE}" && sleep 1 && ceph mgr module enable "${MGR_MODULE}"

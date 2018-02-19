@@ -1,11 +1,9 @@
 #!/bin/bash
 
-dashboard_v2_path="/ceph/src/pybind/mgr/${MGR_MODULE}"
-
 while true; do
 	inotifywait \
 		--exclude '(\.tox|.coverage.*|junit.*|test_tool|\.sw?)' \
 		-e modify -e create -e delete -e move \
-		-r "$dashboard_v2_path" 
+		-r "/ceph/src/pybind/mgr/${MGR_MODULE}"
 	$@
 done

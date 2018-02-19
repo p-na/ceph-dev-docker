@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pushd /ceph/src/pybind/mgr/dashboard_v2
+pushd /ceph/src/pybind/mgr/${MGR_MODULE}
 DASHBOARD_V2_PORT=9865 UNITTEST=true py.test -s $@
 popd
