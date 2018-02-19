@@ -4,7 +4,7 @@ dashboard_v2_path="/ceph/src/pybind/mgr/dashboard_v2"
 
 while true; do
 	inotifywait \
-		--exclude '(\.tox|.coverage.*|junit.*|test_tool|\.swp)' \
+		--exclude '(\.tox|.coverage.*|junit.*|test_tool|\.sw?|\.pyc)' \
 		-e modify -e create -e delete -e move \
 		-r "$dashboard_v2_path" 
 	ceph mgr module disable dashboard_v2 && sleep 1 && ceph mgr module enable dashboard_v2
