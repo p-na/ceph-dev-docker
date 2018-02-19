@@ -2,8 +2,6 @@ alias ls='ls --color=auto'
 alias o='grep --color=auto'
 alias cddb='cd /ceph/src/pybind/mgr/dashboard_v2'
 alias watch-mgr-log="watch grep -A15 'Traceback' /ceph/build/out/mgr.x.log"
-alias tb="grep -A15 Traceback /ceph/build/out/mgr.?.log"
-alias reload="ceph mgr module disable dashboard_v2 && sleep 1 && ceph mgr module enable dashboard_v2"
 
 # ------------------------------------
 # Docker alias and function

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Reloads a Ceph MGR module by disabling it, waiting for a second and enabling it again
+
+if [ "$1" == "--help" ]; then
+	echo "Usage: $0 [<module_name>]"
+	exit 0
+fi
+
+set -ex
+
+if [ ! -z "${@}" ]; then
+	MGR_MODULE="${@}"
+fi
+
+if [ -z "${MGR_MODULE}" ]; then
+	MGR_MODULE="dashboard_v2"
+fi
+
+
+ceph mgr module disable "${MGR_MODULE}" && sleep 1 && ceph mgr module enable "${MGR_MODULE}"

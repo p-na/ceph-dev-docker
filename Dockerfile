@@ -1,8 +1,8 @@
 FROM opensuse:tumbleweed
 
-ENV remote_branch wip-mgr-dashboard_v2
-ENV github_repo openattic/ceph
-ENV mgr_module_name dashboard_v2
+ENV REMOTE_BRANCH wip-mgr-dashboard_v2
+ENV GITHUB_REPO openattic/ceph
+ENV MGR_MODULE dashboard_v2
 
 RUN zypper ref
 RUN zypper -n dup
@@ -20,11 +20,11 @@ RUN pip2 install pecan werkzeug && \
 
 # Ceph dependencies and `dashboard_v2` module
 WORKDIR /tmp
-RUN wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/ceph.spec.in && \
-    wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/install-deps.sh && \
+RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.spec.in && \
+    wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
     chmod +x install-deps.sh && \
     bash install-deps.sh && \
-    wget https://raw.githubusercontent.com/${github_repo}/${remote_branch}/src/pybind/mgr/${mgr_module_name}/requirements.txt && \
+    wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
     pip2 install -r requirements.txt && \
     pip3 install -r requirements.txt && \
     chsh -s /usr/bin/zsh root && \

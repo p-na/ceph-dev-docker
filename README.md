@@ -34,17 +34,26 @@ Ceph will automatically be build with Python2 and Python3 support.
 
 Within your docker container, run the following code.
 
-    $ start -n
+    $ start -d -n
 
 When you already started Ceph once, you can omit the `-n` flag.  The `-n` flag
 creates a new cluster and hence you'll have to re-enable the `dashboard_v2`
-module after you've used it.  By default the environment variable `RGW` will be
-passed to `start` with the value `1`, which is not the default of `vstart.sh`,
-so now you know.
+module after you've used it.
+
+The `-d` flag enables debugging output.  This is, all `print` and
+`logger.<method>` statements in the backend will end up being in the
+`out/mgr.?.log` file.  Otherwise, neither of these commands will be logged!
+
+By default the environment variable `RGW` will be passed to `start` with the
+value `1`, which is *not* the default of `vstart.sh`, so now you know.
 
 To, lets say, start a new Ceph cluster with three MGR deamons, do:
 
     $ MGR=3 start -n
+
+It might be wortwhile to check all options offered by `vstart.sh` by looking at its help:
+
+    $ start --help
 
 ### Check the Status of the Ceph Cluster
 

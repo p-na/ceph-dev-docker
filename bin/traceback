@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Example usage:
+#
+# $ traceback
+# $ watch --color traceback
+# $ watch --color "traceback | head"
+# $ watch --color "traceback | tail -n 50"
+
+# https://stackoverflow.com/questions/3717772/regex-grep-for-multi-line-search-needed
+grep -Pzo "(?s)Traceback.*?([Ee]rror|[wW]arning|Iteration|KeyboardInterrupt|Exit|Exception):\N*" \
+	/ceph/build/out/mgr.?.log | sed -e "s/Traceback/\n\nTraceback/g" | pygmentize -l pytb
+

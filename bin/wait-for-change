@@ -1,0 +1,6 @@
+#!/bin/bash
+
+inotifywait \
+	--exclude '(\.tox|.coverage.*|junit.*|test_tool|\.sw?)' \
+	-e modify -e create -e delete -e move \
+	-r "/ceph/src/pybind/mgr/${MGR_MODULE}"
