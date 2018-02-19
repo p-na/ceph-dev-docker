@@ -1,5 +1,6 @@
 #!/bin/bash
 
-cd src/pybind/mgr/dashboard_v2/frontend
+pushd /ceph/src/pybind/mgr/${MGR_MODULE}/frontend
 npm install
 npm run build -- --prod
+popd
