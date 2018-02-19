@@ -5,6 +5,7 @@ set -ex
 cd /ceph
 git clone https://github.com/openattic/ceph . | true
 ./install-deps.sh
+git submodule update --recursive
 
 cmake_called=False
 if [ ! -d /ceph/build ]; then
