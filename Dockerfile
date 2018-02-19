@@ -30,6 +30,7 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
     chsh -s /usr/bin/zsh root && \
     zypper -n in ccache aaa_base
 
+
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
 
@@ -40,4 +41,5 @@ ADD zshrc /root/.zshrc
 
 VOLUME ["/ceph"]
 
+WORKDIR /ceph
 CMD /usr/bin/zsh
