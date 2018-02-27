@@ -6,6 +6,8 @@ ENV MGR_MODULE dashboard_v2
 ENV RGW 1
 ENV DASHBOARD_PORT 9865
 
+ARG user_uid=1000
+
 # Update os
 RUN zypper ref
 RUN zypper -n dup
@@ -28,14 +30,13 @@ WORKDIR /tmp
 RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
     chmod +x install-deps.sh && \
-    bash install-deps.sh
-
-# `dashboard_v2` module
-RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
+    bash install-deps.sh && \
+    wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
     pip2 install -r requirements.txt && \
     pip3 install -r requirements.txt && \
-    chsh -s /usr/bin/zsh root && \
     zypper -n in ccache aaa_base
+
+RUN chsh -s /usr/bin/zsh root
 
 RUN zypper -n rm python2-bcrypt && \
     pip2 install bcrypt
@@ -43,16 +44,18 @@ RUN zypper -n rm python2-bcrypt && \
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
 
-ADD bash.bashrc /etc/bash.bashrc
-ADD aliases /root/.aliases
-ADD bin/* /root/bin/
-ADD zshrc /root/.zshrc
+# ADD bash.bashrc /etc/bash.bashrc
+
+RUN useradd -r -m -u ${user_uid} user
+
+ADD aliases /home/user/.aliases
+ADD bin/* /home/user/bin/
+ADD zshrc /home/user/.zshrc
+RUN chown -R user /home/user/
 
 RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs
-RUN ["/bin/bash", "-c", "ls /tmp/py2-eggs/*"]
-RUN ["/bin/bash", "-c", "easy_install-2.7 /tmp/py2-eggs/*"]
 
+USER user
 VOLUME ["/ceph"]
-
 WORKDIR /ceph/build

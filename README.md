@@ -13,6 +13,16 @@ Bash.
 
     $ docker build -t ceph-dev .
 
+If the user who owns the Ceph git repository doesn't have the UID 1000, you
+should specify the correct UID as build arg:
+
+    $ docker build -t ceph-dev --build-arg user_uid=1001 .
+
+If you have configured your user to be able to run Docker without root, the
+following will automatically take care of assigning the correct UID.
+
+    $ docker build -t ceph-dev --build-arg user_uid=$(id -u) .
+
 ### Create and Run the Container
 
     $ docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host --name ceph-dev ceph-dev
