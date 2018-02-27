@@ -39,6 +39,11 @@ ADD aliases /root/.aliases
 ADD bin/* /root/bin/
 ADD zshrc /root/.zshrc
 
+RUN mkdir /tmp/py2-eggs
+ADD py2-eggs/* /tmp/py2-eggs
+RUN ["/bin/bash", "-c", "ls /tmp/py2-eggs/*"]
+RUN ["/bin/bash", "-c", "easy_install-2.7 /tmp/py2-eggs/*"]
+
 VOLUME ["/ceph"]
 
 WORKDIR /ceph
