@@ -6,8 +6,11 @@ ENV MGR_MODULE dashboard_v2
 ENV RGW 1
 ENV DASHBOARD_PORT 9865
 
+# Update os
 RUN zypper ref
 RUN zypper -n dup
+
+# Install required tools
 RUN zypper -n install \
         iproute2 net-tools-deprecated python2-pip python3-pip \
         python lttng-ust-devel babeltrace-devel \
@@ -20,13 +23,15 @@ RUN zypper -n install \
 RUN pip2 install pecan werkzeug && \
     zypper -n in python2-pyOpenSSL
 
-# Ceph dependencies and `dashboard_v2` module
+# Ceph dependencies
 WORKDIR /tmp
 RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
     chmod +x install-deps.sh && \
-    bash install-deps.sh && \
-    wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
+    bash install-deps.sh
+
+# `dashboard_v2` module
+RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
     pip2 install -r requirements.txt && \
     pip3 install -r requirements.txt && \
     chsh -s /usr/bin/zsh root && \
@@ -50,5 +55,4 @@ RUN ["/bin/bash", "-c", "easy_install-2.7 /tmp/py2-eggs/*"]
 
 VOLUME ["/ceph"]
 
-WORKDIR /ceph
-CMD /usr/bin/zsh
+WORKDIR /ceph/build
