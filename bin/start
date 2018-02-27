@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Ensure that it is completely stopped before starting to prevent issues with RGW!
+~/bin/stop
+
 pushd /ceph/build 1>/dev/null
 RGW=1 ../src/vstart.sh $@
 popd 1>/dev/null

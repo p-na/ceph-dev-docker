@@ -1,5 +1,6 @@
 #!/bin/bash
 
+~/bin/stop  # Stop manually to prevent issues with RGW
 pushd /ceph/src/pybind/mgr/${MGR_MODULE}
 PATH=/ceph/build/bin:$PATH tox $@
 popd
