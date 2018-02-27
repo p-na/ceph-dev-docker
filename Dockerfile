@@ -32,6 +32,8 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
     chsh -s /usr/bin/zsh root && \
     zypper -n in ccache aaa_base
 
+RUN zypper -n rm python2-bcrypt && \
+    pip2 install bcrypt
 
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
