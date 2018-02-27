@@ -3,6 +3,8 @@ FROM opensuse:tumbleweed
 ENV REMOTE_BRANCH wip-mgr-dashboard_v2
 ENV GITHUB_REPO openattic/ceph
 ENV MGR_MODULE dashboard_v2
+ENV RGW 1
+ENV DASHBOARD_PORT 9865
 
 RUN zypper ref
 RUN zypper -n dup
