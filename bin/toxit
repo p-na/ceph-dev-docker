@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Do not "prevent" anything if testing single environments
+if [ -z "$@" ]; then
+    stop  # Prevent issues with RGW
+else
+    reloadm  # Reloads the MGR module for you
+fi
+
 pushd /ceph/src/pybind/mgr/${MGR_MODULE}
 PATH=/ceph/build/bin:$PATH tox $@
 popd
