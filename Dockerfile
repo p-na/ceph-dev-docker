@@ -17,9 +17,12 @@ RUN zypper -n install \
         iproute2 net-tools-deprecated python2-pip python3-pip \
         python lttng-ust-devel babeltrace-devel \
         librados2 python2-pylint python3-pylint \
-        vim zsh inotify-tools wget \
         python python2-pip python3-pip gcc git \
-        python-devel python2-Cython python2-PrettyTable psmisc
+        python-devel python2-Cython python2-PrettyTable psmisc \
+        python2-CherryPy python2-pecan python2-Jinja2
+
+# Install tools
+RUN zypper -n install vim zsh inotify-tools wget ack
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
