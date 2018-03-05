@@ -47,7 +47,8 @@ RUN zypper -n rm python2-bcrypt && \
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
 
-# ADD bash.bashrc /etc/bash.bashrc
+# Temporary (?) dependecy for RGW-proxy
+RUN pip2 install requests-aws
 
 RUN useradd -r -m -u ${user_uid} user
 
