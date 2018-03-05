@@ -20,7 +20,7 @@ if [ "${cmake_called}" == "False" ] ; then
     git submodule update --recursive
     cmake -DWITH_CCACHE=ON -DWITH_TESTS=OFF -DWITH_PYTHON3=ON ..
 fi
-make -j$(nproc)
+ccache make -j$(nproc)
 
 if which pip2; then
     pip2 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
