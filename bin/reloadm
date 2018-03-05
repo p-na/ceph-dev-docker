@@ -13,4 +13,6 @@ if [ ! -z "${@}" ]; then
 	MGR_MODULE="${@}"
 fi
 
-ceph mgr module disable "${MGR_MODULE}" && sleep 1 && ceph mgr module enable "${MGR_MODULE}"
+ceph mgr module disable "${MGR_MODULE}" && \
+    sleep 2 && \
+    ceph mgr module enable "${MGR_MODULE}"
