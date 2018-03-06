@@ -22,7 +22,11 @@ RUN zypper -n install \
         python2-CherryPy python2-pecan python2-Jinja2
 
 # Install tools
-RUN zypper -n install vim zsh inotify-tools wget ack
+RUN useradd -r -m -u ${user_uid} user
+RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
+    echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    groupadd wheel && \
+    gpasswd -a user wheel
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
@@ -50,7 +54,6 @@ RUN zypper -n in npm8 fontconfig
 # Temporary (?) dependecy for RGW-proxy
 RUN pip2 install requests-aws
 
-RUN useradd -r -m -u ${user_uid} user
 
 ADD aliases /home/user/.aliases
 ADD bin/* /home/user/bin/
