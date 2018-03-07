@@ -11,21 +11,21 @@ Bash.
 
 ### Build the Docker Image
 
-    $ docker build -t ceph-dev .
+    docker build -t ceph-dev .
 
 If the user who owns the Ceph git repository doesn't have the UID 1000, you
 should specify the correct UID as build arg:
 
-    $ docker build -t ceph-dev --build-arg user_uid=1001 .
+    docker build -t ceph-dev --build-arg user_uid=1001 .
 
 If you have configured your user to be able to run Docker without root, the
 following will automatically take care of assigning the correct UID.
 
-    $ docker build -t ceph-dev --build-arg user_uid=$(id -u) .
+    docker build -t ceph-dev --build-arg user_uid=$(id -u) .
 
 ### Create and Run the Container
 
-    $ docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host --name ceph-dev ceph-dev
+    docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host --name ceph-dev ceph-dev
 
 In this case `~/src/ceph-local` is just an empty directory if you just started
 to create your development environment.  You may, of course, change the
@@ -36,7 +36,7 @@ location of the directory to your liking.
 On first run, you may want to clone and build Ceph.  To do this, you just need
 to run `setup-ceph`.  The command does also work for rebuilding Ceph.
 
-    $ setup-ceph
+    setup-ceph
 
 Ceph will automatically be build with Python2 and Python3 support.
 
@@ -44,7 +44,7 @@ Ceph will automatically be build with Python2 and Python3 support.
 
 Within your docker container, run the following code.
 
-    $ vstart -d -n
+    vstart -d -n
 
 When you already started Ceph once, you can omit the `-n` flag.  The `-n` flag
 creates a new cluster and hence you'll have to re-enable the `dashboard_v2`
@@ -59,26 +59,26 @@ value `1`, which is *not* the default of `vstart.sh`, so now you know.
 
 To, lets say, start a new Ceph cluster with three MGR deamons, do:
 
-    $ MGR=3 vstart -n
+    MGR=3 vstart -n
 
 It might be wortwhile to check all options offered by `vstart.sh` by looking at
 its help:
 
-    $ vstart --help
+    vstart --help
 
 ### Check the Status of the Ceph Cluster
 
-    $ ceph -s
+    ceph -s
 
 ### Stop the Ceph Development Environment
 
-    $ stop
+    stop
 
 ### Starting and Stopping Containers
 
-    $ docker start ceph-dev
+    docker start ceph-dev
 
-    $ docker stop ceph-dev
+    docker stop ceph-dev
 
 Note that the container is started with all the arguments given on its
 creation! Docker containers are created using the `docker create` *and* `docker
@@ -90,11 +90,11 @@ At a certain point, it might make sense to create an image out of the current
 container to preserve the current state of it.  To do this, you will need to
 commit your container to an image.
 
-    $ docker commit <CONTAINER_ID> <NEW_IMAGE_NAME>
+    docker commit <CONTAINER_ID> <NEW_IMAGE_NAME>
 
 For instance:
 
-    $ docker commit 7dbf64f71d4d ceph-dev-build
+    docker commit 7dbf64f71d4d ceph-dev-build
 
 You can find the container ID by issuing `docker ps` (if it's running) or by
 issuing `docker ps -a`.  Both commands do only work outside of the container.
