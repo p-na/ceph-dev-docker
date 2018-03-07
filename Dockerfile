@@ -38,9 +38,9 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
     chmod +x install-deps.sh && \
     bash install-deps.sh && \
-    wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
-    pip2 install -r requirements.txt && \
-    pip3 install -r requirements.txt && \
+#     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
+#     pip2 install -r requirements.txt && \
+#     pip3 install -r requirements.txt && \
     zypper -n in ccache aaa_base
 
 RUN chsh -s /usr/bin/zsh root

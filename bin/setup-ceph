@@ -22,9 +22,9 @@ if [ "${cmake_called}" == "False" ] ; then
 fi
 ccache make -j$(nproc)
 
-if which pip2; then
-    sudo pip2 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
-fi
-if which pip3; then
-    sudo pip3 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
-fi
+# if which pip2; then
+#     sudo pip2 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
+# fi
+# if which pip3; then
+#     sudo pip3 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
+# fi
