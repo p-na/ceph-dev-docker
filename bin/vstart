@@ -7,6 +7,8 @@ pushd /ceph/build 1>/dev/null
 RGW=1 ../src/vstart.sh $@
 popd 1>/dev/null
 
-# Set default port
-~/bin/ceph config-key set mgr/dashboard_v2/x/server_port ${DASHBOARD_PORT}
-~/bin/reloadm ${MGR_MODULE}
+if [ ! -z "${DASHBOARD_PORT}" ]; then
+    # Set default port
+    ~/bin/ceph config-key set mgr/dashboard_v2/x/server_port ${DASHBOARD_PORT}
+    ~/bin/reloadm ${MGR_MODULE}
+fi
