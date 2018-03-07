@@ -25,7 +25,13 @@ following will automatically take care of assigning the correct UID.
 
 ### Create and Run the Container
 
-    docker run -it -v ~/src/ceph-local:/ceph -h ceph-dev --net host --name ceph-dev ceph-dev
+    docker run -it \
+        -v ~/src/ceph-local:/ceph \
+        -v ~/src/ceph-ccache:/home/user/.ccache \
+        -h ceph-dev \
+        --net=host \
+        --name ceph-dev \
+        ceph-dev
 
 In this case `~/src/ceph-local` is just an empty directory if you just started
 to create your development environment.  You may, of course, change the
