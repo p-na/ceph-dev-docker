@@ -61,7 +61,7 @@ ADD zshrc /home/user/.zshrc
 RUN chown -R user /home/user/
 
 RUN mkdir /tmp/py2-eggs
-ADD py2-eggs/* /tmp/py2-eggs
+ADD py2-eggs/* /tmp/py2-eggs/
 
 USER user
 VOLUME ["/ceph"]
