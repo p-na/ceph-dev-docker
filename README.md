@@ -33,6 +33,10 @@ following will automatically take care of assigning the correct UID.
         --name ceph-dev \
         ceph-dev
 
+The `<local_path_to_ceph>` variable has to be replaced with either an existing path to a repository, or, if you haven't checked out the repo yet, just use an empty directory where you want the repository to be cloned to.
+
+`<local_path_to_ccache` can be an empty (or even non-existing) directory.  If you already have a `ccache` directory with cache files you can specifiy that.  If you specified a non-existing directory, it will be created for you.
+
 For instance:
 
     docker run -it \
