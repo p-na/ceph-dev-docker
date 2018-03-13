@@ -3,7 +3,7 @@
 set -ex
 
 cd /ceph
-git clone https://github.com/openattic/ceph . | true
+git clone https://github.com/ceph/ceph . | true
 ./install-deps.sh
 
 cmake_called=False
