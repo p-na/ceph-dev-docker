@@ -1,7 +1,7 @@
 FROM opensuse:tumbleweed
 
 ENV REMOTE_BRANCH wip-mgr-dashboard_v2
-ENV GITHUB_REPO openattic/ceph
+ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
 #ENV RGW 1
 ENV DASHBOARD_PORT 9865
