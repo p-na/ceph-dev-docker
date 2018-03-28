@@ -1,6 +1,6 @@
 FROM opensuse:tumbleweed
 
-ENV REMOTE_BRANCH wip-mgr-dashboard_v2
+ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
 #ENV RGW 1
