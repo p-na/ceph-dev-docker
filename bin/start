@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd /ceph/build
+../src/vstart.sh -n -d
+./bin/ceph mgr module enable prometheus
+sleep 5
+./bin/ceph mgr services
+echo "Grafana on http://localhost:3000"
+echo "Prometheus on http://localhost:9090"
+sleep infinity
