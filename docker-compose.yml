@@ -34,5 +34,5 @@ services:
     container_name: 'grafana'
     network_mode: 'host'
     volumes:
-      - ~/tmp/grafana:/var/lib/grafana
+      - '~/tmp/grafana:/var/lib/grafana'
 
