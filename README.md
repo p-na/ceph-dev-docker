@@ -1,13 +1,11 @@
 # ceph-dev-docker
 
-The purpose of this docker image is to help developing the `dashboard_v2` Ceph
-MGR module and hence contains some very specific adaptations compared to
-ricardomarques/ceph-dev-docker.
+The purpose of this docker image is to help developing the `dashboard` Ceph MGR
+module in particular and not to provide a general purpose Ceph development
+environment, although it might be used as one.  Hence it may contain some
+specific additions which I personally felt like having.
 
-Please also note that this Docker container uses Zsh by default instead of
-Bash.
-
-## Usage
+## Usage of ceph-ceph-docker only
 
 ### Build the Docker Image
 
@@ -121,3 +119,6 @@ issuing `docker ps -a`.  Both commands do only work outside of the container.
 The latter will will list all containers, including those which have been
 stopped.
 
+## Usage of ceph-dev-docker with Prometheus and Grafana
+
+    docker-compose up
