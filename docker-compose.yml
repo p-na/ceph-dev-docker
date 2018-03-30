@@ -9,7 +9,19 @@ services:
     volumes:
       - ~/src/ceph:/ceph
       - ~/src/ceph-ccache:/home/user/.ccache
-    entrypoint: ["/home/user/bin/start"]
+    entrypoint: ['/home/user/bin/start']
+
+  node-exporter:
+    user: 'root'
+    image: 'quay.io/prometheus/node-exporter'
+    volumes:
+      - '/proc:/host/proc:ro'
+      - '/sys:/host/sys:ro'
+      - '/:/rootfs:ro'
+    network_mode: 'host'
+    command: ['--path.procfs', '/host/proc',
+              '--path.sysfs', '/host/sys',
+              '--collector.filesystem.ignored-mount-points', '^/(sys|proc|dev|host|etc)($$|/)']
   prometheus:
     image: 'quay.io/prometheus/prometheus'
     volumes:
