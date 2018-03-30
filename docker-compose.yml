@@ -11,10 +11,12 @@ services:
       - ~/src/ceph-ccache:/home/user/.ccache
     entrypoint: ["/home/user/bin/start"]
   prometheus:
-    build:
-      context: https://github.com/p-na/prometheus-docker.git
-    container_name: "prometheus"
-    network_mode: "host"
+    image: 'quay.io/prometheus/prometheus'
+    volumes:
+      - './prometheus.yml:/etc/prometheus/prometheus.yml:ro'
+    container_name: 'prometheus'
+    network_mode: 'host'
+
   grafana:
     image: 'grafana/grafana'
     container_name: 'grafana'
