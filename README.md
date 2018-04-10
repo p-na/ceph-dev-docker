@@ -29,6 +29,7 @@ following will automatically take care of assigning the correct UID.
         -h ceph-dev \
         --net=host \
         --name ceph-dev \
+        --hostname=ceph-dev \
         ceph-dev
 
 The `<local_path_to_ceph>` variable has to be replaced with either an existing path to a repository, or, if you haven't checked out the repo yet, just use an empty directory where you want the repository to be cloned to.
