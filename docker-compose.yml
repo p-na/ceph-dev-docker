@@ -35,4 +35,4 @@ services:
     network_mode: 'host'
     volumes:
       - '~/tmp/grafana:/var/lib/grafana'
-
+      - './grafana.ini:/etc/grafana/grafana.ini:ro'
