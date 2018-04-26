@@ -2,6 +2,7 @@
 
 set -ex
 
+find /ceph -iname '*.pyc' -delete
 cd /ceph
 git clone https://github.com/ceph/ceph . | true
 ./install-deps.sh
@@ -21,10 +22,3 @@ if [ "${cmake_called}" == "False" ] ; then
     cmake -DWITH_CCACHE=ON -DWITH_TESTS=OFF -DWITH_PYTHON3=ON ..
 fi
 ccache make -j$(nproc)
-
-# if which pip2; then
-#     sudo pip2 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
-# fi
-# if which pip3; then
-#     sudo pip3 install -r /ceph/src/pybind/mgr/${MGR_MODULE}/requirements.txt
-# fi
