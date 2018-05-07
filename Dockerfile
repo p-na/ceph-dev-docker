@@ -3,7 +3,6 @@ FROM opensuse:tumbleweed
 ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
-ENV DASHBOARD_PORT 9865
 
 ARG user_uid=1000
 
