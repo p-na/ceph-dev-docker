@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -e
+
 pushd /ceph/src/pybind/mgr/${MGR_MODULE}
+source .tox/py27-cov/bin/activate
 UNITTEST=true LD_LIBRARY_PATH=/ceph/build/lib PYTHONPATH=/ceph/build/lib/cython_modules/lib.2 py.test -s $@
+deactivate
 popd
