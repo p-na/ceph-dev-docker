@@ -10,6 +10,7 @@ services:
       - ~/src/ceph:/ceph
       - ~/src/ceph-ccache:/home/user/.ccache
     entrypoint: ['/home/user/bin/start']
+    # tty: true
 
   node-exporter:
     user: 'root'
