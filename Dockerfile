@@ -56,6 +56,7 @@ RUN pip2 install requests-aws
 ADD aliases /home/user/.aliases
 ADD bin/* /home/user/bin/
 ADD zshrc /home/user/.zshrc
+ADD bashrc /home/user/.bashrc
 RUN chown -R user /home/user/
 
 RUN mkdir /tmp/py2-eggs
