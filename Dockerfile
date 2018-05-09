@@ -6,6 +6,14 @@ ENV MGR_MODULE dashboard
 
 ARG user_uid=1000
 
+# Temporary fix for unavailable packages
+RUN zypper rr OSS
+RUN zypper rr NON\ OSS
+RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/non-oss/ NON\ OSS
+RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/oss/ OSS
+RUN zypper ref
+# Temporary fix END
+
 # Update os
 RUN zypper ref
 RUN zypper -n dup
