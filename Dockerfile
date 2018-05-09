@@ -34,6 +34,10 @@ RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     groupadd wheel && \
     gpasswd -a user wheel
 
+# Debugging remotely
+RUN pip2 install rpdb ipython2
+RUN pip3 install rpdb ipython2
+
 # `restful` module
 RUN pip2 install pecan werkzeug && \
     zypper -n in python2-pyOpenSSL
