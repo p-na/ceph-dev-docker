@@ -35,8 +35,8 @@ RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     gpasswd -a user wheel
 
 # Debugging remotely
-RUN pip2 install rpdb ipython2
-RUN pip3 install rpdb ipython2
+RUN pip2 install rpdb
+RUN pip3 install rpdb
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
