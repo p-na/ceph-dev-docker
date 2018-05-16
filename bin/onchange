@@ -6,4 +6,5 @@ while true; do
 		-e modify -e create -e delete -e move \
 		-r "/ceph/src/pybind/mgr/${MGR_MODULE}" "/ceph/qa/tasks/mgr/${MGR_MODULE}"
 	$@
+	sleep 5
 done
