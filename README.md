@@ -5,6 +5,8 @@ module in particular and not to provide a general purpose Ceph development
 environment, although it might be used as one.  Hence it may contain some
 specific additions which I personally felt like having.
 
+The image will be based on Ubuntu 18.04 Bionic Beaver.
+
 ## Usage of ceph-ceph-docker only
 
 ### Build the Docker Image
