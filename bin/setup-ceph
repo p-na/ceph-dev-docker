@@ -16,9 +16,14 @@ fi
 
 cd /ceph/build
 
-if [ "${cmake_called}" == "False" ] ; then
+if [ "${cmake_called}" == "False" ]; then
     # Maybe use --force here as well?
     git submodule update --recursive
     cmake -DWITH_CCACHE=ON -DWITH_TESTS=OFF -DWITH_PYTHON3=ON ..
 fi
-ccache make -j$(nproc)
+
+if [ -z "$1" ]; then
+	ccache make -j$(nproc)
+else
+	ccache make -j$1
+fi
