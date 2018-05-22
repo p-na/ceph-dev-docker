@@ -1,4 +1,4 @@
-FROM opensuse:tumbleweed
+FROM ubuntu:bionic
 
 ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
@@ -6,30 +6,19 @@ ENV MGR_MODULE dashboard
 
 ARG user_uid=1000
 
-# Temporary fix for unavailable packages
-RUN zypper rr OSS
-RUN zypper rr NON\ OSS
-RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/non-oss/ NON\ OSS
-RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/oss/ OSS
-RUN zypper ref
-# Temporary fix END
+# Set package mirror to one near our location
+RUN sed -ri 's|(http://)(archive.ubuntu.com)(.*)$|\1de.archive.ubuntu.com\3|g' /etc/apt/sources.list
 
 # Update os
-RUN zypper ref
-RUN zypper -n dup
+RUN apt update
+RUN apt dist-upgrade -y
 
 # Install required tools
-RUN zypper -n install \
-        iproute2 net-tools-deprecated python2-pip python3-pip \
-        python lttng-ust-devel babeltrace-devel \
-        librados2 python2-pylint python3-pylint \
-        python python2-pip python3-pip gcc git \
-        python-devel python2-Cython python2-PrettyTable psmisc \
-        python2-CherryPy python2-pecan python2-Jinja2
+RUN apt install -y iproute2 python-pip python3-pip python librados2 python gcc git python-dev cython cython3 python-prettytable python3-prettytable psmisc python-cherrypy python-pecan python-jinja2 python-routes python3-routes
 
 # Install tools
 RUN useradd -r -m -u ${user_uid} user
-RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
+RUN apt install -y vim zsh inotify-tools wget ack sudo && \
     echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     groupadd wheel && \
     gpasswd -a user wheel
@@ -40,26 +29,24 @@ RUN pip3 install rpdb
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
-    zypper -n in python2-pyOpenSSL
+	apt install -y python-openssl python3-openssl
 
 # Ceph dependencies
 WORKDIR /tmp
 RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.spec.in && \
     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
-    chmod +x install-deps.sh && \
+	mkdir debian && \
+	wget -P debian https://raw.githubusercontent.com/ceph/ceph/master/debian/control && \
     bash install-deps.sh && \
-#     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
-#     pip2 install -r requirements.txt && \
-#     pip3 install -r requirements.txt && \
-    zypper -n in ccache aaa_base
+    apt install -y ccache
 
 RUN chsh -s /usr/bin/zsh root
 
-RUN zypper -n rm python2-bcrypt && \
-    pip2 install bcrypt
+RUN apt install -y python-bcrypt python3-bcrypt && \
+	apt install -y python-bcrypt python3-bcrypt
 
 # Frontend dependencies
-RUN zypper -n in npm8 fontconfig
+RUN apt install -y npm fontconfig
 
 # Temporary (?) dependecy for RGW-proxy
 RUN pip2 install requests-aws

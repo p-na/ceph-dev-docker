@@ -2,9 +2,10 @@ version: '3'
 
 services:
 
-  ceph-dev:
+  ceph-dev-bionic:
+    image: ceph-dev:bionic
     build: .
-    container_name: 'ceph-dev'
+    container_name: 'ceph-dev-bionic'
     network_mode: 'host'
     volumes:
       - ~/src/ceph:/ceph
@@ -12,7 +13,8 @@ services:
     entrypoint: ['/home/user/bin/start']
     # tty: true
 
-  node-exporter:
+  node-exporter-bionic:
+    #container_name: node-exporter-bionic
     user: 'root'
     image: 'quay.io/prometheus/node-exporter'
     volumes:
@@ -23,14 +25,16 @@ services:
     command: ['--path.procfs', '/host/proc',
               '--path.sysfs', '/host/sys',
               '--collector.filesystem.ignored-mount-points', '^/(sys|proc|dev|host|etc)($$|/)']
-  prometheus:
+  prometheus-bionic:
+    #container_name: prometheus-bionic
     image: 'quay.io/prometheus/prometheus'
     volumes:
       - './prometheus.yml:/etc/prometheus/prometheus.yml:ro'
     container_name: 'prometheus'
     network_mode: 'host'
 
-  grafana:
+  grafana-bionic:
+    #container_name: grafana-bionic
     image: 'grafana/grafana'
     container_name: 'grafana'
     network_mode: 'host'
