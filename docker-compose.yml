@@ -9,7 +9,7 @@ services:
     volumes:
       - ~/src/ceph:/ceph
       - ~/src/ceph-ccache:/home/user/.ccache
-    entrypoint: ['/home/user/bin/start']
+    entrypoint: ['/home/user/bin/start', 'sleep']
     # tty: true
 
   node-exporter:

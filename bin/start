@@ -7,4 +7,6 @@ sleep 5
 ./bin/ceph mgr services
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
-sleep infinity
+if [ "$1" = "sleep" ]; then
+	sleep infinity
+fi
