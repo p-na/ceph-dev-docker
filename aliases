@@ -3,6 +3,3 @@ alias o='grep --color=auto'
 alias cdm="cd /ceph/src/pybind/mgr/${MGR_MODULE}"
 alias cdb='cd /ceph/build'
 alias watch-mgr-log="watch grep -A15 'Traceback' /ceph/build/out/mgr.x.log"
-
-clear-pycs() { find /ceph/src/pybind/mgr/${MGR_MODULE} -iname "*.pyc" -delete }
-clear-logs() { rm -rf /ceph/build/out/* }

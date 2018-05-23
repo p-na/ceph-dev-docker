@@ -68,6 +68,8 @@ ADD aliases /home/user/.aliases
 ADD bin/* /home/user/bin/
 ADD zshrc /home/user/.zshrc
 ADD bashrc /home/user/.bashrc
+ADD exports /home/user/.exports
+ADD funcs /home/user/.funcs
 RUN chown -R user /home/user/
 
 RUN mkdir /tmp/py2-eggs

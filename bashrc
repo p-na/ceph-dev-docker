@@ -1,5 +1,5 @@
 source ~/.aliases
+source ~/.funcs
+source ~/.exports
 
-export PATH=~/bin:${PATH}
-export CEPH_BUILD_DIR=/ceph/build  # Required for `tox` in dashboard dir
 export PS1="(docker) $PS1"

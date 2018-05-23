@@ -5,6 +5,7 @@ services:
   ceph-dev:
     build: .
     container_name: 'ceph-dev'
+    image: 'ceph-dev:tumbleweed'
     network_mode: 'host'
     volumes:
       - ~/src/ceph:/ceph

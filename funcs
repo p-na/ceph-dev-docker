@@ -1,0 +1,2 @@
+clear-pycs() { find /ceph/src/pybind/mgr/${MGR_MODULE} -iname "*.pyc" -delete ; }
+clear-logs() { rm -rf /ceph/build/out/* ; }
