@@ -4,7 +4,9 @@ ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
 
-ARG user_uid=1000
+ARG USER_UID=1000
+ARG CEPH_PORT=8080
+ARG RGW=1
 
 # Faster mirror
 RUN zypper rr OSS
@@ -27,7 +29,7 @@ RUN zypper -n install \
         python2-CherryPy python2-pecan python2-Jinja2
 
 # Install tools
-RUN useradd -r -m -u ${user_uid} user
+RUN useradd -r -m -u ${USER_UID} user
 RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     groupadd wheel && \
@@ -69,6 +71,8 @@ ADD bin/* /home/user/bin/
 ADD zshrc /home/user/.zshrc
 ADD bashrc /home/user/.bashrc
 ADD exports /home/user/.exports
+RUN echo "export CEPH_PORT=$CEPH_PORT" >> /home/user/.exports
+RUN echo "export RGW=$RGW" >> /home/user/.exports
 ADD funcs /home/user/.funcs
 RUN chown -R user /home/user/
 
