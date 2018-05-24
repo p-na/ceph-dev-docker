@@ -1,12 +1,20 @@
 #!/bin/bash
 
 cd /ceph/build
-RGW=1 ../src/vstart.sh -n -d
+../src/vstart.sh -n -d
 ./bin/ceph mgr module enable prometheus
 sleep 5
 ./bin/ceph mgr services
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
+
+if [ ! -z "$RGW" ]; then
+	radosgw-admin user create --uid=dev --display-name=Developer --system
+	ceph dashboard set-rgw-api-user-id dev
+	ceph dashboard set-rgw-api-access-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].access_key | sed -e 's/^"//' -e 's/"$//'`
+	ceph dashboard set-rgw-api-secret-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].secret_key | sed -e 's/^"//' -e 's/"$//'`
+fi
+
 if [ "$1" = "sleep" ]; then
 	sleep infinity
 fi
