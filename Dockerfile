@@ -3,6 +3,9 @@ FROM opensuse:tumbleweed
 ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
+ENV PATH="/home/user/bin/:${PATH}"
+ENV CEPH_DEV=true
+ENV CEPH_BUILD_DIR=/ceph/build
 
 ARG USER_UID=1000
 ARG CEPH_PORT=8080
@@ -70,9 +73,6 @@ ADD aliases /home/user/.aliases
 ADD bin/* /home/user/bin/
 ADD zshrc /home/user/.zshrc
 ADD bashrc /home/user/.bashrc
-ADD exports /home/user/.exports
-RUN echo "export CEPH_PORT=$CEPH_PORT" >> /home/user/.exports
-RUN echo "export RGW=$RGW" >> /home/user/.exports
 ADD funcs /home/user/.funcs
 RUN chown -R user /home/user/
 
