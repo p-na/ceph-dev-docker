@@ -23,7 +23,7 @@ if [ "${cmake_called}" == "False" ]; then
 fi
 
 if [ -z "$1" ]; then
-	ccache make -j$(nproc)
+	ccache make -j$(($(nproc)/2))  # By default use half of the available CPUs
 else
 	ccache make -j$1
 fi
