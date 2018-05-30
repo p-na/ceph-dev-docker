@@ -6,10 +6,10 @@ ENV MGR_MODULE dashboard
 ENV PATH="/home/user/bin/:${PATH}"
 ENV CEPH_DEV=true
 ENV CEPH_BUILD_DIR=/ceph/build
+ENV RGW=1
+ENV CEPH_PORT=8080
 
 ARG USER_UID=1000
-ARG CEPH_PORT=8080
-ARG RGW=1
 
 # Faster mirror
 RUN zypper rr OSS
