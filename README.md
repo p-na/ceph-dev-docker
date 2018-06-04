@@ -123,3 +123,40 @@ stopped.
 ## Usage of ceph-dev-docker with Prometheus and Grafana
 
     docker-compose up
+
+Note that this will *not* start `ceph-dev-docker`.
+
+Stopping these containers is as easy as running them:
+
+    docker-compose down
+
+You may want to check the help of docker-compose for starting up containers. It
+contains descriptions on how to force recreation of containeres of rebuilding
+them:
+
+    docker-compose help up
+
+After starting all containers, the following external services will be available:
+
+| Tool           | URL                   | User                       | Pass  |
+| -------------- | --------------------- | -------------------------- | ----- |
+| Grafana        |                       |                            |       |
+| Prometheus     |                       |                            |       |
+| Node Exporter  |                       |                            |       |
+| Keycloak       | http://localhost:8080 | admin                      | admin |
+| LDAP           | ldap://localhost:2389 | cn=admin,dc=example,dc=org | admin |
+| PHP LDAP Admin | https://localhost:90  | cn=admin,dc=example,dc=org | admin |
+| Shibboleth     | http://localhost:9080/Shibboleth.sso/Status |      |       |
+
+> Please note that Grafana isn't configured automatically for you, so you
+will have to follow these
+[instructions](https://github.com/ceph/ceph/blob/master/doc/mgr/dashboard.rst#enabling-grafana-dashboards)
+to configure Grafana accordingly. The changes although, are persisted.
+
+## Troubleshooting
+
+If you encounter a `permisson denied` when trying to access `/ceph` by, for instance, running `setup-ceph.sh` or simply by trying to list its contents (to verify that it has been mounted correctly), the chances are high that your host system uses SELinux. To circumvent that problem, you can simply disable SELinux by running:
+
+    sudo setenforce permissive
+
+This puts SELinux in permissive mode, where the rules are still evaluated but not enforced, they are only logged. This basically *disables* SELinux, making the host system more vulnerable for security flaws.
