@@ -38,3 +38,36 @@ services:
     volumes:
       - '~/tmp/grafana:/var/lib/grafana'
       - './grafana.ini:/etc/grafana/grafana.ini:ro'
+
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: H2
+    ports:
+      - "8080:8080"
+
+  openldap:
+    image: osixia/openldap:1.2.0
+    ports:
+      - "2389:389"
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.7.1
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: openldap
+    ports:
+      - "90:443"
+    links:
+      - openldap
+
+  shibboleth:
+    build:
+      context: ./shibboleth
+      dockerfile: Dockerfile
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    links:
+      - openldap
