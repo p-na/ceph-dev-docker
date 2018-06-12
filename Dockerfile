@@ -57,9 +57,6 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
 #     pip3 install -r requirements.txt && \
     zypper -n in ccache aaa_base
 
-# Set a nice cache size to increase the cache hit ratio
-RUN ccache -M20G
-
 RUN chsh -s /usr/bin/zsh root
 
 RUN zypper -n rm python2-bcrypt && \
@@ -83,5 +80,9 @@ RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs/
 
 USER user
+
+# Set a nice cache size to increase the cache hit ratio
+RUN echo "max_size = 20G" > /home/user/.ccache/ccache.conf
+
 VOLUME ["/ceph"]
 WORKDIR /ceph/build
