@@ -80,11 +80,9 @@ ADD py2-eggs/* /tmp/py2-eggs/
 
 USER user
 
-# Set a nice cache size to increase the cache hit ratio
+# Set a nice cache size to increase the cache hit ratio alongside optimization configurations
 RUN mkdir /home/user/.ccache
-RUN echo "max_size = 20G" > /home/user/.ccache/ccache.conf
-RUN echo "sloppiness = time_macros" >> /home/user/.ccache/ccache.conf
-RUN echo "run_second_cpp = true" >> /home/user/.ccache/ccache.conf
+ADD ccache.conf /home/user/.ccache/
 
 VOLUME ["/ceph"]
 WORKDIR /ceph/build
