@@ -22,7 +22,7 @@ cd /ceph/build
 
 if [ "${cmake_called}" == "False" ]; then
     # Maybe use --force here as well?
-    git submodule update --recursive
+    git submodule update --recursive --force --init
     cmake $CMAKE_ARGS ..
 fi
 
