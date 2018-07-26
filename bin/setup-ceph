@@ -1,16 +1,20 @@
 #!/bin/bash
 
+# Improve rebuild time
+export SOURCE_DATE_EPOCH=$(date +%D | date -f- +%s)
+
 set -ex
 
 find /ceph -iname '*.pyc' -delete
 cd /ceph
 git clone https://github.com/ceph/ceph . | true
 ./install-deps.sh
+CMAKE_ARGS="-D WITH_PYTHON3=ON -D WITH_TESTS=ON -D WITH_CCACHE=ON -D ENABLE_GIT_VERSION=OFF"
 
 cmake_called=False
 if [ ! -d /ceph/build ]; then
     # do_cmake.sh enables ccache by default if ccache is available
-    ./do_cmake.sh -DWITH_PYTHON3=ON -DWITH_TESTS=OFF
+    ./do_cmake.sh $CMAKE_ARGS
     cmake_called=True
 fi
 
@@ -19,7 +23,7 @@ cd /ceph/build
 if [ "${cmake_called}" == "False" ]; then
     # Maybe use --force here as well?
     git submodule update --recursive
-    cmake -DWITH_CCACHE=ON -DWITH_TESTS=OFF -DWITH_PYTHON3=ON ..
+    cmake $CMAKE_ARGS ..
 fi
 
 if [ -z "$1" ]; then
