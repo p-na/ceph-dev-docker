@@ -2,17 +2,6 @@ version: '3'
 
 services:
 
-  ceph-dev:
-    build: .
-    container_name: 'ceph-dev-tumbleweed'
-    image: 'ceph-dev:tumbleweed'
-    network_mode: 'host'
-    volumes:
-      - ~/src/ceph:/ceph
-      - ~/src/ceph-ccache:/home/user/.ccache
-    entrypoint: ['/home/user/bin/start', 'sleep']
-    # tty: true
-
   node-exporter:
     user: 'root'
     image: 'quay.io/prometheus/node-exporter'
@@ -46,7 +35,7 @@ services:
       KEYCLOAK_PASSWORD: admin
       DB_VENDOR: H2
     ports:
-      - "8080:8080"
+      - "8088:8080"
 
   openldap:
     image: osixia/openldap:1.2.0
@@ -69,7 +58,7 @@ services:
       context: ./shibboleth
       dockerfile: Dockerfile
     ports:
-      - "9080:9080"
+      - "9088:9080"
       - "9443:9443"
     links:
       - openldap
