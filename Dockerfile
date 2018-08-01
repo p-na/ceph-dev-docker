@@ -29,7 +29,7 @@ RUN zypper -n install \
         python python2-pip python3-pip gcc git \
         python-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
-		the_silver_searcher
+		the_silver_searcher curl
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
@@ -38,9 +38,12 @@ RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     groupadd wheel && \
     gpasswd -a user wheel
 
-# Debugging remotely
-RUN pip2 install rpdb
-RUN pip3 install rpdb
+# Debugging
+RUN pip2 install --upgrade pip
+RUN pip2 install rpdb remote_pdb ipdb ipython
+
+RUN pip3 install --upgrade pip
+RUN pip3 install rpdb remote_pdb ipdb ipython
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
@@ -84,6 +87,8 @@ USER user
 # Set a nice cache size to increase the cache hit ratio alongside optimization configurations
 RUN mkdir /home/user/.ccache
 ADD ccache.conf /home/user/.ccache/
+
+ADD pdbrc ~/.pdbrc
 
 VOLUME ["/ceph"]
 WORKDIR /ceph/build
