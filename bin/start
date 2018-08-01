@@ -11,6 +11,8 @@ if [ ! -z "$RGW" ]; then
 	ceph dashboard set-rgw-api-secret-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].secret_key | sed -e 's/^"//' -e 's/"$//'`
 fi
 
+ceph dashboard set-grafana-api-auth-method password
+
 sleep 5
 ./bin/ceph mgr services
 echo "Grafana on http://localhost:3000"
