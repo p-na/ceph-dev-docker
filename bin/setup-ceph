@@ -1,9 +1,11 @@
 #!/bin/bash
 
+set -ex
+
+sudo zypper ref
+
 # Improve rebuild time
 export SOURCE_DATE_EPOCH=$(date +%D | date -f- +%s)
-
-set -ex
 
 find /ceph -iname '*.pyc' -delete
 cd /ceph
