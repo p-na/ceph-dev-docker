@@ -54,13 +54,13 @@ def get_api_url():
                 'Timeout expired while trying to get API URL, re-trying...',
                 file=sys.stderr)
         except KeyboardInterrupt:
-            print('Aborting...', file=sys.stderr)
-            sys.exit(1)
+            sys.exit('Aborting...')
         except KeyError:
             msg = 'No API URL available! Check the output of ' + \
-                '`ceph mgr services`. Aborting...'
+                '`ceph mgr services`. Waiting...'
             print(msg, file=sys.stderr)
-            sys.exit(1)
+        except json.JSONDecodeError:
+            sys.exit(red('Error decoding JSON'), file=sys.stderr)
 
 
 def log_in(session, api_url):
@@ -95,8 +95,7 @@ if __name__ == '__main__':
     except requests.exceptions.ReadTimeout:
         msg = 'Request timed out after {} seconds '.format(TIMEOUT) + \
             '(client-side)'
-        print(msg, file=sys.stderr)
-        sys.exit(1)
+        sys.exit(red(msg))
 
     data_str = 'with' if args['<data>'] else 'without'
     status_code = resp.status_code
