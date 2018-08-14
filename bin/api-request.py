@@ -27,6 +27,7 @@ import subprocess
 import json
 import urllib3
 import sys
+import os
 from pygments.lexers import PythonTracebackLexer
 from pygments import highlight
 from pygments.formatters import TerminalFormatter
@@ -39,6 +40,7 @@ TIMEOUT = 30
 
 
 def get_api_url():
+    key_error_found = False
     while True:
         try:
             result = subprocess.run(
@@ -48,7 +50,11 @@ def get_api_url():
                 check=True,
                 timeout=5,
                 cwd='/ceph/build')
-            return json.loads(result.stdout)['dashboard']
+            result = json.loads(result.stdout)['dashboard']
+            if key_error_found:
+                sys.stdout.write(os.linesep)
+                sys.stdout.flush()
+            return result
         except subprocess.TimeoutExpired:
             print(
                 'Timeout expired while trying to get API URL, re-trying...',
@@ -56,9 +62,14 @@ def get_api_url():
         except KeyboardInterrupt:
             sys.exit('Aborting...')
         except KeyError:
-            msg = 'No API URL available! Check the output of ' + \
-                '`ceph mgr services`. Waiting...'
-            print(msg, file=sys.stderr)
+            if key_error_found:
+                sys.stderr.write('.')
+                sys.stderr.flush()
+            else:
+                key_error_found = True
+                msg = 'No API URL available! Check the output of ' + \
+                    '`ceph mgr services`. Waiting'
+                print(msg, file=sys.stderr, end='')
         except json.JSONDecodeError:
             sys.exit(red('Error decoding JSON'), file=sys.stderr)
 
