@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Repeats a command multiple times to determine how often it fails.
+# Useful for integration tests when timing can be an issue.
+
+success=0
+failures=0
+amount=$1
+shift
+for i in $(seq 1 $amount); do
+	$@
+	result=$?
+	if [ "$result" -eq 0 ]; then
+		success=$((success + 1))
+	fi
+done
+echo "$success/$amount succeeded"
