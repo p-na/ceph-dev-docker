@@ -1,4 +1,5 @@
 FROM opensuse:tumbleweed
+
 ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
 ENV MGR_MODULE dashboard
@@ -7,6 +8,8 @@ ENV CEPH_DEV=true
 ENV CEPH_BUILD_DIR=/ceph/build
 ENV RGW=1
 ENV CEPH_PORT=8080
+ENV NVM_DIR /home/user/.nvm
+ENV NODE_VERSION 8
 
 ARG USER_UID=1000
 
@@ -86,6 +89,14 @@ RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs/
 
 USER user
+
+RUN mkdir $NVM_DIR
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
+	&& source $NVM_DIR/nvm.sh \
+	&& nvm install $NODE_VERSION \
+	&& nvm alias default $NODE_VERSION \
+	&& nvm use default \
+	&& npm install -g "@angular/cli"
 
 # Set a nice cache size to increase the cache hit ratio alongside optimization configurations
 RUN mkdir /home/user/.ccache
