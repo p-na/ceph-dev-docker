@@ -45,6 +45,9 @@ RUN pip2 install rpdb remote_pdb ipdb ipython
 RUN pip3 install --upgrade pip
 RUN pip3 install rpdb remote_pdb ipdb ipython
 
+# api-requests.sh
+RUN pip3 install requests docopt
+
 # `restful` module
 RUN pip2 install pecan werkzeug && \
     zypper -n in python2-pyOpenSSL
