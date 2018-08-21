@@ -74,9 +74,9 @@ RUN zypper -n in npm8 fontconfig
 # Temporary (?) dependecy for RGW-proxy
 RUN pip2 install requests-aws
 
+ADD bin/* /usr/local/bin/
 
 ADD aliases /home/user/.aliases
-ADD bin/* /home/user/bin/
 ADD zshrc /home/user/.zshrc
 ADD bashrc /home/user/.bashrc
 ADD funcs /home/user/.funcs
