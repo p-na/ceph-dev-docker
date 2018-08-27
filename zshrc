@@ -15,9 +15,16 @@ compinit
 source ~/.aliases
 source ~/.funcs
 
-export PS1="(docker) %n@%m %d# "
 
+export ZSH=~/.oh-my-zsh
+ZSH_THEME=""
+plugins=(git mercurial docker)
+source $ZSH/oh-my-zsh.sh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [[ $PS1 != *"docker"* ]]; then
+	export PS1="(docker) $PS1"
+fi
