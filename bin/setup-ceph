@@ -11,7 +11,7 @@ find /ceph -iname '*.pyc' -delete
 cd /ceph
 git clone https://github.com/ceph/ceph . | true
 ./install-deps.sh
-CMAKE_ARGS="-D WITH_PYTHON3=ON -D WITH_TESTS=ON -D WITH_CCACHE=ON -D ENABLE_GIT_VERSION=OFF"
+CMAKE_ARGS="-D WITH_PYTHON3=ON -D WITH_TESTS=ON -D WITH_CCACHE=ON -D ENABLE_GIT_VERSION=OFF WITH_MGR_DASHBOARD_FRONTEND=OFF"
 
 cmake_called=False
 if [ ! -d /ceph/build ]; then
