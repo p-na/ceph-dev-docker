@@ -49,6 +49,7 @@ elif [ "$DEV_ENV_NO" = "two" ]; then
 		-v $HOME_DIR:/home/user \
 		-v ~/src/ceph-two:/ceph \
 		-e CEPH_PORT=9000 \
+		-e CEPH_RGW_PORT=8001 \
 		--network=host \
 		--name=ceph-dev-${DISTRO}-two \
 		--hostname=ceph-dev-${DISTRO}-two \
