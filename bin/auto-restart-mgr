@@ -1,0 +1,13 @@
+#!/bin/bash
+
+while true; do
+	if /usr/local/bin/ceph -s | grep "no active mgr"; then
+		echo 'mgr instance not running, logging and restarting...'
+	 	echo "$(date +'%F %T'): no active mgr found -> restarting" >> /ceph/build/out/auto-restart-mgr.log
+		echo 'removing pid file...'
+		rm /ceph/build/out/mgr.x.pid
+		echo 'restarting...'
+	 	/ceph/build/bin/ceph-mgr -i x -c /ceph/build/ceph.conf &
+	fi
+	sleep 5
+done

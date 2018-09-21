@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	set "DEBUG"
+fi
+ag $1 /ceph/build/out/mgr.?.log
