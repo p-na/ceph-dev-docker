@@ -4,13 +4,6 @@ cd /ceph/build
 ../src/vstart.sh -n -d
 ./bin/ceph mgr module enable prometheus
 
-if [ ! -z "$RGW" ]; then
-	radosgw-admin user create --uid=dev --display-name=Developer --system
-	ceph dashboard set-rgw-api-user-id dev
-	ceph dashboard set-rgw-api-access-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].access_key | sed -e 's/^"//' -e 's/"$//'`
-	ceph dashboard set-rgw-api-secret-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].secret_key | sed -e 's/^"//' -e 's/"$//'`
-fi
-
 ceph dashboard set-grafana-api-auth-method password
 
 sleep 5
