@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-Usage: api-request.py <method> <path> [<data>]
+Usage: api-request.py <method> <path> [<data>] [--raw]
 
 <method>    post, get, put, delete or custom one
 <path>      Path to the request except the '/api' prefix
 <data>      JSON data
+
+Options:
+    --raw   Do not format the body of the response.
 
 Note: api-request.py does only print the JSON body of the response to stdout,
 all other messages are printed to stderr.  This has the nice side effect that
@@ -126,7 +129,7 @@ if __name__ == '__main__':
     print(bold('Response:'), file=sys.stderr)
     body = resp.json()
     if body:
-        if 'traceback' in body:
+        if 'traceback' in body and not args['--raw']:
             traceback = body['traceback']
             del body['traceback']
             print('Details: ' + body['detail'], file=sys.stderr)
