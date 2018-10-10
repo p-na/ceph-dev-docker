@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-	if timeout 10 ceph -s; then
+	if timeout 2 ceph -s; then
 		if /usr/local/bin/ceph -s | grep "no active mgr"; then
 			echo 'mgr instance not running, logging and restarting...'
 			echo "$(date +'%F %T'): no active mgr found -> restarting" >> /ceph/build/out/auto-restart-mgr.log

@@ -4,16 +4,54 @@
 DEV_ENV_NO="one"
 DISTRO="tumbleweed"
 SHELL_TO_USE="zsh"
+COMMAND="${SHELL_TO_USE}"
 
-if [ ! -z "$1" ]; then
-	DEV_ENV_NO="$1"
+
+pushd ~/src/ceph-dev-docker > /dev/null
+
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -d|--distro)
+    DISTRO="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -s|--shell)
+    SHELL_TO_USE="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -n|--dev-env-no)
+    DEV_ENV_NO="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -c|--command)
+    COMMAND="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    --default)
+    DEFAULT=YES
+    shift # past argument
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [ ! -z "${POSITIONAL}" ]; then
+	COMMAND=${POSITIONAL}
 fi
-if [ ! -z "$2" ]; then
-	DISTRO="$2"
-fi
-if [ ! -z "$3" ]; then
-	SHELL_TO_USE="$3"
-fi
+
 HOME_DIR=~/tmp/ceph-$DEV_ENV_NO-home
 if [ ! -d $HOME_DIR ]; then
 	mkdir -p $HOME_DIR
@@ -39,20 +77,24 @@ if [ "$DEV_ENV_NO" = "one" ]; then
 	docker run -it --rm \
 		-v $HOME_DIR:/home/user \
 		-v ~/src/ceph:/ceph \
+		-v ~/src/ceph-ccache:/home/user/.ccache \
 		--network=host \
 		--name=ceph-dev-$DISTRO \
 		--hostname=ceph-dev-$DISTRO \
 		--add-host=ceph-dev-$DISTRO:127.0.0.1 \
-		ceph-dev:$DISTRO $SHELL_TO_USE
+		ceph-dev:$DISTRO $COMMAND
 elif [ "$DEV_ENV_NO" = "two" ]; then
 	docker run -it --rm \
 		-v $HOME_DIR:/home/user \
 		-v ~/src/ceph-two:/ceph \
+		-v ~/src/ceph-ccache-two:/home/user/.ccache \
 		-e CEPH_PORT=9000 \
 		-e CEPH_RGW_PORT=8001 \
 		--network=host \
 		--name=ceph-dev-${DISTRO}-two \
 		--hostname=ceph-dev-${DISTRO}-two \
 		--add-host=ceph-dev-${DISTRO}-two:127.0.0.1 \
-		ceph-dev:${DISTRO} $SHELL_TO_USE
+		ceph-dev:${DISTRO} $COMMAND
 fi
+ 
+popd > /dev/null
