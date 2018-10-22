@@ -1,4 +1,4 @@
-# !/bin/sh
+#!/bin/sh
 
 pushd /ceph/src/pybind/mgr/dashboard/frontend
 npm run start
