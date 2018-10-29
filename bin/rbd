@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pushd /ceph/build 1>/dev/null
+./bin/rbd $@
+popd 1>/dev/null
