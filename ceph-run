@@ -61,7 +61,6 @@ if [ ! -d ~/tmp ]; then
 	mkdir -p ~/tmp
 fi
 
-
 if [ ! -d $HOME_DIR/.ccache ]; then
 	mkdir $HOME_DIR/.ccache
 fi
@@ -95,6 +94,8 @@ elif [ "$DEV_ENV_NO" = "two" ]; then
 		--hostname=ceph-dev-${DISTRO}-two \
 		--add-host=ceph-dev-${DISTRO}-two:127.0.0.1 \
 		ceph-dev:${DISTRO} $COMMAND
+else 
+    echo "Not a valid choice: ${DEV_ENV_NO}"
 fi
  
 popd > /dev/null
