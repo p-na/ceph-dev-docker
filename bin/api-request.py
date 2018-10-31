@@ -113,12 +113,14 @@ if __name__ == '__main__':
 
     data_str = 'with' if args['<data>'] else 'without'
     status_code = resp.status_code
+    failed = False
     if str(status_code).startswith('2'):
         status_code = bold(green(status_code))
     else:
         status_code = bold(red(status_code))
+        failed = True
     print(
-        '{} to {} {} data returned status code {}'.format(
+        '{} to {} {} payload data returned status code {}'.format(
             bold(args['<method>'].upper()), bold(url), bold(data_str),
             status_code),
         file=sys.stderr)
@@ -142,3 +144,6 @@ if __name__ == '__main__':
             print(json.dumps(resp.json()))
     else:
         print('Response didn\'t contain a body', file=sys.stderr)
+
+    if failed:
+        sys.exit()
