@@ -106,3 +106,6 @@ ADD pdbrc ~/.pdbrc
 
 VOLUME ["/ceph"]
 WORKDIR /ceph/build
+
+# temporary to be added at the end of the layers
+RUN sudo pip3 install prettytable

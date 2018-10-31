@@ -87,12 +87,24 @@ elif [ "$DEV_ENV_NO" = "two" ]; then
 		-v $HOME_DIR:/home/user \
 		-v ~/src/ceph-two:/ceph \
 		-v ~/src/ceph-ccache-two:/home/user/.ccache \
-		-e CEPH_PORT=9000 \
+		-e CEPH_PORT=9001 \
 		-e CEPH_RGW_PORT=8001 \
 		--network=host \
 		--name=ceph-dev-${DISTRO}-two \
 		--hostname=ceph-dev-${DISTRO}-two \
 		--add-host=ceph-dev-${DISTRO}-two:127.0.0.1 \
+		ceph-dev:${DISTRO} $COMMAND
+elif [ "$DEV_ENV_NO" = "three" ]; then
+	docker run -it --rm \
+		-v $HOME_DIR:/home/user \
+		-v ~/src/ceph-three:/ceph \
+		-v ~/src/ceph-ccache-three:/home/user/.ccache \
+		-e CEPH_PORT=9002 \
+		-e CEPH_RGW_PORT=8003 \
+		--network=host \
+		--name=ceph-dev-${DISTRO}-three \
+		--hostname=ceph-dev-${DISTRO}-three \
+		--add-host=ceph-dev-${DISTRO}-three:127.0.0.1 \
 		ceph-dev:${DISTRO} $COMMAND
 else 
     echo "Not a valid choice: ${DEV_ENV_NO}"
