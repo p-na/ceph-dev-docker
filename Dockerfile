@@ -61,9 +61,6 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/install-deps.sh && \
     chmod +x install-deps.sh && \
     bash install-deps.sh && \
-#     wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/src/pybind/mgr/${MGR_MODULE}/requirements.txt && \
-#     pip2 install -r requirements.txt && \
-#     pip3 install -r requirements.txt && \
     zypper -n in ccache aaa_base
 
 RUN chsh -s /usr/bin/zsh root
@@ -79,16 +76,18 @@ RUN pip2 install requests-aws
 
 ADD bin/* /usr/local/bin/
 
-ADD aliases /home/user/.aliases
-ADD zshrc /home/user/.zshrc
-ADD bashrc /home/user/.bashrc
-ADD funcs /home/user/.funcs
-RUN chown -R user /home/user/
-
 RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs/
 
 USER user
+
+ADD aliases /home/user/.aliases
+ADD bashrc /home/user/.bashrc
+ADD funcs /home/user/.funcs
+ADD pdbrc ~/.pdbrc
+# Set a nice cache size to increase the cache hit ratio alongside optimization configurations
+RUN mkdir /home/user/.ccache
+ADD ccache.conf /home/user/.ccache/
 
 RUN mkdir $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
@@ -98,13 +97,9 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.s
 	&& nvm use default \
 	&& npm install -g "@angular/cli"
 
-# Set a nice cache size to increase the cache hit ratio alongside optimization configurations
-RUN mkdir /home/user/.ccache
-ADD ccache.conf /home/user/.ccache/
+RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
+ADD zshrc /home/user/.zshrc
 
-ADD pdbrc ~/.pdbrc
-
-VOLUME ["/ceph"]
 WORKDIR /ceph/build
 
 # temporary to be added at the end of the layers

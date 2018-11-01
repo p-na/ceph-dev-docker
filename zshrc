@@ -15,10 +15,9 @@ compinit
 source ~/.aliases
 source ~/.funcs
 
-
 export ZSH=~/.oh-my-zsh
 ZSH_THEME=""
-plugins=(git mercurial docker)
+plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 export CEPH_ROOT=/ceph
