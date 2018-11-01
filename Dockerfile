@@ -49,7 +49,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install rpdb remote_pdb ipdb ipython
 
 # api-requests.sh
-RUN pip3 install requests docopt
+RUN pip3 install requests docopt ansicolors
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
