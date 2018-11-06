@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 # Defaults
-DEV_ENV_NO="1"
+NO="1"
 DISTRO="tumbleweed"
 SHELL_TO_USE="zsh"
 COMMAND="${SHELL_TO_USE}"
@@ -25,7 +25,7 @@ case $key in
     shift # past value
     ;;
     -n|--dev-env-no)
-    DEV_ENV_NO="$2"
+    NO="$2"
     shift # past argument
     shift # past value
     ;;
@@ -51,15 +51,15 @@ if [ ! -z "${POSITIONAL}" ]; then
 fi
 
 docker run -it --rm \
-    -v ~/src/ceph-${DEV_ENV_NO}:/ceph \
-    --mount source=ceph-dev-home-${DEV_ENV_NO},target=/home \
-    --mount source=ceph-dev-ccache-${DEV_ENV_NO},target=/home/.ccache \
-    --env CEPH_PORT=$((8080+$DEV_ENV_NO)) \
-    --env CEPH_RGW_PORT=$((8000+$DEV_ENV_NO)) \
+    -v ~/src/ceph-${NO}:/ceph \
+    --mount source=ceph-dev-home-${NO},target=/home \
+    --mount source=ceph-dev-ccache-${NO},target=/home/.ccache \
+    --env CEPH_PORT=$((8080+$NO)) \
+    --env CEPH_RGW_PORT=$((8000+$NO)) \
     --network=host \
-    --name=ceph-dev-${DISTRO}-${DEV_ENV_NO} \
-    --hostname=ceph-dev-${DISTRO}-${DEV_ENV_NO} \
-    --add-host=ceph-dev-${DISTRO}-${DEV_ENV_NO}:127.0.0.1 \
+    --name=ceph-dev-${DISTRO}-${NO} \
+    --hostname=ceph-dev-${DISTRO}-${NO} \
+    --add-host=ceph-dev-${DISTRO}-${NO}:127.0.0.1 \
     ceph-dev:${DISTRO} $COMMAND                    
  
 popd > /dev/null
