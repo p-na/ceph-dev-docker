@@ -4,8 +4,6 @@ cd /ceph/build
 ../src/vstart.sh -n -d
 ./bin/ceph mgr module enable prometheus
 
-ceph dashboard set-grafana-api-auth-method password
-
 sleep 5
 ./bin/ceph mgr services
 echo "Grafana on http://localhost:3000"
