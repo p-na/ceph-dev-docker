@@ -87,6 +87,7 @@ def log_in(session, api_url):
         },
         verify=False)
     resp.raise_for_status()
+    return resp.json()
 
 
 def bold(text):
@@ -97,7 +98,8 @@ if __name__ == '__main__':
     args = docopt.docopt(__doc__)
     session = requests.Session()
     api_url = get_api_url()
-    log_in(session, api_url)
+    data = log_in(session, api_url)
+    headers = {'Authorization': 'Bearer {}'.format(data['token'])}
     url = api_url + 'api/' + args['<path>']
     try:
         resp = session.request(
@@ -105,7 +107,8 @@ if __name__ == '__main__':
             url,
             data=args['<data>'],
             verify=False,
-            timeout=TIMEOUT)
+            timeout=TIMEOUT,
+            headers=headers)
     except requests.exceptions.ReadTimeout:
         msg = 'Request timed out after {} seconds '.format(TIMEOUT) + \
             '(client-side)'
