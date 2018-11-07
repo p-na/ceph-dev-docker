@@ -11,6 +11,7 @@ echo "Prometheus on http://localhost:9090"
 
 tmux new -d -s frontend 'fe-run'
 tmux new -d -s backend 'auto-reloadm'
+tmux new -d -s log 'tail -f /ceph/build/out/mgr.?.log'
 
 if [ "$1" = "sleep" ]; then
 	sleep infinity
