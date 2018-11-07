@@ -1,16 +1,14 @@
 #!/bin/bash
 
-if [ "$#" > 0 ] ; then
+if (( "$#" > 0 )) ; then
     if [[ "${1}" =~ .*noc.* ]] ; then
         args="--no-cache"
+    else
+        echo "Unrecognized argument: ${1}"
+        exit 1
     fi
-else
-    echo "Unrecognized argument: ${1}"
-    exit 1
 fi
 
 cd ~/src/ceph-dev-docker
 docker build -t ceph-dev:tumbleweed ${args} .
-docker volume rm ceph-dev-home-1 ceph-dev-home-2 ceph-dev-home-3
-# ./update
 cd -
