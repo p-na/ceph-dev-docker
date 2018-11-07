@@ -1,0 +1,1 @@
+- Replace all hard coded strings by a environment variables
