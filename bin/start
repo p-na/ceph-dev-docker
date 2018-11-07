@@ -9,6 +9,9 @@ sleep 5
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
 
+tmux new -d -s frontend 'fe-run'
+tmux new -d -s backend 'auto-reloadm'
+
 if [ "$1" = "sleep" ]; then
 	sleep infinity
 fi

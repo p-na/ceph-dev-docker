@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find bin -type f -exec docker cp {} ceph-dev-tumbleweed:/usr/local/bin/ \;
+find bin -type f -exec docker cp {} ceph-dev-tumbleweed-1:/usr/local/bin/ \;

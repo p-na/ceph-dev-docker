@@ -32,7 +32,7 @@ RUN zypper -n install \
         python python2-pip python3-pip gcc git \
         python-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
-		the_silver_searcher curl
+		the_silver_searcher curl tmux glibc-locale
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
@@ -84,7 +84,8 @@ USER user
 ADD aliases /home/user/.aliases
 ADD bashrc /home/user/.bashrc
 ADD funcs /home/user/.funcs
-ADD pdbrc ~/.pdbrc
+ADD pdbrc /home/user/.pdbrc
+ADD tmux.conf /home/user/.tmux.conf
 # Set a nice cache size to increase the cache hit ratio alongside optimization configurations
 RUN mkdir /home/user/.ccache
 ADD ccache.conf /home/user/.ccache/

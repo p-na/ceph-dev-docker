@@ -17,7 +17,7 @@ source ~/.funcs
 
 export ZSH=~/.oh-my-zsh
 ZSH_THEME=""
-plugins=(git)
+plugins=(git tmux)
 source $ZSH/oh-my-zsh.sh
 
 export CEPH_ROOT=/ceph
