@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd ~/src/ceph-dev-docker
+docker build -t ceph-dev:tumbleweed .
+docker volume rm ceph-dev-home-1 ceph-dev-home-2 ceph-dev-home-3
+# ./update
+cd -
