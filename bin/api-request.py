@@ -80,7 +80,6 @@ def get_api_url():
 def log_in(session, api_url):
     resp = session.post(
         api_url + 'api/auth',
-        headers={'Content-Type': 'application/json'},
         json={
             'username': 'admin',
             'password': 'admin',
@@ -105,7 +104,7 @@ if __name__ == '__main__':
         resp = session.request(
             args['<method>'],
             url,
-            data=args['<data>'],
+            json=args['<data>'],
             verify=False,
             timeout=TIMEOUT,
             headers=headers)
