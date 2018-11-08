@@ -143,7 +143,7 @@ if __name__ == '__main__':
                                           TerminalFormatter()),
                 file=sys.stderr)
         else:
-            print(json.dumps(resp.json()))
+            print(json.dumps(body, indent=2))
     else:
         print('Response didn\'t contain a body', file=sys.stderr)
 
