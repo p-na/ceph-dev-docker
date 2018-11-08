@@ -6,13 +6,13 @@ cd /ceph/build
 
 sleep 5
 ./bin/ceph mgr services
+
+echo "Additional services (if started):"
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
 
-tmux new -d -s frontend 'fe-run'
-tmux new -d -s backend 'auto-reloadm'
-tmux new -d -s log 'tail -f /ceph/build/out/mgr.?.log'
-
-if [ "$1" = "sleep" ]; then
-	sleep infinity
-fi
+tmux new -d -s workspace 'fe-run'
+tmux new-window -t workspace 'auto-reloadm'
+# Replace line below with watch, as the logs seem to be removed on occasions
+tmux new-window -t workspace 'tail -f /ceph/build/out/mgr.?.log | grep -i dashboard|traceback'
+tmux attach -t workspace
