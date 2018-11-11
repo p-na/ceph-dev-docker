@@ -74,8 +74,6 @@ RUN zypper -n in npm8 fontconfig
 # Temporary (?) dependecy for RGW-proxy
 RUN pip2 install requests-aws
 
-ADD bin/* /usr/local/bin/
-
 RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs/
 
@@ -105,3 +103,8 @@ WORKDIR /ceph/build
 
 # temporary to be added at the end of the layers
 RUN sudo pip3 install prettytable
+
+USER root
+ADD bin/* /usr/local/bin/
+
+USER user
