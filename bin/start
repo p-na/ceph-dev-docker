@@ -11,8 +11,14 @@ echo "Additional services (if started):"
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
 
-tmux new -d -s workspace 'fe-run'
-tmux new-window -t workspace 'auto-reloadm'
-# Replace line below with watch, as the logs seem to be removed on occasions
-tmux new-window -t workspace 'tail -f /ceph/build/out/mgr.?.log | grep -i dashboard|traceback'
-tmux attach -t workspace
+# Prepare RBD
+
+ceph osd pool create rbd 1 replicated # Create default pool
+ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
+
+ceph osd pool create rbd_pool 1 replicated # Create pool
+ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for pool
+
+tmux new -d -s ceph -n 'Frontend Rebuild' 'fe-run' # Create new session, detached
+tmux new-window -t ceph -n 'Backend Reload' 'auto-reloadm' # Add new window to session
+tmux attach -t ceph # Attach to session
