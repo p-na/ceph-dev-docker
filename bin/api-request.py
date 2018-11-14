@@ -99,7 +99,7 @@ if __name__ == '__main__':
     api_url = get_api_url()
     data = log_in(session, api_url)
     headers = {'Authorization': 'Bearer {}'.format(data['token'])}
-    url = api_url + 'api/' + args['<path>']
+    url = api_url + 'api/' + args['<path>'].lstrip('api/')
     try:
         resp = session.request(
             args['<method>'],
