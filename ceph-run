@@ -60,6 +60,6 @@ docker run -it --rm \
     --name=ceph-dev-${DISTRO}-${NO} \
     --hostname=ceph-dev-${DISTRO}-${NO} \
     --add-host=ceph-dev-${DISTRO}-${NO}:127.0.0.1 \
-    ceph-dev:${DISTRO} $COMMAND                    
+    pnaw/ceph-dev:${DISTRO} $COMMAND
  
 popd > /dev/null
