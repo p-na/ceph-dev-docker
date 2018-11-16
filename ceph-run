@@ -2,7 +2,7 @@
 
 # Defaults
 NO="1"
-DISTRO="tumbleweed"
+DISTRO="centos7"
 SHELL_TO_USE="zsh"
 COMMAND="${SHELL_TO_USE}"
 

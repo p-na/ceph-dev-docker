@@ -10,5 +10,5 @@ if (( "$#" > 0 )) ; then
 fi
 
 cd ~/src/ceph-dev-docker
-docker build -t ceph-dev:tumbleweed ${args} .
+docker build -t ceph-dev:centos7 ${args} .
 cd -
