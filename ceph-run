@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -x
+
 # Defaults
 NO="1"
 DISTRO="tumbleweed"
@@ -50,13 +52,17 @@ if [ ! -z "${POSITIONAL}" ]; then
 	COMMAND=${POSITIONAL}
 fi
 
+NO_INC=$(( NO  + (100 * $NO)))
+echo $NO_INC
+
 docker run -it --rm \
     -v ~/src/ceph-${NO}:/ceph \
     --mount source=ceph-dev-home-${NO},target=/home \
     --mount source=ceph-dev-ccache-${NO},target=/home/.ccache \
-    --env CEPH_PORT=$((8080+$NO)) \
-    --env CEPH_RGW_PORT=$((8000+$NO)) \
-    --network=host \
+    --env CEPH_PORT=$(( 9000 + $NO_INC )) \
+    --env CEPH_RGW_PORT=$(( 10000 + $NO_INC )) \
+    --network=work \
+    -p $(( 9000 + NO_INC + 1000 )):$(( 9000 + NO_INC + 1000)) \
     --name=ceph-dev-${DISTRO}-${NO} \
     --hostname=ceph-dev-${DISTRO}-${NO} \
     --add-host=ceph-dev-${DISTRO}-${NO}:127.0.0.1 \
