@@ -1,3 +1,6 @@
+alias s='zypper se'
+alias i='sudo zypper in'
+alias ref='sudo zypper ref'
 alias ls='ls --color=auto'
 alias o='grep --color=auto'
 alias cdm="cd /ceph/src/pybind/mgr/${MGR_MODULE}"
