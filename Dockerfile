@@ -32,7 +32,7 @@ RUN zypper -n install \
         python python2-pip python3-pip gcc git \
         python-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
-		the_silver_searcher curl tmux glibc-locale
+		the_silver_searcher curl tmux glibc-locale neovim man
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
