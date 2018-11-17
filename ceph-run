@@ -52,17 +52,15 @@ if [ ! -z "${POSITIONAL}" ]; then
 	COMMAND=${POSITIONAL}
 fi
 
-NO_INC=$(( NO  + (100 * $NO)))
-echo $NO_INC
-
 docker run -it --rm \
     -v ~/src/ceph-${NO}:/ceph \
     --mount source=ceph-dev-home-${NO},target=/home \
     --mount source=ceph-dev-ccache-${NO},target=/home/.ccache \
-    --env CEPH_PORT=$(( 9000 + $NO_INC )) \
-    --env CEPH_RGW_PORT=$(( 10000 + $NO_INC )) \
+    --env CEPH_PORT=4000 \
+    --env CEPH_RGW_PORT=4100 \
     --network=work \
-    -p $(( 9000 + NO_INC + 1000 )):$(( 9000 + NO_INC + 1000)) \
+    -p $(( 4000 + NO )):4000 \
+    -p $(( 4100 + NO )):4100 \
     --name=ceph-dev-${DISTRO}-${NO} \
     --hostname=ceph-dev-${DISTRO}-${NO} \
     --add-host=ceph-dev-${DISTRO}-${NO}:127.0.0.1 \
