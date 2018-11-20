@@ -32,7 +32,8 @@ RUN zypper -n install \
         python python2-pip python3-pip gcc git \
         python-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
-		the_silver_searcher curl tmux glibc-locale neovim man
+		the_silver_searcher curl tmux glibc-locale neovim man \
+        python2-yapf python3-yapf
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
@@ -50,6 +51,8 @@ RUN pip3 install rpdb remote_pdb ipdb ipython
 
 # api-requests.sh
 RUN pip3 install requests docopt ansicolors
+# other
+RUN sudo pip3 install prettytable
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
@@ -101,8 +104,6 @@ ADD zshrc /home/user/.zshrc
 
 WORKDIR /ceph/build
 
-# temporary to be added at the end of the layers
-RUN sudo pip3 install prettytable
 
 USER root
 ADD bin/* /usr/local/bin/
