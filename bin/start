@@ -19,6 +19,6 @@ ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
 ceph osd pool create rbd_pool 1 replicated # Create pool
 ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for pool
 
-tmux new -d -s ceph -n 'Frontend Rebuild' 'fe-run' # Create new session, detached
-tmux new-window -t ceph -n 'Backend Reload' 'auto-reloadm' # Add new window to session
+tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm' # Create new session, detached
+tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run' # Add new window to session
 tmux attach -t ceph # Attach to session
