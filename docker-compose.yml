@@ -27,6 +27,8 @@ services:
     volumes:
       - '~/tmp/grafana:/var/lib/grafana'
       - './grafana.ini:/etc/grafana/grafana.ini:ro'
+    environment:
+      GF_INSTALL_PLUGINS: vonage-status-panel,grafana-piechart-panel
 
   keycloak:
     image: jboss/keycloak
