@@ -33,7 +33,9 @@ RUN zypper -n install \
         python-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
 		the_silver_searcher curl tmux glibc-locale neovim man \
-        python2-yapf python3-yapf
+        python2-yapf python3-yapf python2-PyJWT python3-PyJWT \
+        gcc7 gcc7-c++ libstdc++6-devel-gcc7 python2-Routes python3-Routes \
+        python2-bcrypt python3-bcrypt
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
@@ -42,16 +44,16 @@ RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     groupadd wheel && \
     gpasswd -a user wheel
 
-# Debugging
+# Install debugging tools
 RUN pip2 install --upgrade pip
 RUN pip2 install rpdb remote_pdb ipdb ipython
 
 RUN pip3 install --upgrade pip
 RUN pip3 install rpdb remote_pdb ipdb ipython
 
-# api-requests.sh
+# Install dependencies for `api-requests.sh`
 RUN pip3 install requests docopt ansicolors
-# other
+# other dependencies
 RUN sudo pip3 install prettytable
 
 # `restful` module
@@ -68,17 +70,17 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
 
 RUN chsh -s /usr/bin/zsh root
 
-RUN zypper -n rm python2-bcrypt && \
-    pip2 install bcrypt
-
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
 
 # Temporary (?) dependecy for RGW-proxy
 RUN pip2 install requests-aws
 
+# Adds PyCharm debugging eggs
 RUN mkdir /tmp/py2-eggs
 ADD py2-eggs/* /tmp/py2-eggs/
+
+# User configuration
 
 USER user
 
@@ -104,8 +106,7 @@ ADD zshrc /home/user/.zshrc
 
 WORKDIR /ceph/build
 
-
+# Doing this step last results in efficient usage of Dockers cache and incredibly fast rebuilds if only those scripts have been changed
 USER root
 ADD bin/* /usr/local/bin/
-
 USER user
