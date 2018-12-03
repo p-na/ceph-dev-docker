@@ -11,6 +11,8 @@ zstyle :compinstall filename '/home/user/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+#
+DISABLE_AUTO_UPDATE="true"
 
 source ~/.aliases
 source ~/.funcs
