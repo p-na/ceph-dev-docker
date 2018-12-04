@@ -20,6 +20,10 @@ ARG USER_UID=1000
 # RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/oss/ OSS
 # RUN zypper ref
 
+RUN zypper -n ar -G https://download.opensuse.org/repositories/filesystems:/ceph:/nautilus/openSUSE_Tumbleweed/filesystems:ceph:nautilus.repo
+RUN zypper -n install --oldpackage python3-Cython-0.28.4-1.1.x86_64 \
+                                   python2-Cython-0.28.4-1.1.x86_64
+
 # Update os
 RUN zypper ref
 RUN zypper -n dup
@@ -30,7 +34,7 @@ RUN zypper -n install \
         python lttng-ust-devel babeltrace-devel \
         librados2 python2-pylint python3-pylint \
         python python2-pip python3-pip gcc git \
-        python-devel python2-Cython python2-PrettyTable psmisc \
+        python-devel python3-devel python2-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
 		the_silver_searcher curl tmux glibc-locale neovim man \
         python2-yapf python3-yapf python2-PyJWT python3-PyJWT \
