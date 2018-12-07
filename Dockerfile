@@ -62,7 +62,7 @@ RUN sudo pip3 install prettytable
 
 # `restful` module
 RUN pip2 install pecan werkzeug && \
-    zypper -n in python2-pyOpenSSL
+    zypper -n in python2-pyOpenSSL python3-pyOpenSSL
 
 # Ceph dependencies
 WORKDIR /tmp
