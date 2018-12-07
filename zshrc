@@ -18,7 +18,7 @@ source ~/.aliases
 source ~/.funcs
 
 export ZSH=~/.oh-my-zsh
-ZSH_THEME=""
+ZSH_THEME="gentoo"
 plugins=(git tmux)
 source $ZSH/oh-my-zsh.sh
 
