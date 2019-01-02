@@ -52,7 +52,7 @@ if [ ! -z "${POSITIONAL}" ]; then
 	COMMAND=${POSITIONAL}
 fi
 
-docker run -it --rm \
+sudo docker run -it --rm \
     -v ~/src/ceph-${NO}:/ceph \
     --mount source=ceph-dev-home,target=/home \
     --mount source=ceph-dev-ccache,target=/home/.ccache \
