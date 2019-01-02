@@ -20,10 +20,6 @@ ARG USER_UID=1000
 # RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/oss/ OSS
 # RUN zypper ref
 
-RUN zypper -n ar -G https://download.opensuse.org/repositories/filesystems:/ceph:/nautilus/openSUSE_Tumbleweed/filesystems:ceph:nautilus.repo
-RUN zypper -n install --oldpackage python3-Cython-0.28.4-1.1.x86_64 \
-                                   python2-Cython-0.28.4-1.1.x86_64
-
 # Update os
 RUN zypper ref
 RUN zypper -n dup
