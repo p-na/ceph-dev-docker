@@ -6,6 +6,7 @@ networks:
 volumes:
   ceph-dev-home:
   ceph-dev-ccache:
+  grafana-data:
 
 services:
 
@@ -27,7 +28,7 @@ services:
       - '4201:4200'
     container_name: ceph-1
     hostname: ceph-1
-    entrypoint: 
+    entrypoint:
       - start
     tty: true
 
@@ -49,7 +50,7 @@ services:
       - '4202:4200'
     container_name: ceph-2
     hostname: ceph-2
-    entrypoint: 
+    entrypoint:
       - start
     tty: true
 
@@ -71,7 +72,7 @@ services:
       - '4203:4200'
     container_name: ceph-3
     hostname: ceph-3
-    entrypoint: 
+    entrypoint:
       - start
     tty: true
 
@@ -104,11 +105,11 @@ services:
     container_name: 'grafana'
     hostname: grafana
     volumes:
-      - '~/tmp/grafana:/var/lib/grafana'
-      - './grafana.ini:/etc/grafana/grafana.ini:ro'
+      - grafana-data:/var/lib/grafana
+      - './grafana.ini:/etc/grafana/grafana.ini'
     environment:
       GF_INSTALL_PLUGINS: vonage-status-panel,grafana-piechart-panel
-    networks: 
+    networks:
       - ceph
     ports:
       - '3000:3000'
