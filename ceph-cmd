@@ -1,7 +1,10 @@
 # !/bin/sh
 
+container="ceph-$1"
+shift
+
 if [ "$#" = 0 ]; then
-    docker exec -it ceph-dev-tumbleweed-1 zsh 
+    docker exec -it $container zsh 
 else
-    docker exec -it ceph-dev-tumbleweed-1 $@
+    docker exec -it $container $@
 fi

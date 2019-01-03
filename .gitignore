@@ -3,3 +3,4 @@ py2-eggs/*
 vimrc
 dashboards/
 .idea/
+.env

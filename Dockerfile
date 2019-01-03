@@ -28,9 +28,9 @@ RUN zypper -n dup
 RUN zypper -n install \
         iproute2 net-tools-deprecated python2-pip python3-pip \
         python lttng-ust-devel babeltrace-devel \
-        librados2 python2-pylint python3-pylint \
+        python2-pylint python3-pylint \
         python python2-pip python3-pip gcc git \
-        python-devel python3-devel python2-Cython python2-PrettyTable psmisc \
+        python-devel python3-devel python2-Cython python3-Cython python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
 		the_silver_searcher curl tmux glibc-locale neovim man \
         python2-yapf python3-yapf python2-PyJWT python3-PyJWT \

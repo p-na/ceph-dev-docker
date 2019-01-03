@@ -1,71 +1,8 @@
 #! /usr/bin/env bash
 
 set -x
-
-# Defaults
-NO="1"
-DISTRO="tumbleweed"
-SHELL_TO_USE="zsh"
-COMMAND="${SHELL_TO_USE}"
-
 pushd ~/src/ceph-dev-docker > /dev/null
-
-POSITIONAL=()
-while [[ $# -gt 0 ]]
-do
-key="$1"
-
-case $key in
-    -d|--distro)
-    DISTRO="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -s|--shell)
-    SHELL_TO_USE="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -n|--dev-env-no)
-    NO="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -c|--command)
-    COMMAND="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    --default)
-    DEFAULT=YES
-    shift # past argument
-    ;;
-    *)    # unknown option
-    POSITIONAL+=("$1") # save it in an array for later
-    shift # past argument
-    ;;
-esac
-done
-set -- "${POSITIONAL[@]}" # restore positional parameters
-
-if [ ! -z "${POSITIONAL}" ]; then
-	COMMAND=${POSITIONAL}
-fi
-
-docker run -it --rm \
-    -v ~/src/ceph-${NO}:/ceph \
-    --mount source=ceph-dev-home,target=/home \
-    --mount source=ceph-dev-ccache,target=/home/.ccache \
-    --env CEPH_PORT=4000 \
-    --env CEPH_RGW_PORT=4100 \
-    --network=work \
-    -p $(( 4000 + NO )):5000 \
-    -p $(( 4100 + NO )):4100 \
-    -p $(( 4010 + NO )):7789 \
-    -p $(( 4200 + NO )):4200 \
-    --name=ceph-dev-${DISTRO}-${NO} \
-    --hostname=ceph-dev-${DISTRO}-${NO} \
-    --add-host=ceph-dev-${DISTRO}-${NO}:127.0.0.1 \
-    pnaw/ceph-dev:${DISTRO} $COMMAND
- 
+NO=$1
+shift
+docker-compose up -d ceph-$NO $@
 popd > /dev/null

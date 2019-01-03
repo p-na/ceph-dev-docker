@@ -21,4 +21,5 @@ ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for poo
 
 tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm' # Create new session, detached
 tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run' # Add new window to session
-tmux attach -t ceph # Attach to session
+# tmux attach -t ceph # Attach to session
+sleep infinity
