@@ -7,3 +7,8 @@ alias cdm="cd /ceph/src/pybind/mgr/${MGR_MODULE}"
 alias cdb='cd /ceph/build'
 alias cdf='cd /ceph/src/pybind/mgr/${MGR_MODULE}/frontend'
 alias watch-mgr-log="watch grep -A15 'Traceback' /ceph/build/out/mgr.x.log"
+
+# git
+
+alias gfum='git fetch upstream master'
+alias grbum='git rebase upstream/master'
