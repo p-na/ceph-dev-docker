@@ -103,6 +103,7 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.s
 
 RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
 ADD zshrc /home/user/.zshrc
+ADD vimrc /home/user/.vimrc
 
 WORKDIR /ceph/build
 
