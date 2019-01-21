@@ -5,7 +5,7 @@ set -ex
 sudo zypper ref
 
 # Improve rebuild time
-export SOURCE_DATE_EPOCH=$(date +%D | date -f- +%s)
+export SOURCE_DATE_EPOCH=$(date +%U | date -f- +%s)
 
 find /ceph -iname '*.pyc' -delete
 cd /ceph
