@@ -99,7 +99,9 @@ if __name__ == '__main__':
     api_url = get_api_url()
     data = log_in(session, api_url)
     headers = {'Authorization': 'Bearer {}'.format(data['token'])}
-    url = api_url + 'api/' + args['<path>'].lstrip('api/')
+    path = args['<path>'] if not args['<path>'].startswith('api/') else \
+           args['<path>'][4:]
+    url = api_url + 'api/' + args['<path>']
     try:
         resp = session.request(
             args['<method>'],
@@ -133,16 +135,21 @@ if __name__ == '__main__':
     print(bold('Response:'), file=sys.stderr)
     body = resp.json()
     if body:
-        if 'traceback' in body and not args['--raw']:
-            traceback = body['traceback']
-            del body['traceback']
-            print('Details: ' + body['detail'], file=sys.stderr)
-            print('Status: ' + body['status'], file=sys.stderr)
-            print(
-                'Traceback: ' + highlight(traceback, PythonTracebackLexer(),
-                                          TerminalFormatter()),
-                file=sys.stderr)
+        if isinstance(body, dict):
+            if 'traceback' in body and not args['--raw']:
+                traceback = body['traceback']
+                del body['traceback']
+                print('Details: ' + body['detail'], file=sys.stderr)
+                print('Status: ' + body['status'], file=sys.stderr)
+                print(
+                    'Traceback: ' + highlight(traceback, PythonTracebackLexer(),
+                                              TerminalFormatter()),
+                    file=sys.stderr)
+            else:
+                pprint(body)
+            
         else:
+            print('(not JSON)')
             print(json.dumps(body, indent=2))
     else:
         print('Response didn\'t contain a body', file=sys.stderr)
