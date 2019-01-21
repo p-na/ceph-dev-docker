@@ -30,6 +30,7 @@ services:
     hostname: ceph-1
     entrypoint:
       - start
+      - sleep
     tty: true
 
   ceph-2:
@@ -52,6 +53,7 @@ services:
     hostname: ceph-2
     entrypoint:
       - start
+      - sleep
     tty: true
 
   ceph-3:
@@ -74,6 +76,30 @@ services:
     hostname: ceph-3
     entrypoint:
       - start
+      - sleep
+    tty: true
+
+  ceph-4:
+    image: $CEPH_IMAGE
+    volumes:
+      - ceph-dev-home:/home
+      - ceph-dev-ccache:/home/.ccache
+      - $CEPH_REPO_4:/ceph
+    environment:
+      CEPH_PORT: 4000
+      CEPH_RGW_PORT: 4100
+    networks:
+      - ceph
+    ports:
+      - '4004:5000'
+      - '4104:4100'
+      - '4014:7789'
+      - '4204:4200'
+    container_name: ceph-4
+    hostname: ceph-4
+    entrypoint:
+      - start
+      - sleep
     tty: true
 
   node-exporter:
@@ -99,6 +125,8 @@ services:
     hostname: 'prometheus'
     networks:
       - ceph
+    ports:
+      - '9090:9090'
 
   grafana:
     image: 'grafana/grafana'
