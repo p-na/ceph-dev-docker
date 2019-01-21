@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# args: $0 [sleep] [vstart-args...]
+
+sleep="false"
+if [ "$1" = "sleep" ] ; then
+    sleep="true"
+    shift
+fi
+
 cd /ceph/build
 ../src/vstart.sh -n $@
 ./bin/ceph mgr module enable prometheus
@@ -11,7 +19,7 @@ echo "Additional services (if started):"
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
 
-# Prepare RBD
+# Create RBD pools
 
 ceph osd pool create rbd 1 replicated # Create default pool
 ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
@@ -19,7 +27,18 @@ ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
 ceph osd pool create rbd_pool 1 replicated # Create pool
 ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for pool
 
+# Prepare RGW credentials
+
+if [ "$RGW" != "" ] ; then
+	./bin/radosgw-admin user create --uid=dev --display-name=Developer --system
+	./bin/ceph dashboard set-rgw-api-user-id dev
+	./bin/ceph dashboard set-rgw-api-access-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].access_key | sed -e 's/^"//' -e 's/"$//'`
+	./bin/ceph dashboard set-rgw-api-secret-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].secret_key | sed -e 's/^"//' -e 's/"$//'`
+fi
+
 tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm' # Create new session, detached
 tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run' # Add new window to session
 # tmux attach -t ceph # Attach to session
-sleep infinity
+if [[ "$sleep" = "true" ]]; then
+    sleep infinity
+fi
