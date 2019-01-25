@@ -13,13 +13,6 @@ ENV NODE_VERSION 8
 
 ARG USER_UID=1000
 
-# Faster mirror
-# RUN zypper rr OSS
-# RUN zypper rr NON\ OSS
-# RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/non-oss/ NON\ OSS
-# RUN zypper ar ftp://mirror.23media.de/opensuse/tumbleweed/repo/oss/ OSS
-# RUN zypper ref
-
 # Update os
 RUN zypper ref
 RUN zypper -n dup
