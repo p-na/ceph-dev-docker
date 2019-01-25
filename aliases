@@ -12,3 +12,5 @@ alias watch-mgr-log="watch grep -A15 'Traceback' /ceph/build/out/mgr.x.log"
 
 alias gfum='git fetch upstream master'
 alias grbum='git rebase upstream/master'
+alias gfom='git fetch origin master'
+alias grbum='git rebase origin/master'
