@@ -1,5 +1,7 @@
 #!/bin/sh
 
 pushd /ceph/src/pybind/mgr/dashboard/frontend
+npm install
+npm rebuild node-sass
 npm run start
 popd
