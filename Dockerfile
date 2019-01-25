@@ -28,7 +28,7 @@ RUN zypper -n install \
 		the_silver_searcher curl tmux glibc-locale neovim man \
         python2-yapf python3-yapf python2-PyJWT python3-PyJWT \
         gcc7 gcc7-c++ libstdc++6-devel-gcc7 python2-Routes python3-Routes \
-        python2-bcrypt python3-bcrypt
+        python2-bcrypt python3-bcrypt susepaste
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
