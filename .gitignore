@@ -4,3 +4,4 @@ vimrc
 dashboards/
 .idea/
 .env
+ssh/*

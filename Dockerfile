@@ -105,6 +105,8 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
 ADD zshrc /home/user/.zshrc
 ADD vimrc /home/user/.vimrc
 
+ADD ssh/* /home/user/.ssh/
+
 WORKDIR /ceph/build
 
 # Doing this step last results in efficient usage of Dockers cache and incredibly fast rebuilds if only those scripts have been changed
