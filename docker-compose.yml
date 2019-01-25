@@ -29,8 +29,8 @@ services:
     container_name: ceph-1
     hostname: ceph-1
     entrypoint:
-      - start
       - sleep
+      - infinity
     tty: true
 
   ceph-2:
@@ -52,8 +52,8 @@ services:
     container_name: ceph-2
     hostname: ceph-2
     entrypoint:
-      - start
       - sleep
+      - infinity
     tty: true
 
   ceph-3:
@@ -75,8 +75,8 @@ services:
     container_name: ceph-3
     hostname: ceph-3
     entrypoint:
-      - start
       - sleep
+      - infinity
     tty: true
 
   ceph-4:
@@ -98,13 +98,13 @@ services:
     container_name: ceph-4
     hostname: ceph-4
     entrypoint:
-      - start
       - sleep
+      - infinity
     tty: true
 
   node-exporter:
     user: 'root'
-    image: 'quay.io/prometheus/node-exporter'
+    image: 'prom/node-exporter'
     container_name: 'node-exporter'
     hostname: 'node-exporter'
     volumes:
@@ -118,7 +118,7 @@ services:
       - ceph
 
   prometheus:
-    image: 'quay.io/prometheus/prometheus'
+    image: 'prom/prometheus'
     volumes:
       - './prometheus.yml:/etc/prometheus/prometheus.yml:ro'
     container_name: 'prometheus'
@@ -176,3 +176,5 @@ services:
       - "9443:9443"
     links:
       - openldap
+
+  # TODO add alertmanager
