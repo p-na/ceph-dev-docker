@@ -1,15 +1,19 @@
 #!/bin/bash
 
-# args: $0 [sleep] [vstart-args...]
+# args: $0 [sleep|noop] [vstart-args...]
+set -x
 
 sleep="false"
 if [ "$1" = "sleep" ] ; then
     sleep="true"
     shift
+elif [ "$1" = "noop" ] ; then
+    sleep infinity
+    exit 0
 fi
 
 cd /ceph/build
-../src/vstart.sh -n $@
+../src/vstart.sh -n -d $@
 ./bin/ceph mgr module enable prometheus
 
 sleep 5
@@ -29,7 +33,7 @@ ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for poo
 
 # Prepare RGW credentials
 
-if [ "$RGW" != "" ] ; then
+if [ "$RGW" -gt "0" ] ; then
 	./bin/radosgw-admin user create --uid=dev --display-name=Developer --system
 	./bin/ceph dashboard set-rgw-api-user-id dev
 	./bin/ceph dashboard set-rgw-api-access-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].access_key | sed -e 's/^"//' -e 's/"$//'`
