@@ -70,8 +70,8 @@ RUN zypper -n in npm8 fontconfig
 RUN pip2 install requests-aws
 
 # Adds PyCharm debugging eggs
-RUN mkdir /tmp/py2-eggs
-ADD py2-eggs/* /tmp/py2-eggs/
+RUN mkdir /tmp/debug-eggs
+ADD debug-eggs/ /tmp/debug-eggs
 
 # User configuration
 

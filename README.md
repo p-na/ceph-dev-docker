@@ -13,4 +13,5 @@
                        changes
     - `fe-run`       - Serves and automatically rebuilds the frontend on
                        changes
+- PyCharm remote debugging support
 
