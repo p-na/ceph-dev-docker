@@ -13,6 +13,11 @@ elif [ "$1" = "noop" ] ; then
 fi
 
 cd /ceph/build
+
+# Backup mgr.x.log
+tar vcfJ mgr.log.$(date +%s).xz out/mgr.?.log
+rm -rf out/*
+
 ../src/vstart.sh -n -d $@
 ./bin/ceph mgr module enable prometheus
 
