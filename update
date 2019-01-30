@@ -9,5 +9,4 @@ for host in "${machines[@]}" ; do
     docker cp vimrc $host:/home/user/.vimrc
     docker cp zshrc $host:/home/user/.zshrc
     find bin -type f -exec docker cp {} $host:/usr/local/bin \;
-    exit 0 # One host is enough as they share /home
 done
