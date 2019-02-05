@@ -8,5 +8,6 @@ for host in "${machines[@]}" ; do
     docker cp aliases $host:/home/user/.aliases
     docker cp vimrc $host:/home/user/.vimrc
     docker cp zshrc $host:/home/user/.zshrc
+    docker cp ssh $host:/home/user/
     find bin -type f -exec docker cp {} $host:/usr/local/bin \;
 done
