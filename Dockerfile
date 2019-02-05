@@ -100,7 +100,7 @@ ADD vimrc /home/user/.vimrc
 
 ADD ssh/* /home/user/.ssh/
 
-WORKDIR /ceph/build
+WORKDIR /ceph
 
 # Doing this step last results in efficient usage of Dockers cache and incredibly fast rebuilds if only those scripts have been changed
 USER root
