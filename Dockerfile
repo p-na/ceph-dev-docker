@@ -23,7 +23,8 @@ RUN zypper -n install \
         python lttng-ust-devel babeltrace-devel \
         python2-pylint python3-pylint \
         python python2-pip python3-pip gcc git \
-        python-devel python3-devel python2-Cython python3-Cython python2-PrettyTable psmisc \
+        python-devel python3-devel python2-Cython python3-Cython \
+        python2-PrettyTable psmisc \
         python2-CherryPy python2-pecan python2-Jinja2 \
 		the_silver_searcher curl tmux glibc-locale neovim man \
         python2-yapf python3-yapf python2-PyJWT python3-PyJWT \
@@ -77,6 +78,8 @@ ADD debug-eggs/ /tmp/debug-eggs
 
 USER user
 
+RUN git config --global core.editor nvim
+
 ADD aliases /home/user/.aliases
 ADD bashrc /home/user/.bashrc
 ADD funcs /home/user/.funcs
@@ -97,8 +100,7 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.s
 RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
 ADD zshrc /home/user/.zshrc
 ADD vimrc /home/user/.vimrc
-
-ADD ssh/* /home/user/.ssh/
+ADD init.vim /home/user/.config/nvim/init.vim
 
 WORKDIR /ceph
 

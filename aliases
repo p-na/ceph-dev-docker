@@ -1,3 +1,4 @@
+alias vi='nvim'
 alias s='zypper se'
 alias i='sudo zypper in'
 alias ref='sudo zypper ref'
