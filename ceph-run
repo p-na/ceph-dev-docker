@@ -1,8 +1,0 @@
-#! /usr/bin/env bash
-
-set -x
-pushd ~/src/ceph-dev-docker > /dev/null
-NO=$1
-shift
-docker-compose up -d ceph-$NO $@
-popd > /dev/null
