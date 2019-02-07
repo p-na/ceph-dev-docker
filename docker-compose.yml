@@ -16,6 +16,7 @@ services:
       - ceph-dev-home:/home
       - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_1:/ceph
+      - ./ssh:/home/user/.ssh
     environment:
       CEPH_PORT: 4000
       CEPH_RGW_PORT: 4100
@@ -39,6 +40,7 @@ services:
       - ceph-dev-home:/home
       - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_2:/ceph
+      - ./ssh:/home/user/.ssh
     environment:
       CEPH_PORT: 4000
       CEPH_RGW_PORT: 4100
@@ -62,6 +64,7 @@ services:
       - ceph-dev-home:/home
       - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_3:/ceph
+      - ./ssh:/home/user/.ssh
     environment:
       CEPH_PORT: 4000
       CEPH_RGW_PORT: 4100
@@ -85,6 +88,7 @@ services:
       - ceph-dev-home:/home
       - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_4:/ceph
+      - ./ssh:/home/user/.ssh
     environment:
       CEPH_PORT: 4000
       CEPH_RGW_PORT: 4100
