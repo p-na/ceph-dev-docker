@@ -15,7 +15,7 @@ fi
 cd /ceph/build
 
 # Backup mgr.x.log
-tar vcfJ mgr.log.$(date +%s).xz out/mgr.?.log
+tar vcfJ mgr.log.$(date +%F_%H:%M:%S).xz out/mgr.?.log
 rm -rf out/*
 
 ../src/vstart.sh -n -d $@
