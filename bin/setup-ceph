@@ -2,33 +2,44 @@
 
 set -ex
 
+PYTHON_VERSION="${PYTHON_VERSION:-3}"
+
+local cores
+if [ -z "$1" ]; then
+    cores=$(( $(nproc) / 2 ))  # By default use half of the available CPUs
+else
+    cores=$1
+fi
+
+# Extend cache time
+export SOURCE_DATE_EPOCH=0
+# Clean up
+find /ceph -iname '*.pyc' -delete
+# Update package list
 sudo zypper ref
 
-# Improve rebuild time
-export SOURCE_DATE_EPOCH=$(date +%U | date -f- +%s)
-
-find /ceph -iname '*.pyc' -delete
-cd /ceph
+pushd /ceph
 git clone https://github.com/ceph/ceph . | true
-CMAKE_ARGS="-D WITH_PYTHON3=ON -D WITH_TESTS=ON -D WITH_CCACHE=ON -D ENABLE_GIT_VERSION=OFF WITH_MGR_DASHBOARD_FRONTEND=OFF"
 
-cmake_called=False
+local make_args
+if (( $PYTHON_VERSION == 3 )) ; then
+    make_args="-DWITH_PYTHON3=ON -DWITH_PYTHON2=OFF -DMGR_PYTHON_VERSION=3"
+else
+    make_args="-DWITH_PYTHON3=OFF -DWITH_PYTHON2=ON -DMGR_PYTHON_VERSION=2"
+fi
+make_args="${make_args} -DENABLE_GIT_VERSION=OFF -DWITH_TESTS=ON -DWITH_CCACHE=ON"
+
+echo "WITH_PYTHON${PYTHON_VERSION}"
+
 if [ ! -d /ceph/build ]; then
     # do_cmake.sh enables ccache by default if ccache is available
-    ./do_cmake.sh $CMAKE_ARGS
-    cmake_called=True
+    ./do_cmake.sh $make_args
+else
+    cd /ceph/build
+    git submodule update --recursive --force --init
+    cmake -DBOOST_J=$cores $make_args ..
 fi
 
 cd /ceph/build
 
-if [ "${cmake_called}" == "False" ]; then
-    # Maybe use --force here as well?
-    git submodule update --recursive --force --init
-    cmake $CMAKE_ARGS ..
-fi
-
-if [ -z "$1" ]; then
-	ccache make -j$(($(nproc)/2))  # By default use half of the available CPUs
-else
-	ccache make -j$1
-fi
+ccache make -j$cores
