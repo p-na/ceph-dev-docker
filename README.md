@@ -29,7 +29,7 @@ cd ~/src/ceph-dev-docker
 docker build -t pnaw/ceph-dev-docker .
 ```
 
-Create a `.env` configuration file:
+#### Create a `.env` configuration file:
 
 ```
 CEPH_IMAGE=pnaw/ceph-dev:tumbleweed
@@ -38,6 +38,19 @@ CEPH_REPO_1=/home/user/src/ceph-1
 # CEPH_REPO_3=/home/user/src/ceph-3
 # CEPH_REPO_4=/home/user/src/ceph-4
 ```
+
+#### Create `proxy.conf.json` file
+
+```
+cp ~/src/ceph-1/src/pybind/mgr/dashboard/frontend/proxy.conf.json.sample \
+    ~/src/ceph-1/src/pybind/mgr/dashboard/frontend/proxy.conf.json
+```
+
+Adapt both ports in the file to match port 5000. The `start` and `fe-run`
+commands depend on the proxy.
+
+The configured repository can be copied to `ceph-{2,3,4}` and used without any
+further configuration.
 
 ### Start Container 
 
@@ -60,3 +73,10 @@ docker-compose exec ceph-1 setup-ceph
 ```
 start
 ```
+
+Enjoy the dashboard on static ports:
+
+- ceph-1 -> port 4201
+- ceph-2 -> port 4202
+- ceph-3 -> port 4203
+- ceph-4 -> port 4204
