@@ -68,7 +68,7 @@ docker-compose exec ceph-1 setup-ceph
 # docker-compose exec ceph-1 setup-ceph <amount_of_cores>
 ```
 
-### Start Ceph
+### Start Ceph 
 
 ```
 start
@@ -76,7 +76,9 @@ start
 
 Enjoy the dashboard on static ports:
 
-- ceph-1 -> port 4201
-- ceph-2 -> port 4202
-- ceph-3 -> port 4203
-- ceph-4 -> port 4204
+| Container | Dashboard Port | FE Proxy Port | Dashboard QA Port | RGW Port |
+|-----------|----------------|---------------|-------------------|----------|
+| ceph-1    | 4001           | 4201          | 4011              | 4101     |
+| ceph-2    | 4002           | 4202          | 4012              | 4102     |
+| ceph-3    | 4003           | 4203          | 4013              | 4103     |
+| ceph-4    | 4004           | 4204          | 4014              | 4104     |
