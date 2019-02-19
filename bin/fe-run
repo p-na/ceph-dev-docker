@@ -3,5 +3,7 @@
 pushd /ceph/src/pybind/mgr/dashboard/frontend
 npm install
 npm rebuild node-sass
-npm run start
+npm run env_build
+#npm run start
+npx ng serve --disable-host-check --host 0.0.0.0
 popd
