@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo zypper ref
+/ceph/install-deps.sh

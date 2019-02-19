@@ -11,8 +11,6 @@ cores=${cores:-$(( $(nproc) / 2 ))}
 
 # Clean up
 find /ceph -iname '*.pyc' -delete
-# Update package list
-sudo zypper ref
 
 pushd /ceph
 git clone https://github.com/ceph/ceph . | true
