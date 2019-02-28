@@ -5,7 +5,7 @@ set -ex
 PYTHON_VERSION="${PYTHON_VERSION:-3}"
 SOURCE_DATE_EPOCH=946684800 # Extend cache lifetime
 
-local cores="$1"
+cores="$1"
 cores=${cores:-$(( $(nproc) / 2 ))}
 
 
@@ -15,7 +15,7 @@ find /ceph -iname '*.pyc' -delete
 pushd /ceph
 git clone https://github.com/ceph/ceph . | true
 
-local make_args="-DWITH_PYTHON3=ON -DWITH_PYTHON2=OFF -DMGR_PYTHON_VERSION=3"
+make_args="-DWITH_PYTHON3=ON -DWITH_PYTHON2=OFF -DMGR_PYTHON_VERSION=3"
 if (( $PYTHON_VERSION == 2 )) ; then
     make_args="-DWITH_PYTHON3=OFF -DWITH_PYTHON2=ON -DMGR_PYTHON_VERSION=2"
 fi
