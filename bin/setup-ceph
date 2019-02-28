@@ -3,7 +3,7 @@
 set -ex
 
 PYTHON_VERSION="${PYTHON_VERSION:-3}"
-SOURCE_DATE_EPOCH=0 # Extend cache time
+SOURCE_DATE_EPOCH=946684800 # Extend cache lifetime
 
 local cores="$1"
 cores=${cores:-$(( $(nproc) / 2 ))}
