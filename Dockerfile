@@ -31,6 +31,9 @@ RUN zypper -n install \
     python3-devel python3-pecan python3-pip python3-pyOpenSSL \
     python3-pylint python3-rados python3-requests python3-yapf susepaste \
     the_silver_searcher tmux vim wget zsh
+RUN zypper -n install \
+	python2-virtualenv python3-virtualenv
+
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
