@@ -19,17 +19,18 @@ RUN zypper -n dup
 
 # Install required tools
 RUN zypper -n install \
-        iproute2 net-tools-deprecated python2-pip python3-pip \
-        python lttng-ust-devel babeltrace-devel \
-        python2-pylint python3-pylint \
-        python python2-pip python3-pip gcc git \
-        python-devel python3-devel python2-Cython python3-Cython \
-        python2-PrettyTable psmisc \
-        python2-CherryPy python2-pecan python2-Jinja2 \
-		the_silver_searcher curl tmux glibc-locale neovim man \
-        python2-yapf python3-yapf python2-PyJWT python3-PyJWT \
-        gcc7 gcc7-c++ libstdc++6-devel-gcc7 python2-Routes python3-Routes \
-        python2-bcrypt python3-bcrypt susepaste python3-rados
+    aaa_base babeltrace-devel bash ccache curl gcc gcc7 gcc7-c++ git \
+    glibc-locale google-opensans-fonts iproute2 jq libstdc++6-devel-gcc7 \
+    lttng-ust-devel man neovim net-tools-deprecated psmisc python \
+    python-Cython python-PrettyTable python-devel python2-CherryPy \
+    python2-Cython python2-Jinja2 python2-PrettyTable python2-PyJWT \
+    python2-Routes python2-Werkzeug python2-bcrypt python2-pecan \
+    python2-pip python2-pyOpenSSL python2-pylint python2-yapf \
+    python3-CherryPy python3-Cython python3-Jinja2 python3-PrettyTable \
+    python3-PyJWT python3-Routes python3-Werkzeug python3-bcrypt \
+    python3-devel python3-pecan python3-pip python3-pyOpenSSL \
+    python3-pylint python3-rados python3-requests python3-yapf susepaste \
+    the_silver_searcher tmux vim wget zsh
 
 # Install tools
 RUN useradd -r -m -u ${USER_UID} user
