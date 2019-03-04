@@ -34,9 +34,16 @@ RUN zypper -n install \
 RUN zypper -n install \
 	python2-virtualenv python3-virtualenv
 
+# SSO dependencies
+RUN zypper -n install \ 
+    libxmlsec1-1 libxmlsec1-nss1 libxmlsec1-openssl1 xmlsec1-devel \
+    xmlsec1-openssl-devel
+RUN pip2 install python-saml
+RUN pip3 install python3-saml
+
+RUN useradd -r -m -u ${USER_UID} user
 
 # Install tools
-RUN useradd -r -m -u ${USER_UID} user
 RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
     echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     groupadd wheel && \
