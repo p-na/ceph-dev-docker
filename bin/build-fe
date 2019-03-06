@@ -1,6 +1,0 @@
-#!/bin/bash
-
-pushd /ceph/src/pybind/mgr/${MGR_MODULE}/frontend
-npm install
-npm run build -- --prod
-popd

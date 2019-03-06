@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+pushd /ceph/src/pybind/mgr/dashboard/frontend
+source /ceph/build/src/pybind/mgr/dashboard/node-env/bin/activate
+
+npm install
+npm rebuild node-sass
+npm run build
+
+pushd /ceph/build
+bin/ceph mgr services
+popd
+popd

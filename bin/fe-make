@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -ex
+
+pushd /ceph/build/src/pybind/mgr/dashboard
+rm -rf node-env
+popd
+
+pushd /ceph/src/pybind/mgr/dashboard/frontend
+rm -rf dist node_modules
+popd
+
+pushd /ceph/build
+make mgr-dashboard-frontend-build
+popd
