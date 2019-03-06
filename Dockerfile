@@ -89,6 +89,12 @@ ADD debug-eggs/ /tmp/debug-eggs
 
 USER user
 
+# Install plugin manager for neovim
+RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN sudo mkdir -p ~/.config/nvim/plugged
+RUN sudo chown -R user ~/.config/nvim/plugged
+
 RUN git config --global core.editor nvim
 
 ADD aliases /home/user/.aliases
