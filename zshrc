@@ -19,7 +19,7 @@ source ~/.funcs
 
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="gentoo"
-plugins=(git tmux)
+plugins=(git tmux dotenv)
 source $ZSH/oh-my-zsh.sh
 
 export CEPH_ROOT=/ceph
