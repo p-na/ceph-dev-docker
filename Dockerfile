@@ -30,7 +30,7 @@ RUN zypper -n install \
     python3-PyJWT python3-Routes python3-Werkzeug python3-bcrypt \
     python3-devel python3-pecan python3-pip python3-pyOpenSSL \
     python3-pylint python3-rados python3-requests python3-yapf susepaste \
-    the_silver_searcher tmux vim wget zsh tox
+    the_silver_searcher tmux vim wget zsh tox rlwrap
 RUN zypper -n install \
 	python2-virtualenv python3-virtualenv
 
