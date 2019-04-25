@@ -86,7 +86,7 @@ Enjoy the dashboard on static ports:
 
 ## Tips and Tricks
 
-### Repeatedly run backend tests
+### Run backend tests N times
 
 Sometimes, the backend tests behave rather unpredictable with regards to the reproducibility of a problem.  This snippet explains how to run multiple tests in a row and store the ouput in log files with timestamps.
 
