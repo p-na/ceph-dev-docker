@@ -99,7 +99,6 @@ RUN git config --global core.editor nvim
 
 ADD aliases /home/user/.aliases
 ADD bashrc /home/user/.bashrc
-ADD funcs /home/user/.funcs
 ADD pdbrc /home/user/.pdbrc
 ADD tmux.conf /home/user/.tmux.conf
 # Set a nice cache size to increase the cache hit ratio alongside optimization configurations

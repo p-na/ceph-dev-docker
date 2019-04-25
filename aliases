@@ -15,3 +15,11 @@ alias gfum='git fetch upstream master'
 alias grbum='git rebase upstream/master'
 alias gfom='git fetch origin master'
 alias grbum='git rebase origin/master'
+
+grb() {
+    echo $@
+}
+
+clear-pycs() { find /ceph/src/pybind/mgr/${MGR_MODULE} -iname "*.pyc" -delete ; }
+clear-logs() { rm -rf /ceph/build/out/* ; }
+cmm() { ceph mgr module $@ ; }

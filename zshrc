@@ -15,7 +15,6 @@ compinit
 DISABLE_AUTO_UPDATE="true"
 
 source ~/.aliases
-source ~/.funcs
 
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="gentoo"

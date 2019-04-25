@@ -4,7 +4,6 @@ set -ex
 
 machines=(ceph-1 ceph-2 ceph-3 ceph-4)
 for host in "${machines[@]}" ; do
-    docker cp funcs $host:/home/user/.funcs
     docker cp aliases $host:/home/user/.aliases
     docker cp vimrc $host:/home/user/.vimrc
     docker cp init.vim $host:/home/user/.config/nvim/init.vim
