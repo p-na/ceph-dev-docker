@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # args: $0 [sleep|noop] [vstart-args...]
-set -x
+set -ex
 
 sleep="false"
 if [ "$1" = "sleep" ] ; then
@@ -14,13 +14,17 @@ fi
 
 cd /ceph/build
 
-# Backup mgr.x.log
-tar vcfJ mgr.log.$(date +%F_%H:%M:%S).xz out/mgr.?.log
-rm -rf out/*
+# if [ -d "out/" ]
+# then
+#     # Backup mgr.x.log
+#     tar vcfJ mgr.log.$(date +%F_%H:%M:%S).xz out/mgr.?.log
+#     rm -rf out/*
+# fi
 
 ../src/vstart.sh -n -d $@
 ./bin/ceph mgr module enable prometheus
 
+echo "sleeping 5 seconds"
 sleep 5
 ./bin/ceph mgr services
 
