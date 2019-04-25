@@ -122,5 +122,9 @@ WORKDIR /ceph
 
 # Doing this step last results in efficient usage of Dockers cache and incredibly fast rebuilds if only those scripts have been changed
 USER root
+# Workaround for startup issues
+RUN pip3 install tempora==1.8 backports.functools_lru_cache
+
 ADD bin/* /usr/local/bin/
+
 USER user
