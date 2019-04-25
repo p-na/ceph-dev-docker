@@ -5,7 +5,6 @@ networks:
 
 volumes:
   ceph-dev-home:
-  ceph-dev-ccache:
   grafana-data:
 
 services:
@@ -14,7 +13,6 @@ services:
     image: $CEPH_IMAGE
     volumes:
       - ceph-dev-home:/home
-      - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_1:/ceph
       - ./ssh:/home/user/.ssh
     environment:
@@ -38,7 +36,6 @@ services:
     image: $CEPH_IMAGE
     volumes:
       - ceph-dev-home:/home
-      - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_2:/ceph
       - ./ssh:/home/user/.ssh
     environment:
@@ -62,7 +59,6 @@ services:
     image: $CEPH_IMAGE
     volumes:
       - ceph-dev-home:/home
-      - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_3:/ceph
       - ./ssh:/home/user/.ssh
     environment:
@@ -86,7 +82,6 @@ services:
     image: $CEPH_IMAGE
     volumes:
       - ceph-dev-home:/home
-      - ceph-dev-ccache:/home/.ccache
       - $CEPH_REPO_4:/ceph
       - ./ssh:/home/user/.ssh
     environment:
