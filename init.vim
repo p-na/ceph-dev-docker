@@ -23,4 +23,6 @@ Plug 'alvan/vim-closetag'
 Plug 'endel/vim-github-colorscheme'
 call plug#end()
 
-colo github
+colo default
+set bg=light
+
