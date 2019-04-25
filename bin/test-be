@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd /ceph/src/pybind/mgr/dashboard
+bash run-backend-api-tests.sh $@
