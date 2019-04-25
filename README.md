@@ -82,3 +82,14 @@ Enjoy the dashboard on static ports:
 | ceph-2    | 4002           | 4202          | 4012              | 4102     |
 | ceph-3    | 4003           | 4203          | 4013              | 4103     |
 | ceph-4    | 4004           | 4204          | 4014              | 4104     |
+
+
+## Tips and Tricks
+
+### Repeatedly run backend tests
+
+Sometimes, the backend tests behave rather unpredictable with regards to the reproducibility of a problem.  This snippet explains how to run multiple tests in a row and store the ouput in log files with timestamps.
+
+```
+for i in $(seq 0 10); do docker-compose up --force-recreate -d ceph-1 && docker-compose exec ceph-1 test-be 2>&1 /tmp/backend-test-$(date +%F_%H_%M_%S).log| tee ; done
+```
