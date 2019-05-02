@@ -1,8 +1,8 @@
 #!/bin/bash
 
 while true; do
-	inotifywait \
-		--exclude '(\.tox|.coverage.*|junit.*|test_tool|\.sw?|\.pyc|\.html|\.ts|\.js|\.s?css|tmp___)' \
+	inotifywait --exclude \
+        '(\.tox|.coverage.*|junit.*|test_tool|\.sw?|\.pyc|\.html|\.ts|\.js|\.s?css|tmp___|frontend\/)' \
 		-e modify -e create -e delete -e move \
 		-r "/ceph/src/pybind/mgr/${MGR_MODULE}/"
     sleep 1
