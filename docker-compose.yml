@@ -9,97 +9,72 @@ volumes:
 
 services:
 
-  ceph-1:
+  ceph-1: &default
     image: $CEPH_IMAGE
-    volumes:
-      - ceph-dev-home:/home
-      - $CEPH_REPO_1:/ceph
-      - ./ssh:/home/user/.ssh
     environment:
       CEPH_PORT: 4000
       CEPH_RGW_PORT: 4100
     networks:
       - ceph
-    ports:
-      - '4001:5000'
-      - '4101:4100'
-      - '4011:7789'
-      - '4201:4200'
-    container_name: ceph-1
-    hostname: ceph-1
     entrypoint:
       - sleep
       - infinity
     tty: true
+    volumes: &defaultvols
+      - ceph-dev-home:/home
+      - ./ssh:/home/user/.ssh
+      - $CEPH_REPO_1:/ceph
+    ports:
+      - '8081:8080'  # Dashboard without SSL
+      - '4001:5000'  # Dashboard
+      - '4101:4100'
+      - '4011:7789'
+      - '4201:4200'  # Dashboard Frontend Proxy
+    container_name: ceph-1
+    hostname: ceph-1
 
   ceph-2:
-    image: $CEPH_IMAGE
+    <<: *default
     volumes:
       - ceph-dev-home:/home
-      - $CEPH_REPO_2:/ceph
       - ./ssh:/home/user/.ssh
-    environment:
-      CEPH_PORT: 4000
-      CEPH_RGW_PORT: 4100
-    networks:
-      - ceph
+      - $CEPH_REPO_2:/ceph
     ports:
+      - '8082:8080'
       - '4002:5000'
       - '4102:4100'
       - '4012:7789'
       - '4202:4200'
     container_name: ceph-2
     hostname: ceph-2
-    entrypoint:
-      - sleep
-      - infinity
-    tty: true
 
   ceph-3:
-    image: $CEPH_IMAGE
+    <<: *default
     volumes:
       - ceph-dev-home:/home
-      - $CEPH_REPO_3:/ceph
       - ./ssh:/home/user/.ssh
-    environment:
-      CEPH_PORT: 4000
-      CEPH_RGW_PORT: 4100
-    networks:
-      - ceph
+      - $CEPH_REPO_3:/ceph
     ports:
+      - '8083:8080'
       - '4003:5000'
       - '4103:4100'
       - '4013:7789'
       - '4203:4200'
     container_name: ceph-3
     hostname: ceph-3
-    entrypoint:
-      - sleep
-      - infinity
-    tty: true
 
   ceph-4:
-    image: $CEPH_IMAGE
+    <<: *default
     volumes:
       - ceph-dev-home:/home
-      - $CEPH_REPO_4:/ceph
       - ./ssh:/home/user/.ssh
-    environment:
-      CEPH_PORT: 4000
-      CEPH_RGW_PORT: 4100
-    networks:
-      - ceph
+      - $CEPH_REPO_4:/ceph
     ports:
+      - '8084:8080'
       - '4004:5000'
       - '4104:4100'
       - '4014:7789'
       - '4204:4200'
-    container_name: ceph-4
-    hostname: ceph-4
-    entrypoint:
-      - sleep
-      - infinity
-    tty: true
 
   node-exporter:
     user: 'root'

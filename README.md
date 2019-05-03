@@ -76,12 +76,12 @@ start
 
 Enjoy the dashboard on static ports:
 
-| Container | Dashboard Port | FE Proxy Port | Dashboard QA Port | RGW Port |
-|-----------|----------------|---------------|-------------------|----------|
-| ceph-1    | 4001           | 4201          | 4011              | 4101     |
-| ceph-2    | 4002           | 4202          | 4012              | 4102     |
-| ceph-3    | 4003           | 4203          | 4013              | 4103     |
-| ceph-4    | 4004           | 4204          | 4014              | 4104     |
+| Container | Dashboard w/SSL | Dashboard w/o SSL | FE Proxy w/o SSL | Dashboards' QA | RGW  |
+|-----------|-----------------|-------------------|------------------|----------------|------|
+| ceph-1    | 4001            | 8081              | 4201             | 4011           | 4101 |
+| ceph-2    | 4002            | 8082              | 4202             | 4012           | 4102 |
+| ceph-3    | 4003            | 8083              | 4203             | 4013           | 4103 |
+| ceph-4    | 4004            | 8084              | 4204             | 4014           | 4104 |
 
 
 ## Tips and Tricks
