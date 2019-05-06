@@ -22,7 +22,7 @@ RUN zypper -n install \
     aaa_base babeltrace-devel bash ccache curl gcc gcc7 gcc7-c++ git \
     glibc-locale google-opensans-fonts iproute2 jq libstdc++6-devel-gcc7 \
     lttng-ust-devel man neovim net-tools-deprecated psmisc python \
-    python-Cython python-PrettyTable python-devel python2-CherryPy \
+    python-Cython python-PrettyTable python-devel \
     python2-Cython python2-Jinja2 python2-PrettyTable python2-PyJWT \
     python2-Routes python2-Werkzeug python2-bcrypt python2-pecan \
     python2-pip python2-pyOpenSSL python2-pylint python2-yapf \
