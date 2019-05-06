@@ -75,6 +75,8 @@ services:
       - '4104:4100'
       - '4014:7789'
       - '4204:4200'
+    container_name: ceph-4
+    hostname: ceph-4
 
   node-exporter:
     user: 'root'
