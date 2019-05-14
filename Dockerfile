@@ -127,4 +127,9 @@ RUN pip3 install tempora==1.8 backports.functools_lru_cache
 
 ADD bin/* /usr/local/bin/
 
+# Chrome for running E2E tests
+RUN /usr/local/bin/install-chrome.sh
+ENV CHROME_BIN /usr/bin/google-chrome
+
+
 USER user
