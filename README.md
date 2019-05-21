@@ -91,5 +91,5 @@ Enjoy the dashboard on static ports:
 Sometimes, the backend tests behave rather unpredictable with regards to the reproducibility of a problem.  This snippet explains how to run multiple tests in a row and store the ouput in log files with timestamps.
 
 ```
-for i in $(seq 0 10); do docker-compose up -d ceph-1 && docker-compose exec ceph-1 test-be 2>&1 /tmp/backend-test-$(date +%F_%H_%M_%S).log| tee ; done
+for i in $(seq 0 10); do docker-compose up -d ceph-1 && docker-compose exec ceph-1 test-be 2>&1 | tee /tmp/backend-test-$(date +%F_%H_%M_%S).log; done
 ```
