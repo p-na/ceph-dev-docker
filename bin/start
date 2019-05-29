@@ -37,8 +37,8 @@ echo "Prometheus on http://localhost:9090"
 ceph osd pool create rbd 1 replicated # Create default pool
 ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
 
-ceph osd pool create rbd_pool 1 replicated # Create pool
-ceph osd pool application enable rbd_pool rbd # Set application to `rbd` for pool
+ceph osd pool create nfs 1 replicated # Create pool
+ceph dashboard set-ganesha-clusters-rados-pool-namespace ceph:nfs
 
 # Prepare RGW credentials
 
