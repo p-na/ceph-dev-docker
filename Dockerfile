@@ -19,18 +19,67 @@ RUN zypper -n dup
 
 # Install required tools
 RUN zypper -n install \
-    aaa_base babeltrace-devel bash ccache curl gcc gcc7 gcc7-c++ git \
-    glibc-locale google-opensans-fonts iproute2 jq libstdc++6-devel-gcc7 \
-    lttng-ust-devel man neovim net-tools-deprecated psmisc python \
-    python-Cython python-PrettyTable python-devel \
-    python2-Cython python2-Jinja2 python2-PrettyTable python2-PyJWT \
-    python2-Routes python2-Werkzeug python2-bcrypt python2-pecan \
-    python2-pip python2-pyOpenSSL python2-pylint python2-yapf \
-    python3-CherryPy python3-Cython python3-Jinja2 python3-PrettyTable \
-    python3-PyJWT python3-Routes python3-Werkzeug python3-bcrypt \
-    python3-devel python3-pecan python3-pip python3-pyOpenSSL \
-    python3-pylint python3-rados python3-requests python3-yapf susepaste \
-    the_silver_searcher tmux vim wget zsh tox rlwrap netcat-openbsd
+    aaa_base \
+    babeltrace-devel \
+    bash \
+    ccache \
+    curl \
+    gcc \
+    gcc7 \
+    gcc7-c++ \
+    git \
+    glibc-locale \
+    google-opensans-fonts \
+    iproute2 \
+    jq \
+    libstdc++6-devel-gcc7 \
+    lttng-ust-devel \
+    man \
+    neovim \
+    net-tools-deprecated \
+    netcat-openbsd \
+    psmisc \
+    python \
+    python-Cython \
+    python-PrettyTable \
+    python-devel \
+    python2-Cython \
+    python2-Jinja2 \
+    python2-PrettyTable \
+    python2-PyJWT \
+    python2-Routes \
+    python2-Werkzeug \
+    python2-bcrypt \
+    python2-pecan \
+    python2-pip \
+    python2-pyOpenSSL \
+    python2-pylint \
+    python2-yapf \
+    python3-CherryPy \
+    python3-Cython \
+    python3-Jinja2 \
+    python3-PrettyTable \
+    python3-PyJWT \
+    python3-Routes \
+    python3-Werkzeug \
+    python3-bcrypt \
+    python3-devel \
+    python3-pecan \
+    python3-pip \
+    python3-pyOpenSSL \
+    python3-pylint \
+    python3-rados \
+    python3-requests \
+    python3-yapf \
+    rlwrap \
+    susepaste \
+    the_silver_searcher \
+    tmux \
+    tox \
+    vim \
+    wget \
+    zsh
+
 RUN zypper -n install \
 	python2-virtualenv python3-virtualenv python3-mypy_extensions
 
@@ -55,6 +104,9 @@ RUN pip2 install rpdb remote_pdb ipdb ipython
 
 RUN pip3 install --upgrade pip
 RUN pip3 install rpdb remote_pdb ipdb ipython
+
+RUN python  -m pip install --upgrade ptvsd
+RUN python3 -m pip install --upgrade ptvsd
 
 # Install dependencies for `api-requests.sh`
 RUN pip3 install requests docopt ansicolors
