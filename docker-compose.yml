@@ -32,6 +32,12 @@ services:
       - '4201:4200'  # Dashboard Frontend Proxy
     container_name: ceph-1
     hostname: ceph-1
+    devices:
+      - "/dev/fuse:/dev/fuse"
+    cap_add:
+      - SYS_ADMIN
+      - MKNOD # really required?
+    privileged: true
 
   ceph-2:
     <<: *default

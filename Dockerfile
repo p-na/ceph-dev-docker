@@ -127,6 +127,9 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
 
 RUN chsh -s /usr/bin/zsh root
 
+# CephFS
+RUN zypper in -y ceph-fuse
+
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
 
@@ -161,8 +164,8 @@ RUN mkdir $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
 	&& source $NVM_DIR/nvm.sh \
 	&& nvm install $NODE_VERSION \
-	&& nvm alias default $NODE_VERSION \
-	&& nvm use default \
+    && nvm alias default $NODE_VERSION \
+	&& nvm use $NODE_VERSION \
 	&& npm install -g "@angular/cli"
 
 RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh

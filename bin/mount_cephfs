@@ -1,0 +1,8 @@
+#!/bin/bash
+ 
+if [ ! -d /mnt/cephfs ] ; then
+    mkdir /mnt/cephfs
+fi
+pushd /ceph/build
+sudo ./bin/ceph-fuse /mnt/cephfs -f -d
+popd
