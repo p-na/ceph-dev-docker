@@ -1,15 +1,22 @@
 #!/bin/bash
+CEPH_IMAGE=${CEPH_IMAGE:-pnaw/ceph-dev}
+OS_CODENAME=${OS_CODENAME:-tumbleweed}
 
-if (( "$#" > 0 )) ; then
-    if [[ "${1}" =~ .*noc.* ]] ; then
-        args="--no-cache"
-    else
-        echo "Unrecognized argument: ${1}"
-        exit 1
-    fi
+function tag_image {
+    date=$(date +%F)
+    docker image tag $CEPH_IMAGE ${CEPH_IMAGE%:$OS_CODENAME}:${date//-/}
+}
+function build {
+    tag_image
+    docker build -t $CEPH_IMAGE:$OS_CODENAME .
+}
+function buildnc {
+    tag_image
+    docker build -t $CEPH_IMAGE:$OS_CODENAME --no-cache .
+}
+
+if [ "$1" = "nc" ] ; then
+    buildnc
+else
+    build
 fi
-
-cd ~/src/ceph-dev-docker
-docker build -t pnaw/ceph-dev:tumbleweed ${args} .
-docker tag pnaw/ceph-dev:tumbleweed pnaw/ceph-dev:latest
-cd -
