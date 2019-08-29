@@ -8,7 +8,6 @@ SOURCE_DATE_EPOCH=946684800 # Extend cache lifetime
 cores="$1"
 cores=${cores:-$(( $(nproc) / 2 ))}
 
-
 # Clean up
 find /ceph -iname '*.pyc' -delete
 
@@ -27,8 +26,8 @@ if [ ! -d /ceph/build ]; then
     # do_cmake.sh enables ccache by default if ccache is available
     ./do_cmake.sh $make_args
 else
-    cd /ceph/build
     git submodule update --recursive --force --init
+    cd /ceph/build
     cmake -DBOOST_J=$cores $make_args ..
 fi
 
