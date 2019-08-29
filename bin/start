@@ -49,8 +49,8 @@ if [ "$RGW" -gt "0" ] ; then
 	./bin/ceph dashboard set-rgw-api-secret-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].secret_key | sed -e 's/^"//' -e 's/"$//'`
 fi
 
-tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm' # Create new session, detached
-tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run' # Add new window to session
+tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm; zsh -i' # Create new session, detached
+tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run; zsh -i' # Add new window to session
 # tmux attach -t ceph # Attach to session
 if [[ "$sleep" = "true" ]]; then
     sleep infinity
