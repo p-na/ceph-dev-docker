@@ -1,0 +1,20 @@
+route:
+  receiver: 'ceph-dashboard'
+  group_wait: 1m
+
+  # When the first notification was sent, wait 'group_interval' to send a batch
+  # of new alerts that started firing for that group.
+  group_interval: 1m
+
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them.
+  repeat_interval: 1m
+
+receivers:
+  - name: 'ceph-dashboard'
+    webhook_configs:
+    - url: 'http://ceph-1:4200/api/prometheus_receiver'
+    - url: 'http://ceph-2:4200/api/prometheus_receiver'
+    - url: 'http://ceph-3:4200/api/prometheus_receiver'
+    - url: 'http://ceph-4:4200/api/prometheus_receiver'
+    - url: 'http://localhost:9099/' # sntp trap exporter

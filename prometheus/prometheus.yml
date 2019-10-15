@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: ceph
+    static_configs:
+      - targets: ["ceph-1:9283", "ceph-2:9283", "ceph-3:9283", "ceph-4:9283"]
+  - job_name: node-exporter
+    static_configs:
+      - targets: ["node-exporter:9100"]
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+            - alertmanager:9093
+
+rule_files:
+  - alert.rules

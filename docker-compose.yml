@@ -102,7 +102,8 @@ services:
   prometheus:
     image: 'prom/prometheus'
     volumes:
-      - './prometheus.yml:/etc/prometheus/prometheus.yml:ro'
+      - './prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro'
+      - './prometheus/alert.rules:/etc/prometheus/alert.rules:ro'
     container_name: 'prometheus'
     hostname: 'prometheus'
     networks:
@@ -123,6 +124,19 @@ services:
       - ceph
     ports:
       - '3000:3000'
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - './alertmanager/:/etc/alertmanager/'
+    container_name: alertmanager
+    networks:
+      - ceph
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - '9093:9093'
 
   keycloak:
     image: jboss/keycloak
@@ -159,4 +173,3 @@ services:
     links:
       - openldap
 
-  # TODO add alertmanager

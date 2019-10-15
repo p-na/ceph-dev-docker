@@ -32,17 +32,28 @@ echo "Additional services (if started):"
 echo "Grafana on http://localhost:3000"
 echo "Prometheus on http://localhost:9090"
 
-# Create RBD pools
+if [ ! -z "$RBD"  || ! -z "$RBD_POOL" ] ; then
+    # Create RBD pools
+    ceph osd pool create rbd 8 replicated # Create default pool
+    ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
+fi
 
-ceph osd pool create rbd 1 replicated # Create default pool
-ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
+if [ -z "$NONFS" ] ; then 
+    ceph osd pool create nfs 8 replicated # Create pool
+    ceph dashboard set-ganesha-clusters-rados-pool-namespace ceph:nfs
+fi
 
-ceph osd pool create nfs 1 replicated # Create pool
-ceph dashboard set-ganesha-clusters-rados-pool-namespace ceph:nfs
+if ping -c 1 alertmanager; then
+    ceph dashboard set-alertmanager-api-host http://alertmanager:9093
+fi
+
+if ping -c 1 prometheus; then
+    ceph dashboard set-prometheus-api-host http://prometheus:9090
+fi
 
 # Prepare RGW credentials
 
-if [ "$RGW" -gt "0" ] ; then
+if [[ "$RGW" -gt "0" || ! -z "$RGW" ]] ; then
 	./bin/radosgw-admin user create --uid=dev --display-name=Developer --system
 	./bin/ceph dashboard set-rgw-api-user-id dev
 	./bin/ceph dashboard set-rgw-api-access-key `./bin/radosgw-admin user info --uid=dev | jq .keys[0].access_key | sed -e 's/^"//' -e 's/"$//'`
