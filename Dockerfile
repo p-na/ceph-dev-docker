@@ -71,11 +71,11 @@ RUN zypper -n install \
     python3-rados \
     python3-requests \
     python3-yapf \
+    ripgrep \
     rlwrap \
     rpm-build \
     smartmontools \
     susepaste \
-    the_silver_searcher \
     tmux \
     tox \
     vim \
