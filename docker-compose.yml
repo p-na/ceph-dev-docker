@@ -23,6 +23,7 @@ services:
     volumes: &defaultvols
       - ceph-dev-home:/home
       - ./ssh:/home/user/.ssh
+      - /run/udev:/run/udev:ro
       - $CEPH_REPO_1:/ceph
     ports:
       - '8081:8080'  # Dashboard without SSL

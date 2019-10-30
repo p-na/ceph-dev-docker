@@ -73,6 +73,7 @@ RUN zypper -n install \
     python3-yapf \
     rlwrap \
     rpm-build \
+    smartmontools \
     susepaste \
     the_silver_searcher \
     tmux \
