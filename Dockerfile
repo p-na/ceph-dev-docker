@@ -1,4 +1,4 @@
-FROM opensuse:tumbleweed
+FROM opensuse/tumbleweed
 
 ENV REMOTE_BRANCH master
 ENV GITHUB_REPO ceph/ceph
@@ -72,6 +72,7 @@ RUN zypper -n install \
     python3-requests \
     python3-yapf \
     rlwrap \
+    rpm-build \
     susepaste \
     the_silver_searcher \
     tmux \
