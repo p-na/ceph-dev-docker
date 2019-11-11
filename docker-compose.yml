@@ -85,6 +85,22 @@ services:
     container_name: ceph-4
     hostname: ceph-4
 
+  ceph-usb:
+    <<: *default
+    volumes:
+      - /run/udev:/run/udev:ro
+      - ceph-dev-home:/home
+      - ./ssh:/home/user/.ssh
+      - $CEPH_REPO_USB:/ceph
+    ports:
+      - '8085:8080'
+      - '4005:5000'
+      - '4105:4100'
+      - '4015:7789'
+      - '4205:4200'
+    container_name: ceph-usb
+    hostname: ceph-usb
+
   node-exporter:
     user: 'root'
     image: 'prom/node-exporter'
