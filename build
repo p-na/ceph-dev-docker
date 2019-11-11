@@ -1,18 +1,20 @@
 #!/bin/bash
-CEPH_IMAGE=${CEPH_IMAGE:-pnaw/ceph-dev}
-OS_CODENAME=${OS_CODENAME:-tumbleweed}
+CEPH_IMAGE=${CEPH_IMAGE:-pnaw/ceph-dev:tumbleweed}
 
 function tag_image {
     date=$(date +%F)
-    docker image tag $CEPH_IMAGE ${CEPH_IMAGE%:$OS_CODENAME}:${date//-/}
+    echo "docker image tag $CEPH_IMAGE ${CEPH_IMAGE}:${date//-/}"
+    docker image tag $CEPH_IMAGE ${CEPH_IMAGE}:${date//-/}
 }
 function build {
     tag_image
-    docker build -t $CEPH_IMAGE:$OS_CODENAME .
+    echo "docker build -t $CEPH_IMAGE ."
+    docker build -t $CEPH_IMAGE .
 }
 function buildnc {
     tag_image
-    docker build -t $CEPH_IMAGE:$OS_CODENAME --no-cache .
+    echo "docker build -t $CEPH_IMAGE --no-cache ."
+    docker build -t $CEPH_IMAGE --no-cache .
 }
 
 if [ "$1" = "nc" ] ; then
