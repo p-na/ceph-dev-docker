@@ -95,7 +95,7 @@ RUN zypper -n install \
 RUN useradd -r -m -u ${USER_UID} user
 
 # Install tools
-RUN zypper -n install vim zsh inotify-tools wget ack sudo && \
+RUN zypper -n install vim zsh inotify-tools wget ack sudo fzf fzf-zsh-completion && \
     echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     groupadd wheel && \
     gpasswd -a user wheel
