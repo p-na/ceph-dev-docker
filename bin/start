@@ -66,3 +66,5 @@ tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run; zsh -i' # Add new window 
 if [[ "$sleep" = "true" ]]; then
     sleep infinity
 fi
+
+./bin/ceph dashboard debug enable
