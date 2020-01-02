@@ -65,6 +65,7 @@ RUN zypper -n install \
     python3-bcrypt \
     python3-devel \
     python3-pecan \
+    python3-scipy \
     python3-pip \
     python3-pyOpenSSL \
     python3-pylint \
