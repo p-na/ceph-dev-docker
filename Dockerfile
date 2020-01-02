@@ -65,12 +65,13 @@ RUN zypper -n install \
     python3-bcrypt \
     python3-devel \
     python3-pecan \
-    python3-scipy \
     python3-pip \
     python3-pyOpenSSL \
     python3-pylint \
     python3-rados \
+    python3-remoto \
     python3-requests \
+    python3-scipy \
     python3-yapf \
     ripgrep \
     rlwrap \
