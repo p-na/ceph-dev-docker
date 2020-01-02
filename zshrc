@@ -27,3 +27,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 source /etc/zsh_completion.d/fzf-key-bindings
+
+export NG_CLI_ANALYTICS="false" # prevent user interaction
