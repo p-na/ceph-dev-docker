@@ -5,7 +5,6 @@ networks:
 
 volumes:
   ceph-dev-home:
-  grafana-data:
 
 services:
   ceph-1: &default
@@ -136,13 +135,13 @@ services:
       - "9090:9090"
 
   grafana:
+    build:
+      context: ./grafana
     image: "pse/grafana"
     container_name: "grafana"
     hostname: grafana
     volumes:
-      - ./grafana/data/:/var/lib/grafana
-    environment:
-      GF_INSTALL_PLUGINS: vonage-status-panel,grafana-piechart-panel
+      - "./grafana/data/:/var/lib/grafana"
     networks:
       - ceph
     ports:
