@@ -136,12 +136,11 @@ services:
       - "9090:9090"
 
   grafana:
-    image: "grafana/grafana"
+    image: "pse/grafana"
     container_name: "grafana"
     hostname: grafana
     volumes:
-      - grafana-data:/var/lib/grafana
-      - "./grafana.ini:/etc/grafana/grafana.ini"
+      - ./grafana/data/:/var/lib/grafana
     environment:
       GF_INSTALL_PLUGINS: vonage-status-panel,grafana-piechart-panel
     networks:
