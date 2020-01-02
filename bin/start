@@ -38,7 +38,7 @@ if [ ! -z "$RBD"  || ! -z "$RBD_POOL" ] ; then
     ceph osd pool application enable rbd rbd # Set application to `rbd` for pool
 fi
 
-if [ -z "$NONFS" ] ; then 
+if [ -z "$NONFS" ] ; then
     ceph osd pool create nfs 8 replicated # Create pool
     ceph dashboard set-ganesha-clusters-rados-pool-namespace ceph:nfs
 fi
@@ -63,8 +63,15 @@ fi
 tmux new -d -s ceph -n 'Backend Reload' 'auto-reloadm; zsh -i' # Create new session, detached
 tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run; zsh -i' # Add new window to session
 # tmux attach -t ceph # Attach to session
+
+# Enable debug messages in responses from the back-end
+./bin/ceph dashboard debug enable
+
+# Enable debug log level and write to dashboards own log file instead of
+# writing to the mgr.?.log.
+./bin/ceph config set mgr mgr/dashboard/log_level debug
+./bin/ceph config set mgr mgr/dashboard/log_to_file true
+
 if [[ "$sleep" = "true" ]]; then
     sleep infinity
 fi
-
-./bin/ceph dashboard debug enable
