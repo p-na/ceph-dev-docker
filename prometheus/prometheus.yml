@@ -20,4 +20,6 @@ alerting:
             - alertmanager:9093
 
 rule_files:
-  - alert.rules
+  - alert_rules.yml
+  - ceph_rules.yml
+  - rewrite_rules.yml
