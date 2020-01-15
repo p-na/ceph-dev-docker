@@ -65,6 +65,8 @@ RUN zypper -n install \
     python3-Werkzeug \
     python3-bcrypt \
     python3-devel \
+    python3-numpy \
+    python3-numpy-devel \
     python3-pecan \
     python3-pip \
     python3-pyOpenSSL \
