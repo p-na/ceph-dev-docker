@@ -31,6 +31,7 @@ RUN zypper -n install \
     glibc-locale \
     google-opensans-fonts \
     iproute2 \
+    iputils \
     jq \
     libstdc++6-devel-gcc7 \
     lttng-ust-devel \
