@@ -29,3 +29,4 @@ export NVM_DIR="$HOME/.nvm"
 source /etc/zsh_completion.d/fzf-key-bindings
 
 export NG_CLI_ANALYTICS="false" # prevent user interaction
+export FZF_DEFAULT_OPTS="--height=20% --layout=reverse --border"
