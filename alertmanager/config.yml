@@ -1,7 +1,9 @@
+global:
+  slack_api_url: "https://hooks.slack.com/services/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"
 route:
-  receiver: 'all'
+  receiver: "all"
 
-  group_by: ['alertname']
+  group_by: ["alertname"]
 
   group_wait: 10s
 
@@ -19,17 +21,23 @@ inhibit_rules:
   # supress all your alerts with the same region label that have a severity label of
   # page.
   - source_match:
-      severity: 'page-regionfail'
+      severity: "page-regionfail"
     target_match:
-      severity: 'page'
-    equal: ['region']
+      severity: "page"
+    equal: ["region"]
 
 receivers:
-  - name: 'all'
+  - name: "all"
 
     webhook_configs:
-    - url: 'http://ceph-1:4200/api/prometheus_receiver'
-    - url: 'http://ceph-2:4200/api/prometheus_receiver'
-    - url: 'http://ceph-3:4200/api/prometheus_receiver'
-    - url: 'http://ceph-4:4200/api/prometheus_receiver'
-    - url: 'http://localhost:9099/' # sntp trap exporter
+      - url: "http://ceph-1:4200/api/prometheus_receiver"
+      - url: "http://ceph-2:4200/api/prometheus_receiver"
+      - url: "http://ceph-3:4200/api/prometheus_receiver"
+      - url: "http://ceph-4:4200/api/prometheus_receiver"
+      # - url: 'http://localhost:9099/' # snmp trap exporter
+      - url: "http://alert-receiver:9099/"
+
+    slack_configs:
+      - api_url: "https://hooks.slack.com/services/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"
+        channel: "#general"
+        text: "<!channel>{{.CommonAnnotations.general}}</channel>"
