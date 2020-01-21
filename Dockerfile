@@ -88,10 +88,10 @@ RUN zypper -n install \
     zsh
 
 RUN zypper -n install \
-	python2-virtualenv python3-virtualenv python3-mypy_extensions
+    python2-virtualenv python3-virtualenv python3-mypy_extensions
 
 # SSO dependencies
-RUN zypper -n install \ 
+RUN zypper -n install \
     libxmlsec1-1 libxmlsec1-nss1 libxmlsec1-openssl1 xmlsec1-devel \
     xmlsec1-openssl-devel
 # RUN pip2 install python-saml
@@ -169,11 +169,11 @@ ADD ccache.conf /home/user/.ccache/
 
 RUN mkdir $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
-	&& source $NVM_DIR/nvm.sh \
-	&& nvm install $NODE_VERSION \
+    && source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
-	&& nvm use $NODE_VERSION \
-	&& npm install -g "@angular/cli"
+    && nvm use $NODE_VERSION \
+    && npm install -g "@angular/cli"
 
 RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
 ADD zshrc /home/user/.zshrc
@@ -193,5 +193,7 @@ ADD bin/* /usr/local/bin/
 RUN /usr/local/bin/install-chrome.sh
 ENV CHROME_BIN /usr/bin/google-chrome
 
+# Temporary fix for scipy issue in diskprection_local -> https://tracker.ceph.com/issues/43447
+RUN zypper -n rm python3-scipy && pip3 install scipy==1.3.2
 
 USER user
