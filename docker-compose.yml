@@ -29,6 +29,7 @@ services:
       - "4101:4100"
       - "4011:7789"
       - "4201:4200" # Dashboard Frontend Proxy
+      - "10001:10001" # Debugging
     container_name: ceph-1
     hostname: ceph-1
     devices:
@@ -50,6 +51,7 @@ services:
       - "4102:4100"
       - "4012:7789"
       - "4202:4200"
+      - "10002:10002" # Debugging
     container_name: ceph-2
     hostname: ceph-2
 
@@ -65,6 +67,7 @@ services:
       - "4103:4100"
       - "4013:7789"
       - "4203:4200"
+      - "10003:10003" # Debugging
     container_name: ceph-3
     hostname: ceph-3
 
@@ -80,6 +83,7 @@ services:
       - "4104:4100"
       - "4014:7789"
       - "4204:4200"
+      - "10004:10004" # Debugging
     container_name: ceph-4
     hostname: ceph-4
 
@@ -96,6 +100,7 @@ services:
       - "4105:4100"
       - "4015:7789"
       - "4205:4200"
+      - "10005:10005"
     container_name: ceph-usb
     hostname: ceph-usb
 
@@ -159,6 +164,17 @@ services:
       - "--storage.path=/alertmanager"
     ports:
       - "9093:9093"
+
+  alert-receiver:
+    build: alert-receiver
+    volumes:
+      - "./alert-receiver:/alert-receiver"
+    container_name: alert-receiver
+    entrypoint:
+      - npm
+      - start
+    networks:
+      - ceph
 
   keycloak:
     image: jboss/keycloak

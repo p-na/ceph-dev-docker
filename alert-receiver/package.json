@@ -1,0 +1,31 @@
+{
+  "name": "prometheus-alertmanager-webhook-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "prettier": {
+    "singleQuote": true
+  },
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node out/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/lodash": "^4.14.147",
+    "@types/moment": "^2.13.0",
+    "@types/node-notifier": "^5.4.0",
+    "moment": "^2.24.0",
+    "node-notifier": "^6.0.0",
+    "node-notifier-cli": "^1.1.2",
+    "tslint": "^5.20.1"
+  }
+}

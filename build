@@ -12,7 +12,8 @@ function build {
     docker build -t $CEPH_IMAGE .
 }
 function buildnc {
-    tag_image
+    # tag_image
+    echo "tagging deactivated"
     echo "docker build -t $CEPH_IMAGE --no-cache ."
     docker build -t $CEPH_IMAGE --no-cache .
 }
