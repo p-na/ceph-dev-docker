@@ -1,5 +1,5 @@
-global:
-  slack_api_url: "https://hooks.slack.com/services/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"
+# global:
+#   slack_api_url: "https://hooks.slack.com/services/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"
 route:
   receiver: "all"
 
@@ -36,8 +36,7 @@ receivers:
       - url: "http://ceph-4:4200/api/prometheus_receiver"
       # - url: 'http://localhost:9099/' # snmp trap exporter
       - url: "http://alert-receiver:9099/"
-
-    slack_configs:
-      - api_url: "https://hooks.slack.com/services/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"
-        channel: "#general"
-        text: "<!channel>{{.CommonAnnotations.general}}</channel>"
+    # slack_configs:
+    #   - api_url: "https://hooks.slack.com/services/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"
+    #     channel: "#general"
+    #     text: "<!channel>{{.CommonAnnotations.general}}</channel>"
