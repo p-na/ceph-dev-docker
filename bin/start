@@ -72,6 +72,11 @@ tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run; zsh -i' # Add new window 
 ./bin/ceph config set mgr mgr/dashboard/log_level debug
 ./bin/ceph config set mgr mgr/dashboard/log_to_file true
 
+# Temporary fix for `stray hosts/services` issue of `orchestrator_cli`
+ceph config set mgr mgr/cephadm/warn_on_stray_hosts false && \
+    ceph config set mgr mgr/cephadm/warn_on_stray_services false && \
+    ceph mgr module enable cephadm
+
 if [[ "$sleep" = "true" ]]; then
     sleep infinity
 fi
