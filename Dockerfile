@@ -196,4 +196,7 @@ ENV CHROME_BIN /usr/bin/google-chrome
 # Temporary fix for scipy issue in diskprection_local -> https://tracker.ceph.com/issues/43447
 RUN zypper -n rm python3-scipy && pip3 install scipy==1.3.2
 
+# Fix for missing dependency in `orchestrator_cli` mgr module
+RUN zypper -n in python3-PyYAML python2-PyYAML
+
 USER user
