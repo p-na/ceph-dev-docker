@@ -1,33 +1,58 @@
 #!/bin/bash
-TAG_NAME=tumbleweed
-CEPH_IMAGE=${CEPH_IMAGE:-pnaw/ceph-dev:${TAG_NAME}}
+
+# Get $CEPH_IMAGE variable
+source .env
+if [ -z "$CEPH_IMAGE" ] ; then
+	>&2 echo "\$CEPH_IMAGE variable empty, exiting.."
+	exit 1
+fi
+
+tag_name=${CEPH_IMAGE/*:/}
+if [ -z "$tag_name" ] ; then
+	>&2 cat <<-eof
+	variable \$tag_name is empty. it was tried to be derived from
+	\$ceph_image, which is: "$ceph_image".
+	eof
+	exit 1
+fi
+
+image_name=${CEPH_IMAGE/:*/}
+if [ -z "$image_name" ] ; then
+	>&2 cat <<-eof
+	variable \$image_name is empty. it was tried to be derived from
+	\$ceph_image, which is: "$ceph_image".
+	eof
+	exit 1
+fi
 
 tag_image() {
-    date=$(date +%F)
-    # use array for calling content of variable as command
-    # https://unix.stackexchange.com/questions/444946/how-can-we-run-a-command-stored-in-a-variable
-    cmd=(docker image tag $CEPH_IMAGE ${CEPH_IMAGE%:${TAG_NAME}}:${date//-/})
-    echo ${cmd[@]}
-    ${cmd[@]}
+	date=$(date +%F)
+	# use array for calling content of variable as command
+	# https://unix.stackexchange.com/questions/444946/how-can-we-run-a-command-stored-in-a-variable
+	cmd=(docker image tag $CEPH_IMAGE ${CEPH_IMAGE%:${tag_name}}:${date//-/})
+	echo ${cmd[@]}
+	${cmd[@]}
 }
+
 build() {
-    tag_image
-    cmd=(docker build -t ${CEPH_IMAGE} .)
-    echo ${cmd[@]}
-    ${cmd[@]}
+	tag_image
+	cmd=(docker build -t ${CEPH_IMAGE} .)
+	echo ${cmd[@]}
+	${cmd[@]}
 }
+
 buildnc() {
-    tag_image
-    cmd=(docker build -t ${CEPH_IMAGE} --no-cache .)
-    echo ${cmd[@]}
-    ${cmd[@]}
+	tag_image
+	cmd=(docker build -t ${CEPH_IMAGE} --no-cache .)
+	echo ${cmd[@]}
+	${cmd[@]}
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
-    # NOT sourced
-    if [ "$1" = "nc" ] ; then
-        buildnc
-    else
-        build
-    fi
+	# NOT sourced
+	if [ "$1" = "nc" ] ; then
+		buildnc
+	else
+		build
+	fi
 fi
