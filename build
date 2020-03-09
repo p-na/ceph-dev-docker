@@ -23,8 +23,11 @@ buildnc() {
     ${cmd[@]}
 }
 
-if [ "$1" = "nc" ] ; then
-    buildnc
-else
-    build
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
+    # NOT sourced
+    if [ "$1" = "nc" ] ; then
+        buildnc
+    else
+        build
+    fi
 fi
