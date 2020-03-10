@@ -87,6 +87,8 @@ RUN zypper -n install \
     wget \
     zsh
 
+RUN chsh -s /usr/bin/zsh root
+
 RUN zypper -n install \
     python2-virtualenv python3-virtualenv python3-mypy_extensions
 
@@ -132,8 +134,6 @@ RUN wget https://raw.githubusercontent.com/${GITHUB_REPO}/${REMOTE_BRANCH}/ceph.
     bash install-deps.sh && \
     zypper -n in ccache aaa_base
 
-RUN chsh -s /usr/bin/zsh root
-
 # CephFS
 RUN zypper in -y ceph-fuse
 
@@ -147,7 +147,13 @@ RUN pip2 install requests-aws
 RUN mkdir /tmp/debug-eggs
 ADD debug-eggs/ /tmp/debug-eggs
 
+# Chrome for running E2E tests
+ADD bin/install-chrome.sh /usr/local/bin/
+RUN /usr/local/bin/install-chrome.sh
+ENV CHROME_BIN /usr/bin/google-chrome
+
 # User configuration
+##
 
 USER user
 
@@ -176,27 +182,19 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.s
     && npm install -g "@angular/cli"
 
 RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
-ADD zshrc /home/user/.zshrc
-ADD vimrc /home/user/.vimrc
-ADD init.vim /home/user/.config/nvim/init.vim
 
-WORKDIR /ceph
-
-# Doing this step last results in efficient usage of Dockers cache and incredibly fast rebuilds if only those scripts have been changed
 USER root
-# Workaround for startup issues
-RUN pip3 install tempora==1.8 backports.functools_lru_cache
-
-ADD bin/* /usr/local/bin/
-
-# Chrome for running E2E tests
-RUN /usr/local/bin/install-chrome.sh
-ENV CHROME_BIN /usr/bin/google-chrome
 
 # Temporary fix for scipy issue in diskprection_local -> https://tracker.ceph.com/issues/43447
 RUN zypper -n rm python3-scipy && pip3 install scipy==1.3.2
-
+# Workaround for startup issues
+RUN pip3 install tempora==1.8 backports.functools_lru_cache
 # Fix for missing dependency in `orchestrator_cli` mgr module
 RUN zypper -n in python3-PyYAML python2-PyYAML
 
+# User configs
 USER user
+ADD zshrc /home/user/.zshrc
+ADD vimrc /home/user/.vimrc
+ADD init.vim /home/user/.config/nvim/init.vim
+ADD bin/* /usr/local/bin/
