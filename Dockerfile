@@ -198,3 +198,5 @@ ADD zshrc /home/user/.zshrc
 ADD vimrc /home/user/.vimrc
 ADD init.vim /home/user/.config/nvim/init.vim
 ADD bin/* /usr/local/bin/
+
+WORKDIR /ceph
