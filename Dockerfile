@@ -41,21 +41,7 @@ RUN zypper -n install \
     netcat-openbsd \
     psmisc \
     python \
-    python-Cython \
-    python-PrettyTable \
     python-devel \
-    python2-Cython \
-    python2-Jinja2 \
-    python2-PrettyTable \
-    python2-PyJWT \
-    python2-Routes \
-    python2-Werkzeug \
-    python2-bcrypt \
-    python2-pecan \
-    python2-pip \
-    python2-pyOpenSSL \
-    python2-pylint \
-    python2-yapf \
     python3-CherryPy \
     python3-Cython \
     python3-Jinja2 \
@@ -90,13 +76,12 @@ RUN zypper -n install \
 RUN chsh -s /usr/bin/zsh root
 
 RUN zypper -n install \
-    python2-virtualenv python3-virtualenv python3-mypy_extensions
+    python3-virtualenv python3-mypy_extensions
 
 # SSO dependencies
 RUN zypper -n install \
     libxmlsec1-1 libxmlsec1-nss1 libxmlsec1-openssl1 xmlsec1-devel \
     xmlsec1-openssl-devel
-# RUN pip2 install python-saml
 # RUN pip3 install python3-saml
 
 RUN useradd -r -m -u ${USER_UID} user
@@ -108,23 +93,18 @@ RUN zypper -n install vim zsh inotify-tools wget ack sudo fzf fzf-zsh-completion
     gpasswd -a user wheel
 
 # Install debugging tools
-RUN pip2 install --upgrade pip
-RUN pip2 install rpdb remote_pdb ipdb ipython
-
 RUN pip3 install --upgrade pip
 RUN pip3 install rpdb remote_pdb ipdb ipython
 
-RUN python  -m pip install --upgrade ptvsd
 RUN python3 -m pip install --upgrade ptvsd
 
 # Install dependencies for `api-requests.sh`
 RUN pip3 install requests docopt ansicolors
 # other dependencies
-RUN sudo pip3 install prettytable
+RUN pip3 install prettytable
 
 # `restful` module
-RUN pip2 install pecan werkzeug && \
-    zypper -n in python2-pyOpenSSL python3-pyOpenSSL
+RUN zypper -n in python3-pyOpenSSL
 
 # Ceph dependencies
 WORKDIR /tmp
@@ -139,9 +119,6 @@ RUN zypper in -y ceph-fuse
 
 # Frontend dependencies
 RUN zypper -n in npm8 fontconfig
-
-# Temporary (?) dependecy for RGW-proxy
-RUN pip2 install requests-aws
 
 # Adds PyCharm debugging eggs
 RUN mkdir /tmp/debug-eggs
@@ -185,12 +162,16 @@ RUN git clone https://github.com/robbyrussell/oh-my-zsh /home/user/.oh-my-zsh
 
 USER root
 
+# RUN zypper -n addrepo https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/openSUSE_Tumbleweed/shells:zsh-users:zsh-autosuggestions.repo && \
+#     zypper refresh && \
+#     zypper -n install zsh-autosuggestions
+
 # Temporary fix for scipy issue in diskprection_local -> https://tracker.ceph.com/issues/43447
 RUN zypper -n rm python3-scipy && pip3 install scipy==1.3.2
 # Workaround for startup issues
 RUN pip3 install tempora==1.8 backports.functools_lru_cache
 # Fix for missing dependency in `orchestrator_cli` mgr module
-RUN zypper -n in python3-PyYAML python2-PyYAML
+RUN zypper -n in python3-PyYAML
 
 # User configs
 USER user
