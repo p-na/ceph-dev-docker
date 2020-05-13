@@ -41,7 +41,7 @@ build() {
 	${cmd[@]}
 }
 
-buildnc() {
+build_without_cache() {
 	tag_image
 	cmd=(docker build -t ${CEPH_IMAGE} --no-cache .)
 	echo ${cmd[@]}
@@ -51,7 +51,10 @@ buildnc() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
 	# NOT sourced
 	if [ "$1" = "nc" ] ; then
-		buildnc
+        docker pull opensuse/tumbleweed  # fixme make that generic based on Dockerfile
+		build_without_cache
+    elif [ "$1" = "pull" ] ; then
+        docker pull opensuse/tumbleweed  # fixme make that generic based on Dockerfile
 	else
 		build
 	fi
