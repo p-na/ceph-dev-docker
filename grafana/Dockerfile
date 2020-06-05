@@ -1,4 +1,4 @@
-FROM grafana/grafana
+FROM grafana/grafana:6.7.4
 
 ADD grafana.ini /etc/grafana/grafana.ini
 ADD ceph-dashboards.yml /etc/grafana/provisioning/dashboards/ceph-dashboards.yaml
