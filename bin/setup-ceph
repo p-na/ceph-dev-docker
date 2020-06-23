@@ -14,7 +14,7 @@ find /ceph -iname '*.pyc' -delete
 pushd /ceph
 git clone https://github.com/ceph/ceph . | true
 
-make_args="-DWITH_PYTHON3=ON -DWITH_PYTHON2=OFF -DMGR_PYTHON_VERSION=3"
+make_args="-DWITH_PYTHON3=3 -DWITH_PYTHON2=OFF -DMGR_PYTHON_VERSION=3"
 if (( $PYTHON_VERSION == 2 )) ; then
     make_args="-DWITH_PYTHON3=OFF -DWITH_PYTHON2=ON -DMGR_PYTHON_VERSION=2"
 fi
