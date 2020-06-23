@@ -5,3 +5,4 @@ dashboards/
 .idea/
 .env
 ssh/*
+.vscode/
