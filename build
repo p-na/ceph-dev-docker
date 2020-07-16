@@ -7,6 +7,10 @@ if [ -z "$CEPH_IMAGE" ] ; then
 	exit 1
 fi
 
+if [ "$1" == 'mimic' ] ; then
+	CEPH_IMAGE="pnaw/ceph-dev:tumbleweed"
+fi
+
 tag_name=${CEPH_IMAGE/*:/}
 if [ -z "$tag_name" ] ; then
 	>&2 cat <<-eof
