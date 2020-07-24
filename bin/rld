@@ -7,8 +7,6 @@ if [ "$1" == "--help" ]; then
 	exit 0
 fi
 
-set -ex
-
 if [ ! -z "${@}" ]; then
 	MGR_MODULE="${@}"
 fi
