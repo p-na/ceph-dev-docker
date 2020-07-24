@@ -13,6 +13,10 @@ if [ ! -z "${@}" ]; then
 	MGR_MODULE="${@}"
 fi
 
+for f in $(ls /ceph/build/out/*.log) ; do
+	> $f
+done
+
 ceph mgr module disable "${MGR_MODULE}" && \
     sleep 2 && \
     ceph mgr module enable "${MGR_MODULE}"
