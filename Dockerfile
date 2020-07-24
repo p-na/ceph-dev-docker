@@ -71,6 +71,7 @@ RUN zypper -n install \
     tox \
     vim \
     wget \
+    rbd-fuse \
     zsh
 
 RUN chsh -s /usr/bin/zsh root
@@ -172,6 +173,8 @@ RUN zypper -n rm python3-scipy && pip3 install scipy==1.3.2
 RUN pip3 install tempora==1.8 backports.functools_lru_cache
 # Fix for missing dependency in `orchestrator_cli` mgr module
 RUN zypper -n in python3-PyYAML
+
+RUN pip3 install debugpy
 
 # User configs
 USER user
