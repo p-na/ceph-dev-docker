@@ -74,6 +74,7 @@ tmux new-window -t ceph -n 'Frontend Rebuild' 'fe-run; zsh -i' # Add new window 
 
 # Temporary fix for `stray hosts` issue of `orchestrator_cli`
 ceph config set mgr mgr/cephadm/warn_on_stray_hosts false &&
+    ceph config set mgr mgr/cephadm/warn_on_stray_daemons false &&
     ceph mgr module enable cephadm
 
 if [[ "$sleep" = "true" ]]; then
