@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 networks:
   ceph:
@@ -23,17 +23,20 @@ services:
       - ./ssh:/home/user/.ssh
       - /run/udev:/run/udev:ro
       - $CEPH_REPO_1:/ceph
+      - /dev:/dev:ro
     ports:
-      - "8081:8080" # Dashboard without SSL
-      - "4001:5000" # Dashboard
-      - "4101:4100"
-      - "4011:7789"
-      - "4201:4200" # Dashboard Frontend Proxy
-      - "10001:10001" # Debugging
+      - '8081:8080' # Dashboard without SSL
+      - '4001:5000' # Dashboard
+      - '4101:4100'
+      - '4011:7789'
+      - '4201:4200' # Dashboard Frontend Proxy
+      - '9283:9283' # Prometheus exporter only for ceph-1
+      - '10001:10001' # Debugging
+      - '4567:4567'
     container_name: ceph-1
     hostname: ceph-1
     devices:
-      - "/dev/fuse:/dev/fuse"
+      - '/dev/fuse:/dev/fuse'
     cap_add:
       - SYS_ADMIN
       - MKNOD # really required?
@@ -46,12 +49,12 @@ services:
       - ./ssh:/home/user/.ssh
       - $CEPH_REPO_2:/ceph
     ports:
-      - "8082:8080"
-      - "4002:5000"
-      - "4102:4100"
-      - "4012:7789"
-      - "4202:4200"
-      - "10002:10002" # Debugging
+      - '8082:8080'
+      - '4002:5000'
+      - '4102:4100'
+      - '4012:7789'
+      - '4202:4200'
+      - '10002:10002' # Debugging
     container_name: ceph-2
     hostname: ceph-2
 
@@ -62,12 +65,12 @@ services:
       - ./ssh:/home/user/.ssh
       - $CEPH_REPO_3:/ceph
     ports:
-      - "8083:8080"
-      - "4003:5000"
-      - "4103:4100"
-      - "4013:7789"
-      - "4203:4200"
-      - "10003:10003" # Debugging
+      - '8083:8080'
+      - '4003:5000'
+      - '4103:4100'
+      - '4013:7789'
+      - '4203:4200'
+      - '10003:10003' # Debugging
     container_name: ceph-3
     hostname: ceph-3
 
@@ -78,12 +81,12 @@ services:
       - ./ssh:/home/user/.ssh
       - $CEPH_REPO_4:/ceph
     ports:
-      - "8084:8080"
-      - "4004:5000"
-      - "4104:4100"
-      - "4014:7789"
-      - "4204:4200"
-      - "10004:10004" # Debugging
+      - '8084:8080'
+      - '4004:5000'
+      - '4104:4100'
+      - '4014:7789'
+      - '4204:4200'
+      - '10004:10004' # Debugging
     container_name: ceph-4
     hostname: ceph-4
 
@@ -95,80 +98,95 @@ services:
       - ./ssh:/home/user/.ssh
       - $CEPH_REPO_USB:/ceph
     ports:
-      - "8085:8080"
-      - "4005:5000"
-      - "4105:4100"
-      - "4015:7789"
-      - "4205:4200"
-      - "10005:10005"
+      - '8085:8080'
+      - '4005:5000'
+      - '4105:4100'
+      - '4015:7789'
+      - '4205:4200'
+      - '10005:10005'
     container_name: ceph-usb
     hostname: ceph-usb
 
-  node-exporter:
-    user: "root"
-    image: "prom/node-exporter"
-    container_name: "node-exporter"
-    hostname: "node-exporter"
+  node-exporter-0.16.0: &node_exporter_defaults
+    user: 'root'
+    image: 'prom/node-exporter:v0.16.0'
+    container_name: 'node-exporter'
+    hostname: 'node-exporter'
     volumes:
-      - "/proc:/host/proc:ro"
-      - "/sys:/host/sys:ro"
-      - "/:/rootfs:ro"
-    command:
-      [
-        "--path.procfs",
-        "/host/proc",
-        "--path.sysfs",
-        "/host/sys",
-        "--collector.filesystem.ignored-mount-points",
-        "^/(sys|proc|dev|host|etc)($$|/)",
+      - '/proc:/host/proc:ro'
+      - '/sys:/host/sys:ro'
+        # - "/:/rootfs:ro,rslave"
+    command: [
+        '--path.procfs=/host/proc',
+        '--path.sysfs=/host/sys',
+        # '--path.rootfs=/rootfs',
+        '--collector.filesystem.ignored-mount-points',
+        '^/(sys|proc|dev|host|etc)($$|/)',
+        '--collector.edac',
       ]
-    networks:
-      - ceph
+    network_mode: host
+
+  node-exporter-1.1.2:
+    <<: *node_exporter_defaults
+    image: 'prom/node-exporter:v1.1.2'
+    container_name: 'node-exporter-1.1.2'
 
   prometheus:
-    image: "prom/prometheus"
+    image: 'prom/prometheus'
     volumes:
-      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
-      - "./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro"
-      - "./prometheus/ceph_rules.yml:/etc/prometheus/ceph_rules.yml:ro"
-      - "./prometheus/rewrite_rules.yml:/etc/prometheus/rewrite_rules.yml:ro"
-    container_name: "prometheus"
-    hostname: "prometheus"
-    networks:
-      - ceph
-    ports:
-      - "9090:9090"
+      - './prometheus:/etc/prometheus:ro'
+    container_name: 'prometheus'
+    hostname: 'prometheus'
+    network_mode: host
 
-  grafana:
-    build:
-      context: ./grafana
-    image: "pse/grafana"
-    container_name: "grafana"
+  grafana-5: &grafana_default
+    image: 'grafana/grafana:5.4.5'
+    container_name: 'grafana-5.4.5'
     hostname: grafana
     volumes:
-      - "./grafana/data/:/var/lib/grafana"
-    networks:
-      - ceph
+      - './grafana/grafana.ini:/etc/grafana/grafana.ini'
+      - './grafana/data/:/var/lib/grafana'
+      - './grafana/dashboards/:/var/lib/grafana/dashboards'
+      - './grafana/ceph-dashboards.yml:/etc/grafana/provisioning/dashboards/ceph-dashboards.yaml'
+      - './grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml'
     ports:
-      - "3000:3000"
+      - '3000:3000'
+
+  grafana-6.7.4:
+    image: 'grafana/grafana:6.7.4'
+    container_name: 'grafana-6.7.4'
+
+  grafana-7.0.5:
+    <<: *grafana_default
+    image: 'pse/grafana:7.0.5'
+    container_name: 'grafana-7.0.5'
+
+  grafana-7.5.1:
+    <<: *grafana_default
+    image: 'grafana/grafana:7.5.1'
+    container_name: 'grafana-7.5.1'
+
+  grafana7-home:
+    <<: *grafana_default
+    image: 'registry.opensuse.org/home/pnawracay/branches/filesystems/ceph/octopus/images/ceph/grafana:7.0.3'
+    container_name: 'grafana7-home'
 
   alertmanager:
     image: prom/alertmanager
     volumes:
-      - "./alertmanager/:/etc/alertmanager/"
+      - './alertmanager/:/etc/alertmanager/'
     container_name: alertmanager
-    networks:
-      - ceph
+    network_mode: host
     command:
-      - "--config.file=/etc/alertmanager/config.yml"
-      - "--storage.path=/alertmanager"
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
     ports:
-      - "9093:9093"
+      - '9093:9093'
 
   alert-receiver:
     build: alert-receiver
     volumes:
-      - "./alert-receiver:/alert-receiver"
+      - './alert-receiver:/alert-receiver'
     container_name: alert-receiver
     entrypoint:
       - npm
@@ -183,21 +201,21 @@ services:
       KEYCLOAK_PASSWORD: admin
       DB_VENDOR: H2
     ports:
-      - "8088:8080"
+      - '8088:8080'
 
   openldap:
     image: osixia/openldap:1.2.0
     environment:
       LDAP_TLS_VERIFY_CLIENT: try
     ports:
-      - "2389:389"
+      - '2389:389'
 
   phpldapadmin:
     image: osixia/phpldapadmin:0.7.1
     environment:
       PHPLDAPADMIN_LDAP_HOSTS: openldap
     ports:
-      - "90:443"
+      - '90:443'
     links:
       - openldap
 
@@ -206,7 +224,7 @@ services:
       context: ./shibboleth
       dockerfile: Dockerfile
     ports:
-      - "9088:9080"
-      - "9443:9443"
+      - '9088:9080'
+      - '9443:9443'
     links:
       - openldap
