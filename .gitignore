@@ -6,3 +6,4 @@ dashboards/
 .env
 ssh/*
 .vscode/
+grafana/data/grafana.db
