@@ -131,6 +131,11 @@ services:
     image: 'prom/node-exporter:v1.1.2'
     container_name: 'node-exporter-1.1.2'
 
+  node-exporter-1.0.1:
+    <<: *node_exporter_defaults
+    image: 'prom/node-exporter:v1.0.1'
+    container_name: 'node-exporter-1.0.1'
+
   prometheus:
     image: 'prom/prometheus'
     volumes:
