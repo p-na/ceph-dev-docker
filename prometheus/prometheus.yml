@@ -1,17 +1,91 @@
 global:
-  scrape_interval: 5s
+  scrape_interval: 10s
 
 scrape_configs:
   - job_name: prometheus
     static_configs:
-      - targets: ["localhost:9090"]
+      - targets: ['localhost:9090']
+
+  - job_name: node_exporter
+    static_configs:
+      - targets:
+          - localhost:9100
+
   - job_name: ceph
     honor_labels: true
     static_configs:
-      - targets: ['localhost:9283', 'ceph-1:9283', 'ceph-2:9283', 'ceph-3:9283', 'ceph-4:9283']
-  - job_name: node-exporter
+      - targets:
+          - 'localhost:9283'
+          - 'ceph-1:9283'
+          - 'ceph-2:9283'
+          - 'ceph-3:9283'
+          - 'ceph-4:9283'
+          - 'localhost:8888' # Fake metrics from snapshots starting here
+          - 'localhost:8889'
+          - 'localhost:8890'
+
+  - job_name: ses6-mon1
     static_configs:
-      - targets: ["node-exporter:9100"]
+      - targets:
+          - 'localhost:8891'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-mon2
+    static_configs:
+      - targets:
+          - 'localhost:8892'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-mon3
+    static_configs:
+      - targets:
+          - 'localhost:8893'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-osd01
+    static_configs:
+      - targets:
+          - 'localhost:8894'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-osd02
+    static_configs:
+      - targets:
+          - 'localhost:8895'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-osd03
+    static_configs:
+      - targets:
+          - 'localhost:8896'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ses6-osd04
+    static_configs:
+      - targets:
+          - 'localhost:8897'
+    relabel_configs:
+      - source_labels: ['job']
+        target_label: instance
+        replacement: '$1'
 
 alerting:
   alertmanagers:
@@ -22,6 +96,5 @@ alerting:
             - localhost:9093
 
 rule_files:
-  # - alert_rules.yml
-  - ceph_rules.yml
+  - ceph_default_alerts.yml
   - rewrite_rules.yml
