@@ -126,6 +126,11 @@ services:
       ]
     network_mode: host
 
+  node-exporter-latest:
+    <<: *node_exporter_defaults
+    image: 'prom/node-exporter:latest'
+    container_name: 'node-exporter-latest'
+
   node-exporter-1.1.2:
     <<: *node_exporter_defaults
     image: 'prom/node-exporter:v1.1.2'
@@ -171,9 +176,9 @@ services:
     image: 'grafana/grafana:7.5.1'
     container_name: 'grafana-7.5.1'
 
-  grafana7-home:
+  grafana-7-home:
     <<: *grafana_default
-    image: 'registry.opensuse.org/home/pnawracay/branches/filesystems/ceph/octopus/images/ceph/grafana:7.0.3'
+    image: 'registry.suse.de/home/pnawracay/monitoring/containers/ses/7/ceph/grafana:7.5.4'
     container_name: 'grafana7-home'
 
   alertmanager:
