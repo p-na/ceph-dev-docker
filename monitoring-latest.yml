@@ -1,0 +1,181 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2021-04-27T15:43:31Z"
+  labels:
+    app: monitoring
+  name: monitoring
+spec:
+  containers:
+  - command:
+    - /run.sh
+    env:
+    - name: PATH
+      value: /usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    - name: GF_PATHS_CONFIG
+      value: /etc/grafana/grafana.ini
+    - name: GF_PATHS_DATA
+      value: /var/lib/grafana
+    - name: GF_PATHS_HOME
+      value: /usr/share/grafana
+    - name: GF_PATHS_LOGS
+      value: /var/log/grafana
+    - name: GF_PATHS_PLUGINS
+      value: /var/lib/grafana/plugins
+    - name: GF_PATHS_PROVISIONING
+      value: /etc/grafana/provisioning
+    image: docker.io/grafana/grafana:latest
+    name: grafana
+    ports:
+    - containerPort: 9090
+      hostPort: 9090
+      protocol: TCP
+    - containerPort: 9100
+      hostPort: 9100
+      protocol: TCP
+    - containerPort: 3000
+      hostPort: 3000
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsGroup: 0
+      runAsUser: 472
+      seLinuxOptions: {}
+    volumeMounts:
+    - mountPath: /etc/grafana/grafana.ini
+      name: home-user-src-ceph-dev-docker-grafana-grafana.ini-host
+    - mountPath: /var/lib/grafana
+      name: home-user-src-ceph-dev-docker-grafana-data-host
+    - mountPath: /var/lib/grafana/dashboards
+      name: home-user-src-ceph-dev-docker-grafana-dashboards-host
+    - mountPath: /etc/grafana/provisioning/dashboards/ceph-dashboards.yaml
+      name: home-user-src-ceph-dev-docker-grafana-ceph-dashboards.yml-host
+    - mountPath: /etc/grafana/provisioning/datasources/datasource.yaml
+      name: home-user-src-ceph-dev-docker-grafana-datasource.yml-host
+    workingDir: /usr/share/grafana
+  - args:
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --storage.tsdb.path=/prometheus
+    - --web.console.libraries=/usr/share/prometheus/console_libraries
+    - --web.console.templates=/usr/share/prometheus/consoles
+    command:
+    - /bin/prometheus
+    env:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    image: docker.io/prom/prometheus:latest
+    name: prometheus
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsGroup: 65534
+      runAsUser: 65534
+      seLinuxOptions: {}
+    volumeMounts:
+    - mountPath: /etc/prometheus
+      name: home-user-src-ceph-dev-docker-prometheus-host
+      readOnly: true
+    - mountPath: /prometheus
+      name: 15d7ade98c3376d810acc8d3ed61c3bfb12c0827f0ddfa4a61724311c2393d72-pvc
+    workingDir: /prometheus
+  - args:
+    - --path.procfs=/host/proc
+    - --path.sysfs=/host/sys
+    - --collector.filesystem.ignored-mount-points
+    - ^/(sys|proc|dev|host|etc)($$|/)
+    - --collector.edac
+    command:
+    - /bin/node_exporter
+    env:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    image: docker.io/prom/node-exporter:latest
+    name: node-exporter
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsGroup: 65534
+      runAsUser: 65534
+      seLinuxOptions: {}
+    volumeMounts:
+    - mountPath: /host/sys
+      name: sys-host
+      readOnly: true
+    - mountPath: /host/proc
+      name: proc-host
+      readOnly: true
+    workingDir: /
+  dnsConfig: {}
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/grafana/grafana.ini
+      type: File
+    name: home-user-src-ceph-dev-docker-grafana-grafana.ini-host
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/grafana/data
+      type: Directory
+    name: home-user-src-ceph-dev-docker-grafana-data-host
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/grafana/ceph-dashboards.yml
+      type: File
+    name: home-user-src-ceph-dev-docker-grafana-ceph-dashboards.yml-host
+  - name: 15d7ade98c3376d810acc8d3ed61c3bfb12c0827f0ddfa4a61724311c2393d72-pvc
+    persistentVolumeClaim:
+      claimName: 15d7ade98c3376d810acc8d3ed61c3bfb12c0827f0ddfa4a61724311c2393d72
+  - hostPath:
+      path: /proc
+      type: Directory
+    name: proc-host
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/grafana/dashboards
+      type: Directory
+    name: home-user-src-ceph-dev-docker-grafana-dashboards-host
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/grafana/datasource.yml
+      type: File
+    name: home-user-src-ceph-dev-docker-grafana-datasource.yml-host
+  - hostPath:
+      path: /home/user/src/ceph-dev-docker/prometheus
+      type: Directory
+    name: home-user-src-ceph-dev-docker-prometheus-host
+  - hostPath:
+      path: /sys
+      type: Directory
+    name: sys-host
+status: {}
+
