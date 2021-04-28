@@ -30,16 +30,6 @@ spec:
           value: /etc/grafana/provisioning
       image: docker.io/grafana/grafana:latest
       name: grafana
-      ports:
-        - containerPort: 9090
-          hostPort: 9090
-          protocol: TCP
-        - containerPort: 9100
-          hostPort: 9100
-          protocol: TCP
-        - containerPort: 3000
-          hostPort: 3000
-          protocol: TCP
       resources: {}
       securityContext:
         allowPrivilegeEscalation: true
@@ -140,6 +130,7 @@ spec:
           readOnly: true
       workingDir: /
   dnsConfig: {}
+  hostNetwork: true
   restartPolicy: Never
   volumes:
     - hostPath:
